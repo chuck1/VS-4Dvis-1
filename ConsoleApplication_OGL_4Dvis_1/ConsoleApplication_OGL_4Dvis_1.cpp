@@ -12,159 +12,375 @@
 //Include the standard C++ headers
 #include <stdio.h>
 #include <stdlib.h>
+#include <vector>
+#include <iostream>
+#include <fstream>
+#include <cstdlib>
+#include <string>
 
-int		cubeVertexIndex(int i, int j, int k, int l)
-{
-	return i * 8 + j * 4 + k * 2 + l;
+GLuint LoadShaders(const char * vertex_file_path, const char * fragment_file_path){
+
+	// Create the shaders
+	GLuint VertexShaderID = glCreateShader(GL_VERTEX_SHADER);
+	GLuint FragmentShaderID = glCreateShader(GL_FRAGMENT_SHADER);
+
+	// Read the Vertex Shader code from the file
+	std::string VertexShaderCode;
+	std::ifstream VertexShaderStream(vertex_file_path, std::ios::in);
+	if (VertexShaderStream.is_open()){
+		std::string Line = "";
+		while (getline(VertexShaderStream, Line))
+			VertexShaderCode += "\n" + Line;
+		VertexShaderStream.close();
+	}
+	else{
+		printf("Impossible to open %s. Are you in the right directory ? Don't forget to read the FAQ !\n", vertex_file_path);
+		getchar();
+		return 0;
+	}
+
+	// Read the Fragment Shader code from the file
+	std::string FragmentShaderCode;
+	std::ifstream FragmentShaderStream(fragment_file_path, std::ios::in);
+	if (FragmentShaderStream.is_open()){
+		std::string Line = "";
+		while (getline(FragmentShaderStream, Line))
+			FragmentShaderCode += "\n" + Line;
+		FragmentShaderStream.close();
+	}
+
+	GLint Result = GL_FALSE;
+	int InfoLogLength;
+
+
+	// Compile Vertex Shader
+	printf("Compiling shader : %s\n", vertex_file_path);
+	char const * VertexSourcePointer = VertexShaderCode.c_str();
+	glShaderSource(VertexShaderID, 1, &VertexSourcePointer, NULL);
+	glCompileShader(VertexShaderID);
+
+	// Check Vertex Shader
+	glGetShaderiv(VertexShaderID, GL_COMPILE_STATUS, &Result);
+	glGetShaderiv(VertexShaderID, GL_INFO_LOG_LENGTH, &InfoLogLength);
+	if (InfoLogLength > 0){
+		std::vector<char> VertexShaderErrorMessage(InfoLogLength + 1);
+		glGetShaderInfoLog(VertexShaderID, InfoLogLength, NULL, &VertexShaderErrorMessage[0]);
+		printf("%s\n", &VertexShaderErrorMessage[0]);
+	}
+
+
+
+	// Compile Fragment Shader
+	printf("Compiling shader : %s\n", fragment_file_path);
+	char const * FragmentSourcePointer = FragmentShaderCode.c_str();
+	glShaderSource(FragmentShaderID, 1, &FragmentSourcePointer, NULL);
+	glCompileShader(FragmentShaderID);
+
+	// Check Fragment Shader
+	glGetShaderiv(FragmentShaderID, GL_COMPILE_STATUS, &Result);
+	glGetShaderiv(FragmentShaderID, GL_INFO_LOG_LENGTH, &InfoLogLength);
+	if (InfoLogLength > 0){
+		std::vector<char> FragmentShaderErrorMessage(InfoLogLength + 1);
+		glGetShaderInfoLog(FragmentShaderID, InfoLogLength, NULL, &FragmentShaderErrorMessage[0]);
+		printf("%s\n", &FragmentShaderErrorMessage[0]);
+	}
+
+
+
+	// Link the program
+	printf("Linking program\n");
+	GLuint ProgramID = glCreateProgram();
+	glAttachShader(ProgramID, VertexShaderID);
+	glAttachShader(ProgramID, FragmentShaderID);
+	glLinkProgram(ProgramID);
+
+	// Check the program
+	glGetProgramiv(ProgramID, GL_LINK_STATUS, &Result);
+	glGetProgramiv(ProgramID, GL_INFO_LOG_LENGTH, &InfoLogLength);
+	if (InfoLogLength > 0){
+		std::vector<char> ProgramErrorMessage(InfoLogLength + 1);
+		glGetProgramInfoLog(ProgramID, InfoLogLength, NULL, &ProgramErrorMessage[0]);
+		printf("%s\n", &ProgramErrorMessage[0]);
+	}
+
+
+	glDetachShader(ProgramID, VertexShaderID);
+	glDetachShader(ProgramID, FragmentShaderID);
+
+	glDeleteShader(VertexShaderID);
+	glDeleteShader(FragmentShaderID);
+
+	return ProgramID;
 }
-void	construct2Plane4(int d, int dims, int d0, int v0, int d1, int v1, GLint* indexArray, int& indexArrayIndex, int* I)
+
+class Geometry
 {
-	if (d < dims)
+public:
+	void drawTriangles()
 	{
-		if (d == d0)
+		glEnableVertexAttribArray(0);
+
+		glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
+		glVertexAttribPointer(
+			0,                  // attribute 0. No particular reason for 0, but must match the layout in the shader.
+			4,                  // size
+			GL_FLOAT,           // type
+			GL_FALSE,           // normalized?
+			0,                  // stride
+			(void*)0            // array buffer offset
+			);
+
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBuffer);
+
+		glDrawElements(
+			GL_TRIANGLES,      // mode
+			indexArrayIndex,    // count
+			GL_UNSIGNED_INT,   // type
+			(void*)0           // element array buffer offset
+			);
+
+		glDisableVertexAttribArray(0);
+	}
+	void drawLines()
+	{
+		glEnableVertexAttribArray(0);
+
+		glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
+		glVertexAttribPointer(
+			0,                  // attribute 0. No particular reason for 0, but must match the layout in the shader.
+			4,                  // size
+			GL_FLOAT,           // type
+			GL_FALSE,           // normalized?
+			0,                  // stride
+			(void*)0            // array buffer offset
+			);
+
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBuffer);
+
+		glDrawElements(
+			GL_LINES,      // mode
+			indexArrayIndex,    // count
+			GL_UNSIGNED_INT,   // type
+			(void*)0           // element array buffer offset
+			);
+
+		glDisableVertexAttribArray(0);
+	}
+	void setup()
+	{
+		glGenVertexArrays(1, &VertexArrayID);
+		glBindVertexArray(VertexArrayID);
+
+
+		// Generate 1 buffer, put the resulting identifier in vertexbuffer
+		glGenBuffers(1, &vertexBuffer);
+		glGenBuffers(1, &indexBuffer);
+
+		// The following commands will talk about our 'vertexbuffer' buffer
+		glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
+		glBufferData(GL_ARRAY_BUFFER, pArrayIndex * sizeof(GLfloat), p, GL_STATIC_DRAW);
+
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, indexBuffer);
+		glBufferData(GL_ELEMENT_ARRAY_BUFFER, indexArrayIndex * sizeof(GLuint), indexArray, GL_STATIC_DRAW);
+	}
+
+	GLuint vertexBuffer;
+	GLuint indexBuffer;
+
+	GLuint VertexArrayID;
+
+	GLfloat* p;
+	int pArrayIndex;
+
+	GLuint* indexArray;
+	int indexArrayIndex;
+};
+class Cube4: public Geometry
+{
+public:
+	int		cubeVertexIndex(int i, int j, int k, int l)
+	{
+		return i * 8 + j * 4 + k * 2 + l;
+	}
+	void	construct2Plane4(int d, int dims, int d0, int v0, int d1, int v1, GLuint* indexArray, int& indexArrayIndex, int* I)
+	{
+		if (d < dims)
 		{
-			I[d] = v0;
-			construct2Plane4(d + 1, dims, d0, v0, d1, v1, indexArray, indexArrayIndex, I);
-		}
-		else if (d == d1)
-		{
-			I[d] = v1;
-			construct2Plane4(d + 1, dims, d0, v0, d1, v1, indexArray, indexArrayIndex, I);
-		}
-		else
-		{
-			for (int i = 0; i < 2; ++i)
+			if (d == d0)
 			{
-				I[d] = i;
-				construct3Cube4(d + 1, dims, d0, v0, indexArray, indexArrayIndex, I);
+				I[d] = v0;
+				construct2Plane4(d + 1, dims, d0, v0, d1, v1, indexArray, indexArrayIndex, I);
 			}
-		}
-	}
-	else
-	{
-		indexArray[indexArrayIndex] = cubeVertexIndex(I[0], I[1], I[2], I[3]);
-		++indexArrayIndex;
-	}
-}
-void	construct3Cube4(int d, int dims, int d0, int v0, GLint* indexArray, int& indexArrayIndex, int* I)
-{
-	if (d < dims)
-	{
-		if (d == d0)
-		{
-			I[d] = v0;
-			construct3Cube4(d + 1, dims, d0, v0, indexArray, indexArrayIndex, I);
-		}
-		else
-		{
-			for (int i = 0; i < 2; ++i)
+			else if (d == d1)
 			{
-				I[d] = i;
-				construct3Cube4(d + 1, dims, d0, v0, indexArray, indexArrayIndex, I);
+				I[d] = v1;
+				construct2Plane4(d + 1, dims, d0, v0, d1, v1, indexArray, indexArrayIndex, I);
 			}
-		}
-	}
-	else
-	{
-		indexArray[indexArrayIndex] = cubeVertexIndex(I[0], I[1], I[2], I[3]);
-		++indexArrayIndex;
-	}
-}
-void	construct2Plane4(int d0, int v0, int d1, int v1, GLint* indexArray, int& indexArrayIndex)
-{
-
-}
-void	construct3Cube4(int dim, int val, GLint* indexArray, int& indexArrayIndex)
-{
-	int I[4];
-	int D[3];
-
-	D[0] = 0;
-	D[1] = 1;
-	D[2] = 2;
-
-	for (int i = dim; i < 3; ++i)
-	{
-		++D[i];
-	}
-	
-	construct3Cube4(0, 4, dim, val, indexArray, indexArrayIndex, I);
-
-
-
-
-	for (int d = 0; d < 4; ++d)
-	{
-		if (d == dim) continue;
-
-		for (int v = 0; v < 2; ++v)
-		{
-			construct2Plane4(dim, val, d, v, indexArray, indexArrayIndex);
-		}
-	}
-
-
-
-
-
-
-
-
-	// or
-
-	/*for (int i = 0; i < 2; ++i)
-	{
-		I[D[0]] = i;
-
-		for (int j = 0; j < 2; ++j)
-		{
-			I[D[1]] = j;
-
-			for (int k = 0; k < 2; ++k)
+			else
 			{
-				I[D[2]] = k;
-
-				indexArray[indexArrayIndex] = cubeVertexIndex(I[0], I[1], I[2], I[3]);
-				++indexArrayIndex;
-			}
-		}
-	}*/
-}
-void	construct4Cube4()
-{
-	GLfloat* p = new GLfloat[16];
-
-	for (int i = 0; i < 2; ++i)
-	{
-		for (int j = 0; j < 2; ++j)
-		{
-			for (int k = 0; k < 2; ++k)
-			{
-				for (int l = 0; l < 2; ++l)
+				for (int i = 0; i < 2; ++i)
 				{
-					int m = cubeVertexIndex(i, j, k, l);
+					I[d] = i;
+					construct2Plane4(d + 1, dims, d0, v0, d1, v1, indexArray, indexArrayIndex, I);
 				}
 			}
 		}
-	}
-
-	GLint* indexArray = new GLint[8*8];
-	int indexArrayIndex = 0;
-	
-	for (int dim = 0; dim < 4; ++dim)
-	{
-		for (int v = 0; v < 2; ++v)
+		else
 		{
-			construct3Cube4(dim, v, indexArray, indexArrayIndex);
+			indexArray[indexArrayIndex] = cubeVertexIndex(I[0], I[1], I[2], I[3]);
+			++indexArrayIndex;
 		}
 	}
-
-	for (int i = 0; i < (8 * 8); ++i)
+	void	construct1Line4(int d, int dims, int d0, int v0, int d1, int v1, int d2, int v2, GLuint* indexArray, int& indexArrayIndex, int* I)
 	{
-		printf("%i\n", indexArray[i]);
+		if (d < dims)
+		{
+			if (d == d0)
+			{
+				I[d] = v0;
+				construct1Line4(d + 1, dims, d0, v0, d1, v1, d2, v2, indexArray, indexArrayIndex, I);
+			}
+			else if (d == d1)
+			{
+				I[d] = v1;
+				construct1Line4(d + 1, dims, d0, v0, d1, v1, d2, v2, indexArray, indexArrayIndex, I);
+			}
+			else if (d == d2)
+			{
+				I[d] = v2;
+				construct1Line4(d + 1, dims, d0, v0, d1, v1, d2, v2, indexArray, indexArrayIndex, I);
+			}
+			else
+			{
+				for (int i = 0; i < 2; ++i)
+				{
+					I[d] = i;
+					construct1Line4(d + 1, dims, d0, v0, d1, v1, d2, v2, indexArray, indexArrayIndex, I);
+				}
+			}
+		}
+		else
+		{
+			indexArray[indexArrayIndex] = cubeVertexIndex(I[0], I[1], I[2], I[3]);
+			++indexArrayIndex;
+		}
 	}
-}
+	void	construct2Plane4(int d0, int v0, int d1, int v1, GLuint* indexArray, int& indexArrayIndex)
+	{
+		int I[4];
 
+		//construct2Plane4(0, 4, d0, v0, d1, v1, indexArray, indexArrayIndex, I);
+
+
+
+
+		for (int d = 0; d < 4; ++d)
+		{
+			if (d == d0) continue;
+			if (d == d1) continue;
+
+			for (int v = 0; v < 2; ++v)
+			{
+				construct1Line4(0, 4, d0, v0, d1, v1, d, v, indexArray, indexArrayIndex, I);
+			}
+		}
+
+	}
+	void	construct3Cube4(int dim, int val, GLuint* indexArray, int& indexArrayIndex)
+	{
+		for (int d = 0; d < 4; ++d)
+		{
+			if (d == dim) continue;
+
+			for (int v = 0; v < 2; ++v)
+			{
+				construct2Plane4(dim, val, d, v, indexArray, indexArrayIndex);
+			}
+		}
+	}
+	void	construct4Cube4Pos(int d, int dims, GLfloat* p, int& pArrayIndex, float* pTemp)
+	{
+		if (d < dims)
+		{
+			for (int i = 0; i < 2; ++i)
+			{
+				pTemp[d] = i * 2 - 1;
+				construct4Cube4Pos(d + 1, dims, p, pArrayIndex, pTemp);
+			}
+		}
+		else
+		{
+			memcpy(p + pArrayIndex, pTemp, dims*sizeof(GLfloat));
+			pArrayIndex += dims;
+		}
+	}
+	void	construct4Cube4()
+	{
+		pArrayIndex = 0;
+		p = new GLfloat[16 * 4];
+
+		GLfloat pTemp[4];
+
+		construct4Cube4Pos(0, 4, p, pArrayIndex, pTemp);
+
+		// index array
+
+		int N = 2 * (2 * 2) * (3 * 2)*(4 * 2);
+
+		indexArrayIndex = 0;
+		indexArray = new GLuint[N];
+		
+
+
+
+		for (int dim = 0; dim < 4; ++dim)
+		{
+			for (int v = 0; v < 2; ++v)
+			{
+				construct3Cube4(dim, v, indexArray, indexArrayIndex);
+			}
+		}
+		
+
+
+		printf("pArrayIndex = %i\n", pArrayIndex);
+		printf("indexArrayIndex = %i\n", indexArrayIndex);
+		printf("N = %i\n", N);
+
+		for (int i = 0; i < indexArrayIndex; ++i)
+		{
+			int j = indexArray[i];
+			printf("%3i %4f %4f %4f %4f\n", j, p[4 * j], p[4 * j+1], p[4 * j+2], p[4 * j+3]);
+		}
+	}
+	
+	
+};
+class Triangle: public Geometry
+{
+public:
+	void construct()
+	{
+		static const GLfloat g_vertex_buffer_data[] = {
+			-1.0f, -1.0f, 0.0f, 0.0f,
+			1.0f, -1.0f, 0.0f, 0.0f,
+			0.0f, 1.0f, 0.0f, 0.0f,
+		};
+
+		p = new GLfloat[12];
+
+		memcpy(p, g_vertex_buffer_data, 12 * sizeof(GLfloat));
+
+		pArrayIndex = 12;
+
+
+		indexArray = new GLuint[3];
+		indexArray[0] = 0;
+		indexArray[1] = 1;
+		indexArray[2] = 2;
+		indexArrayIndex = 3;
+	}
+};
 
 
 
@@ -182,10 +398,15 @@ static void key_callback(GLFWwindow* window, int key, int scancode, int action, 
 		glfwSetWindowShouldClose(window, GL_TRUE);
 }
 
+
+
+Cube4 cube;
+Triangle tri;
+
 int _tmain(int argc, _TCHAR* argv[])
 {
-	construct4Cube4();
-
+	
+	
 
 	//Set the error callback
 	glfwSetErrorCallback(error_callback);
@@ -233,13 +454,33 @@ int _tmain(int argc, _TCHAR* argv[])
 	}
 
 	//Set a background color
-	glClearColor(0.0f, 0.0f, 1.0f, 0.0f);
+	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+
+
+
+	// initialize rendering data
+	cube.construct4Cube4();
+	cube.setup();
+
+	tri.construct();
+	tri.setup();
+
+	// Create and compile our GLSL program from the shaders
+	GLuint programID = LoadShaders("SimpleVertexShader.vertexshader", "SimpleFragmentShader.fragmentshader");
+	
 
 	//Main Loop
 	do
 	{
 		//Clear color buffer
-		glClear(GL_COLOR_BUFFER_BIT);
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+		glUseProgram(programID);
+
+		//cube.drawTriangles();
+		cube.drawLines();
+		//tri.drawTriangles();
+		//tri.drawLines();
 
 		//Swap buffers
 		glfwSwapBuffers(window);

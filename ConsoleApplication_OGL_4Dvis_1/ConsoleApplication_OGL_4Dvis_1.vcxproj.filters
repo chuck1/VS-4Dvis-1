@@ -16,6 +16,12 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
+    <Text Include="SimpleFragmentShader.fragmentshader">
+      <Filter>Source Files</Filter>
+    </Text>
+    <Text Include="SimpleVertexShader.vertexshader">
+      <Filter>Source Files</Filter>
+    </Text>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
