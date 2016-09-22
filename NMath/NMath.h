@@ -1,0 +1,5 @@
+
+
+namespace NMath{
+	void test();
+}

@@ -9,6 +9,8 @@
 //Include GLFW
 #include <GLFW/glfw3.h>
 
+#include <NMath.h>
+
 //Include the standard C++ headers
 #include <stdio.h>
 #include <stdlib.h>
@@ -170,7 +172,6 @@ public:
 	{
 		glGenVertexArrays(1, &VertexArrayID);
 		glBindVertexArray(VertexArrayID);
-
 
 		// Generate 1 buffer, put the resulting identifier in vertexbuffer
 		glGenBuffers(1, &vertexBuffer);
@@ -405,7 +406,7 @@ Triangle tri;
 
 int _tmain(int argc, _TCHAR* argv[])
 {
-	
+	NMath::test();
 	
 
 	//Set the error callback
