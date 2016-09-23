@@ -5,6 +5,11 @@
 #include <cassert>
 #include <exception>
 
+/**
+* many of the operations on a matrix were moved to global functions because they return or utilize matrices of M-1 or N-1 dimension.
+* Therefore, if these functions were in the body of the class, they would cause infinite recursion of class specialization until an error occurs.
+* The simpliest solution is to use global template functions which are far easier to specialize to avoid creating matricies of dimensions 0 or less.
+*/
 template<int M, int N>
 class Mat
 {
