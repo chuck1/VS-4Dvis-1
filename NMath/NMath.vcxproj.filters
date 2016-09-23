@@ -24,6 +24,12 @@
     <ClInclude Include="NMath.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="VecFunctions.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MatFunctions.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source.cpp">
