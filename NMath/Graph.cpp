@@ -1,12 +1,12 @@
 #include "Graph.h"
 
 
-Graph::Graph()
+nmath::graph::Graph::Graph()
 {
 }
 
 
-Graph::~Graph()
+nmath::graph::Graph::~Graph()
 {
 }
 

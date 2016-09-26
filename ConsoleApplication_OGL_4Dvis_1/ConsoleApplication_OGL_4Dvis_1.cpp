@@ -20,6 +20,8 @@
 #include <cstdlib>
 #include <string>
 
+#include "OCL.h"
+
 GLuint LoadShaders(const char * vertex_file_path, const char * fragment_file_path){
 
 	// Create the shaders
@@ -404,10 +406,31 @@ static void key_callback(GLFWwindow* window, int key, int scancode, int action, 
 Cube4 cube;
 Triangle tri;
 
+OCL ocl;
+
+
+void OCLtest2()
+{
+	try{
+		OCLtest(ocl);
+	}
+	catch (std::exception & e)
+	{
+		printf(e.what());
+		getchar();
+		return;
+	}
+}
+
 int _tmain(int argc, _TCHAR* argv[])
 {
 	NMath::test();
 	
+	ocl.init();
+
+	OCLtest2();
+
+
 
 	//Set the error callback
 	glfwSetErrorCallback(error_callback);
@@ -473,10 +496,16 @@ int _tmain(int argc, _TCHAR* argv[])
 	//Main Loop
 	do
 	{
+		
+		OCLtest2();
+		
+		
 		//Clear color buffer
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 		glUseProgram(programID);
+
+
 
 		//cube.drawTriangles();
 		cube.drawLines();
@@ -495,6 +524,11 @@ int _tmain(int argc, _TCHAR* argv[])
 	glfwDestroyWindow(window);
 	//Finalize and clean up GLFW
 	glfwTerminate();
+
+
+	// OpenCL cleanup
+	ocl.flush();
+	ocl.shutdown();
 
 	exit(EXIT_SUCCESS);
 }
