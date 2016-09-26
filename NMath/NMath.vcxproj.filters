@@ -31,6 +31,12 @@
     <Filter Include="Source Files\graph\container">
       <UniqueIdentifier>{8bc51f01-06bd-4ebe-b55e-c8e325fbcb15}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\nmath\vclip">
+      <UniqueIdentifier>{1981b7e4-7558-4380-96cf-4dea83588bb3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\nmath\linalg">
+      <UniqueIdentifier>{62ee67fa-f845-4c2e-a0e6-191aba686d9f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Include\nmath\graph\decl.hpp">
@@ -78,17 +84,23 @@
     <ClInclude Include="Include\nmath\graph\iterator\vert_graph_all.hpp">
       <Filter>Header Files\nmath\graph\iterator</Filter>
     </ClInclude>
-    <ClInclude Include="Mat.h">
-      <Filter>Header Files\nmath</Filter>
+    <ClInclude Include="Include\nmath\vclip\Vclip.h">
+      <Filter>Header Files\nmath\vclip</Filter>
     </ClInclude>
-    <ClInclude Include="MatFunctions.h">
-      <Filter>Header Files\nmath</Filter>
+    <ClInclude Include="Include\nmath\linalg\Mat.h">
+      <Filter>Header Files\nmath\linalg</Filter>
     </ClInclude>
-    <ClInclude Include="Vec.h">
-      <Filter>Header Files\nmath</Filter>
+    <ClInclude Include="Include\nmath\linalg\MatFunctions.h">
+      <Filter>Header Files\nmath\linalg</Filter>
     </ClInclude>
-    <ClInclude Include="VecFunctions.h">
-      <Filter>Header Files\nmath</Filter>
+    <ClInclude Include="Include\nmath\linalg\NMath.h">
+      <Filter>Header Files\nmath\linalg</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\nmath\linalg\Vec.h">
+      <Filter>Header Files\nmath\linalg</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\nmath\linalg\VecFunctions.h">
+      <Filter>Header Files\nmath\linalg</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -2,15 +2,15 @@
 #include <iostream>
 #include <cstdio>
 
-#include <nmath/Vec.h>
-#include <nmath/VecFunctions.h>
-#include <nmath/Mat.h>
-#include <nmath/NMath.h>
+#include <nmath/linalg/Vec.h>
+#include <nmath/linalg/VecFunctions.h>
+#include <nmath/linalg/Mat.h>
+#include <nmath/linalg/NMath.h>
 
 #include <nmath/graph/graph.hpp>
 
 template<int M>
-std::ostream& operator<<(std::ostream& os, Vec<M> const & v)
+std::ostream& operator<<(std::ostream& os, nmath::linalg::Vec<M> const & v)
 {
 	for (int i = 0; i < M; ++i) os << v(i) << " ";
 	return os;
@@ -43,14 +43,14 @@ public:
 
 void NMath::test()
 {
-	Vec<5> a = Vec<5>::baseVec(0);
-	Vec<5> b = Vec<5>::baseVec(1);
-	Vec<5> c = Vec<5>::baseVec(2);
-	Vec<5> d = Vec<5>::baseVec(3);
+	nmath::linalg::Vec<5> a = nmath::linalg::Vec<5>::baseVec(0);
+	nmath::linalg::Vec<5> b = nmath::linalg::Vec<5>::baseVec(1);
+	nmath::linalg::Vec<5> c = nmath::linalg::Vec<5>::baseVec(2);
+	nmath::linalg::Vec<5> d = nmath::linalg::Vec<5>::baseVec(3);
 
-	auto e = normal<5>(a, b, c, d);
+	auto e = nmath::linalg::normal<5>(a, b, c, d);
 
-	auto m = SMat<5>::Identity();
+	auto m = nmath::SMat<5>::Identity();
 
 	std::cout << a << std::endl;
 	std::cout << b << std::endl;

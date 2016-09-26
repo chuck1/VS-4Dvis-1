@@ -9,7 +9,9 @@
 //Include GLFW
 #include <GLFW/glfw3.h>
 
-#include <nmath/NMath.h>
+#include <nmath/linalg/NMath.h>
+
+#include <nspace\actor\RigidBody.h>
 
 //Include the standard C++ headers
 #include <stdio.h>

@@ -13,6 +13,15 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Header Files\nspace">
+      <UniqueIdentifier>{4b2d8ae5-9098-4725-b833-e73c8e0e19b0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\nspace\actor">
+      <UniqueIdentifier>{fc4baa6f-1442-4f9d-b03c-72247a4f487b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\nspace\util">
+      <UniqueIdentifier>{0c94ff57-75e4-4a02-b5ca-8e72ebcea53c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -32,6 +41,12 @@
     </ClInclude>
     <ClInclude Include="OCL.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\nspace\actor\RigidBody.h">
+      <Filter>Header Files\nspace\actor</Filter>
+    </ClInclude>
+    <ClInclude Include="include\nspace\util\Array.h">
+      <Filter>Header Files\nspace\util</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

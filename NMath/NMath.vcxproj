@@ -80,10 +80,12 @@
     <ClInclude Include="Include\nmath\graph\pair_comp.hpp" />
     <ClInclude Include="Include\nmath\graph\vert.hpp" />
     <ClInclude Include="Include\nmath\graph\vert_comp.hpp" />
-    <ClInclude Include="Mat.h" />
-    <ClInclude Include="MatFunctions.h" />
-    <ClInclude Include="Vec.h" />
-    <ClInclude Include="VecFunctions.h" />
+    <ClInclude Include="Include\nmath\linalg\Mat.h" />
+    <ClInclude Include="Include\nmath\linalg\MatFunctions.h" />
+    <ClInclude Include="Include\nmath\linalg\NMath.h" />
+    <ClInclude Include="Include\nmath\linalg\Vec.h" />
+    <ClInclude Include="Include\nmath\linalg\VecFunctions.h" />
+    <ClInclude Include="Include\nmath\vclip\Vclip.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source.cpp" />
