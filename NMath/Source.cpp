@@ -2,11 +2,12 @@
 #include <iostream>
 #include <cstdio>
 
-#include "Vec.h"
-#include "VecFunctions.h"
-#include "Mat.h"
-#include "NMath.h"
+#include <nmath/Vec.h>
+#include <nmath/VecFunctions.h>
+#include <nmath/Mat.h>
+#include <nmath/NMath.h>
 
+#include <nmath/graph/graph.hpp>
 
 template<int M>
 std::ostream& operator<<(std::ostream& os, Vec<M> const & v)
@@ -14,6 +15,31 @@ std::ostream& operator<<(std::ostream& os, Vec<M> const & v)
 	for (int i = 0; i < M; ++i) os << v(i) << " ";
 	return os;
 }
+
+class Vertex : public nmath::graph::vert
+{
+public:
+	Vertex(nmath::graph::GRAPH_S g):
+		nmath::graph::vert(g)
+	{}
+	virtual bool		operator==(vert const & v)
+	{
+		Vertex const * v1 = dynamic_cast<Vertex const *>(&v);
+		return (v1->d == d) && (v1->i == i);
+	}
+	virtual bool		operator<(vert const & v)
+	{
+		Vertex const * v1 = dynamic_cast<Vertex const *>(&v);
+		if (v1->d == d)
+		{
+			return v1->i < i;
+		}
+		return v1->d < d;
+	}
+
+	int d;
+	int i;
+};
 
 void NMath::test()
 {
@@ -33,6 +59,19 @@ void NMath::test()
 	std::cout << e << std::endl;
 
 	std::cout << det(m) << std::endl;
+
+
+	// graph
+
+	auto g = std::make_shared<nmath::graph::Graph>();
+
+	auto v0 = std::make_shared<Vertex>(g);
+	auto v1 = std::make_shared<Vertex>(g);
+
+	g->add_edge(v0, v1);
+
+	std::cout << "graph" << std::endl;
+	std::cout << g->vert_size() << std::endl;
 
 	getchar();
 }

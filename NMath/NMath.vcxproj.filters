@@ -13,39 +13,132 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="Header Files\graph">
-      <UniqueIdentifier>{6e799b3a-c40d-4342-b7a6-9ccbad3017e9}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\graph">
       <UniqueIdentifier>{f470e4eb-3020-4b9e-b292-74ad7a7cc9f7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\nmath">
+      <UniqueIdentifier>{fd267415-c6e9-492f-a881-87098976842c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\nmath\graph">
+      <UniqueIdentifier>{be3cc809-8e06-4b9a-bcad-f881449fcb58}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\nmath\graph\iterator">
+      <UniqueIdentifier>{075195cf-431c-4980-9bed-89ed02c2c2b0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\graph\iterator">
+      <UniqueIdentifier>{e93e6474-a592-4375-87db-d113c03cff92}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\graph\container">
+      <UniqueIdentifier>{8bc51f01-06bd-4ebe-b55e-c8e325fbcb15}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Vec.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="Include\nmath\graph\decl.hpp">
+      <Filter>Header Files\nmath\graph</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\nmath\graph\edge.hpp">
+      <Filter>Header Files\nmath\graph</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\nmath\graph\edge_data.hpp">
+      <Filter>Header Files\nmath\graph</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\nmath\graph\gr.hpp">
+      <Filter>Header Files\nmath\graph</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\nmath\graph\graph.hpp">
+      <Filter>Header Files\nmath\graph</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\nmath\graph\layer.hpp">
+      <Filter>Header Files\nmath\graph</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\nmath\graph\pair.hpp">
+      <Filter>Header Files\nmath\graph</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\nmath\graph\pair_comp.hpp">
+      <Filter>Header Files\nmath\graph</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\nmath\graph\vert.hpp">
+      <Filter>Header Files\nmath\graph</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\nmath\graph\vert_comp.hpp">
+      <Filter>Header Files\nmath\graph</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\nmath\graph\iterator\edge_graph.hpp">
+      <Filter>Header Files\nmath\graph\iterator</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\nmath\graph\iterator\edge_vert.hpp">
+      <Filter>Header Files\nmath\graph\iterator</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\nmath\graph\iterator\vert_comp.hpp">
+      <Filter>Header Files\nmath\graph\iterator</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\nmath\graph\iterator\vert_graph.hpp">
+      <Filter>Header Files\nmath\graph\iterator</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\nmath\graph\iterator\vert_graph_all.hpp">
+      <Filter>Header Files\nmath\graph\iterator</Filter>
     </ClInclude>
     <ClInclude Include="Mat.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="NMath.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="VecFunctions.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\nmath</Filter>
     </ClInclude>
     <ClInclude Include="MatFunctions.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\nmath</Filter>
     </ClInclude>
-    <ClInclude Include="Graph.h">
-      <Filter>Header Files\graph</Filter>
+    <ClInclude Include="Vec.h">
+      <Filter>Header Files\nmath</Filter>
+    </ClInclude>
+    <ClInclude Include="VecFunctions.h">
+      <Filter>Header Files\nmath</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Graph.cpp">
+    <ClCompile Include="Source\graph\edge.cpp">
       <Filter>Source Files\graph</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\graph\edge_data.cpp">
+      <Filter>Source Files\graph</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\graph\graph.cpp">
+      <Filter>Source Files\graph</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\graph\layer.cpp">
+      <Filter>Source Files\graph</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\graph\pair.cpp">
+      <Filter>Source Files\graph</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\graph\pair_comp.cpp">
+      <Filter>Source Files\graph</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\graph\vert.cpp">
+      <Filter>Source Files\graph</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\graph\vert_comp.cpp">
+      <Filter>Source Files\graph</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\graph\container\container_edge.cpp">
+      <Filter>Source Files\graph\container</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\graph\container\container_vert.cpp">
+      <Filter>Source Files\graph\container</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\graph\iterator\iterator_vert_comp.cpp">
+      <Filter>Source Files\graph\iterator</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\graph\iterator\iterator_vert_graph.cpp">
+      <Filter>Source Files\graph\iterator</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\graph\iterator\iterator_vert_graph_all.cpp">
+      <Filter>Source Files\graph\iterator</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\graph\iterator\iterator_edge_vert.cpp">
+      <Filter>Source Files\graph\iterator</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\graph\iterator\iterator_edge_graph.cpp">
+      <Filter>Source Files\graph\iterator</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

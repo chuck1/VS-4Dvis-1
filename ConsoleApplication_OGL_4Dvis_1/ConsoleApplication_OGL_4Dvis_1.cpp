@@ -9,7 +9,7 @@
 //Include GLFW
 #include <GLFW/glfw3.h>
 
-#include <NMath.h>
+#include <nmath/NMath.h>
 
 //Include the standard C++ headers
 #include <stdio.h>

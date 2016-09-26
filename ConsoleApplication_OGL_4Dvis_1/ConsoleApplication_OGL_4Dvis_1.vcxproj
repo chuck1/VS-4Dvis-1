@@ -52,7 +52,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(CUDA_PATH)\include;C:\Users\cr3b88\Documents\Visual Studio 2013\Projects\ConsoleApplication_OGL_4Dvis_1\NMath;C:\opengl-wrappers\glew\glew-2.0.0\include;C:\opengl-wrappers\glfw\glfw-3.2.1.bin.WIN64\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(CUDA_PATH)\include;C:\Users\cr3b88\Documents\Visual Studio 2013\Projects\ConsoleApplication_OGL_4Dvis_1\NMath\Include;C:\opengl-wrappers\glew\glew-2.0.0\include;C:\opengl-wrappers\glfw\glfw-3.2.1.bin.WIN64\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
