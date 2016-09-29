@@ -69,6 +69,7 @@
     <ClInclude Include="Include\nmath\graph\container\vert.hpp" />
     <ClInclude Include="Include\nmath\graph\decl.hpp" />
     <ClInclude Include="Include\nmath\graph\edge.hpp" />
+    <ClInclude Include="Include\nmath\graph\EdgeFunction.h" />
     <ClInclude Include="Include\nmath\graph\edge_data.hpp" />
     <ClInclude Include="Include\nmath\graph\gr.hpp" />
     <ClInclude Include="Include\nmath\graph\graph.hpp" />

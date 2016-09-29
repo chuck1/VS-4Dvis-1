@@ -4,7 +4,7 @@
 #include <iterator>
 
 #include <nmath/graph/decl.hpp>
-#include <nmath/graph/edge.hpp>
+//#include <nmath/graph/edge.hpp>
 
 namespace nmath {
 	namespace graph {
@@ -22,26 +22,94 @@ namespace nmath {
 				
 				typedef CONT::iterator iterator;
 
-				typedef graph::edge const &	reference;
-				typedef graph::edge		value_type;
+				typedef graph::Edge<V> const &	reference;
+				typedef graph::Edge<V>		value_type;
 
-				edge_vert(graph::container::edge &, iterator);
-				edge_vert &			operator=(edge_vert const &);
+				//edge_vert(graph::container::edge &, iterator);
+				//edge_vert &			operator=(edge_vert const &);
 
-				void				next();
+				//void				next();
 
-				graph::iterator::edge_vert		operator++();
-				/** postfix */
-				graph::iterator::edge_vert		operator++(int);
+				//graph::iterator::edge_vert		operator++();
+				///** postfix */
+				//graph::iterator::edge_vert		operator++(int);
 
-				reference			operator*();
-				value_type const *		operator->();
+				//reference			operator*();
+				//value_type const *		operator->();
 
-				bool				operator==(graph::iterator::edge_vert const &);
-				bool				operator!=(graph::iterator::edge_vert const &);
+				//bool				operator==(graph::iterator::edge_vert const &);
+				//bool				operator!=(graph::iterator::edge_vert const &);
+
+
+
+
+
+
+				edge_vert(nmath::graph::container::Edge<V> & c, iterator i) :
+					_M_container(c),
+					_M_i(i)
+				{
+					next();
+				}
+				edge_vert &				operator=(edge_vert const & i)
+				{
+					_M_container = i._M_container;
+					_M_i = i._M_i;
+					return *this;
+				}
+
+				void				next()
+				{
+					while (true) {
+						if (_M_i == _M_container.end()) break;
+
+						nmath::graph::edge const & edge = *_M_i;
+
+						if (!edge.enabled()) {
+							++_M_i;
+							continue;
+						}
+
+						break;
+					}
+				}
+				edge_vert			operator++()
+				{
+					++_M_i;
+					next();
+					return THIS(_M_container, _M_i);
+				}
+				edge_vert			operator++(int)
+				{
+					THIS ret(_M_container, _M_i);
+					operator++();
+					return ret;
+				}
+
+				reference			operator*()
+				{
+					return *_M_i;
+				}
+				value_type const *	operator->()
+				{
+					return _M_i.operator->();
+				}
+
+				bool				operator==(edge_vert const & i)
+				{
+					return _M_i == i._M_i;
+				}
+				bool				operator!=(edge_vert const & i)
+				{
+					return !operator==(i);
+				}
+
+
+
+
 
 				//private:
-				graph::container::edge &		_M_container;
+				graph::container::Edge<V> &		_M_container;
 				iterator						_M_i;
 			};
 

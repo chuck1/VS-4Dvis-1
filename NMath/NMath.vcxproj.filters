@@ -111,6 +111,9 @@
     <ClInclude Include="Include\nmath\graph\container\vert.hpp">
       <Filter>Header Files\nmath\graph\container</Filter>
     </ClInclude>
+    <ClInclude Include="Include\nmath\graph\EdgeFunction.h">
+      <Filter>Header Files\nmath\graph</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source.cpp">

@@ -8,6 +8,7 @@
 #include <nmath/linalg/NMath.h>
 
 #include <nmath/graph/graph.hpp>
+#include <nmath/graph/container/edge.hpp>
 
 template<int M>
 std::ostream& operator<<(std::ostream& os, nmath::linalg::Vec<M> const & v)
@@ -16,18 +17,20 @@ std::ostream& operator<<(std::ostream& os, nmath::linalg::Vec<M> const & v)
 	return os;
 }
 
-class Vertex : public nmath::graph::vert
+class Vertex : public nmath::graph::Vert<Vertex>
 {
 public:
-	Vertex(nmath::graph::GRAPH_S g):
-		nmath::graph::vert(g)
+	typedef nmath::graph::Vert<Vertex> BASE;
+
+	Vertex(BASE::G_S g) :
+		BASE(g, std::make_shared<BASE::ECONT>())
 	{}
-	virtual bool		operator==(vert const & v)
+	virtual bool		operator==(BASE const & v)
 	{
 		Vertex const * v1 = dynamic_cast<Vertex const *>(&v);
 		return (v1->d == d) && (v1->i == i);
 	}
-	virtual bool		operator<(vert const & v)
+	virtual bool		operator<(BASE const & v)
 	{
 		Vertex const * v1 = dynamic_cast<Vertex const *>(&v);
 		if (v1->d == d)
@@ -63,7 +66,7 @@ void NMath::test()
 
 	// graph
 
-	auto g = std::make_shared<nmath::graph::Graph>();
+	auto g = std::make_shared<nmath::graph::Graph<Vertex>>();
 
 	auto v0 = std::make_shared<Vertex>(g);
 	auto v1 = std::make_shared<Vertex>(g);
