@@ -10,11 +10,14 @@
 
 namespace nmath{
 	namespace graph{
-
+		template<typename V>
 		class vert_comp
 		{
 		public:
-			bool	operator()(VERT_S const & np0, VERT_S const & np1);
+			bool	operator()(std::shared_ptr<V> const & np0, std::shared_ptr<V> const & np1)
+			{
+				return (*np0) < (*np1);
+			}
 		};
 
 	}

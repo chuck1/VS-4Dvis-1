@@ -22,6 +22,9 @@
     <Filter Include="Header Files\nspace\util">
       <UniqueIdentifier>{0c94ff57-75e4-4a02-b5ca-8e72ebcea53c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\nspace\app">
+      <UniqueIdentifier>{7ee3cb4d-4cd2-49fb-8036-25865556f61f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -48,6 +51,15 @@
     <ClInclude Include="include\nspace\util\Array.h">
       <Filter>Header Files\nspace\util</Filter>
     </ClInclude>
+    <ClInclude Include="include\nspace\app\App.h">
+      <Filter>Header Files\nspace\app</Filter>
+    </ClInclude>
+    <ClInclude Include="include\nspace\decl.h">
+      <Filter>Header Files\nspace</Filter>
+    </ClInclude>
+    <ClInclude Include="include\nspace\tests.h">
+      <Filter>Header Files\nspace</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -57,6 +69,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="OpenCL.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="nspace_tests.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

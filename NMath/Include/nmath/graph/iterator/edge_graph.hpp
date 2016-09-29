@@ -9,23 +9,20 @@
 namespace nmath {
 	namespace graph {
 		namespace iterator {
-
-
-			typedef std::iterator<std::input_iterator_tag, nmath::graph::edge> ITERATOR_EDGE;
-
 			/**
 			 * iterates on each unique edge of graph. first iterators on each vert, then
 			 * iterates on each edge of the vert's edge container if the opposite vert evaluates to
 			 * less than the first vert
 			 */
+			template<typename V>
 			class edge_graph :
-				public ITERATOR_EDGE
+				public std::iterator<std::input_iterator_tag, nmath::graph::Edge<V>>
 			{
 			public:
 				typedef nmath::graph::edge const &	reference;
 				typedef nmath::graph::edge		value_type;
 
-				typedef nmath::graph::CONT_VERT::iterator iterator0;
+				typedef nmath::std::set<std::shared_ptr<V>, graph::vert_comp<V>>::iterator iterator0;
 				typedef nmath::graph::CONT_EDGE::iterator iterator1;
 
 				edge_graph(nmath::graph::container::vert &, iterator0 const &);
@@ -48,7 +45,7 @@ namespace nmath {
 
 				//private:
 				nmath::graph::container::vert &		_M_container;
-				nmath::graph::CONT_VERT::iterator		_M_i;
+				nmath::std::set<std::shared_ptr<V>, graph::vert_comp<V>>::iterator		_M_i;
 				nmath::graph::CONT_EDGE::iterator		_M_j;
 				//value_type			_M_value;
 			};

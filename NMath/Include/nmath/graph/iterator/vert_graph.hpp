@@ -12,19 +12,18 @@ namespace nmath {
 	namespace graph {
 		namespace iterator {
 
-			typedef std::iterator<std::input_iterator_tag, graph::VERT_S> ITERATOR_VERT;
-
 			/**
 			 * iterates on each edge in a vert's edge container
 			 */
+			template<typename V>
 			class vert_graph :
-				public ITERATOR_VERT
+				public std::iterator<std::input_iterator_tag, std::shared_ptr<V>>
 			{
 			public:
-				typedef graph::CONT_VERT::iterator iterator;
+				typedef typename std::set<std::shared_ptr<V>, graph::vert_comp<V>>::iterator iterator;
 
-				typedef graph::VERT_S const &	reference;
-				typedef graph::VERT_S		value_type;
+				typedef std::shared_ptr<V> const &	reference;
+				typedef std::shared_ptr<V>		value_type;
 
 				vert_graph(graph::container::vert &, iterator);
 				vert_graph			operator=(vert_graph const &);

@@ -3,24 +3,24 @@
 
 #include <iterator>
 
-#include "../../graph/decl.hpp"
-#include "../../graph/edge.hpp"
+#include <nmath/graph/decl.hpp>
+#include <nmath/graph/edge.hpp>
 
 namespace nmath {
 	namespace graph {
 		namespace iterator {
-
-			typedef std::iterator<std::input_iterator_tag, graph::edge> ITERATOR_EDGE;
-
 			/**
 			 * iterates on each edge in a vert's edge container
 			 */
+			template<typename V>
 			class edge_vert :
-				public ITERATOR_EDGE
+				public std::iterator<std::input_iterator_tag, graph::Edge<V>>
 			{
 			public:
 				//typedef typename graph::CONT_EDGE::iterator iterator;
-				typedef graph::CONT_EDGE::iterator iterator;
+				typedef std::iterator<std::input_iterator_tag, graph::Edge<V>> CONT;
+				
+				typedef CONT::iterator iterator;
 
 				typedef graph::edge const &	reference;
 				typedef graph::edge		value_type;
@@ -42,7 +42,7 @@ namespace nmath {
 
 				//private:
 				graph::container::edge &		_M_container;
-				graph::CONT_EDGE::iterator		_M_i;
+				iterator						_M_i;
 			};
 
 

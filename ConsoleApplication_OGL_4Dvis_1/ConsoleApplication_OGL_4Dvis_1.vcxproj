@@ -83,6 +83,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\nspace\actor\RigidBody.h" />
+    <ClInclude Include="include\nspace\app\App.h" />
+    <ClInclude Include="include\nspace\decl.h" />
+    <ClInclude Include="include\nspace\tests.h" />
     <ClInclude Include="include\nspace\util\Array.h" />
     <ClInclude Include="OCL.h" />
     <ClInclude Include="stdafx.h" />
@@ -90,6 +93,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ConsoleApplication_OGL_4Dvis_1.cpp" />
+    <ClCompile Include="nspace_tests.cpp" />
     <ClCompile Include="OpenCL.cpp" />
     <ClCompile Include="stdafx.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>

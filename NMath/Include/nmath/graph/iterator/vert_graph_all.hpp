@@ -10,43 +10,99 @@
 namespace nmath {
 	namespace graph {
 		namespace iterator {
-
-
-			typedef std::iterator<std::input_iterator_tag, graph::VERT_S> ITERATOR_VERT;
-
 			/**
 			 * iterates on each edge in a vert's edge container
 			 */
+			template<typename V>
 			class vert_graph_all :
-				public ITERATOR_VERT
+				public std::iterator<std::input_iterator_tag, std::shared_ptr<V>>
 			{
 			public:
-				typedef graph::CONT_VERT::iterator iterator;
+				typedef typename std::set<std::shared_ptr<V>, graph::vert_comp<V>>::iterator iterator;
 
-				typedef graph::VERT_S const &	reference;
-				typedef graph::VERT_S		value_type;
+				typedef std::shared_ptr<V> V_S;
+				typedef V_S const &		reference;
+				typedef V_S				value_type;
 
-				vert_graph_all(graph::container::vert &, iterator);
-				vert_graph_all(graph::container::vert &, iterator, graph::VERT_FUNC);
 
-				vert_graph_all			operator=(vert_graph_all const &);
+				vert_graph_all(nmath::graph::container::vert & container, THIS::iterator j) :
+					_M_container(container),
+					_M_j(j)
+				{
+					next();
+				}
+				vert_graph_all(nmath::graph::container::vert & container, THIS::iterator j, nmath::graph::VERT_FUNC func) :
+					_M_container(container),
+					_M_j(j),
+					_M_func(func)
+				{
+					next();
+				}
+				vert_graph_all			operator=(THIS const & i)
+				{
+					_M_container = i._M_container;
+					_M_j = i._M_j;
+					return *this;
+				}
 
-				void				next();
+				void					next()
+				{
+					while (true) {
+						if (_M_j == _M_container.end()) break;
 
-				graph::iterator::vert_graph_all	operator++();
-				/** postfix */
-				graph::iterator::vert_graph_all	operator++(int);
+						graph::VERT_S const & v = *_M_j;
 
-				reference			operator*();
-				value_type const *		operator->();
+						assert(v);
 
-				bool				operator==(graph::iterator::vert_graph_all const &);
-				bool				operator!=(graph::iterator::vert_graph_all const &);
+						if (_M_func) {
+							if (!_M_func(v)) {
+								++_M_j;
+								continue;
+							}
+						}
+
+						break;
+					}
+				}
+
+				vert_graph_all			operator++()
+				{
+					++_M_j;
+					next();
+					return graph::iterator::vert_graph_all(_M_container, _M_j);
+				}
+				vert_graph_all			operator++(int)
+				{
+					graph::iterator::vert_graph_all ret(_M_container, _M_j);
+					operator++();
+					return ret;
+				}
+
+				reference				operator*()
+				{
+					return *_M_j;
+				}
+				value_type const *		operator->()
+				{
+					return _M_j.operator->();
+				}
+
+				bool					operator==(nmath::graph::iterator::vert_graph_all const & i)
+				{
+					return (_M_j == i._M_j);
+				}
+				bool					operator!=(nmath::graph::iterator::vert_graph_all const & i)
+				{
+					return !(_M_j == i._M_j);
+				}
+
+
+
 
 				//private:
 				graph::container::vert &		_M_container;
 				iterator			_M_j;
-				graph::VERT_FUNC			_M_func;
+				std::function<bool(std::shared_ptr<V> const &)>			_M_func;
 			};
 
 		}

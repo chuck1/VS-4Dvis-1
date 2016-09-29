@@ -37,6 +37,9 @@
     <Filter Include="Header Files\nmath\linalg">
       <UniqueIdentifier>{62ee67fa-f845-4c2e-a0e6-191aba686d9f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\nmath\graph\container">
+      <UniqueIdentifier>{f09921fd-e258-4042-8d57-d169b279aa43}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Include\nmath\graph\decl.hpp">
@@ -101,6 +104,12 @@
     </ClInclude>
     <ClInclude Include="Include\nmath\linalg\VecFunctions.h">
       <Filter>Header Files\nmath\linalg</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\nmath\graph\container\edge.hpp">
+      <Filter>Header Files\nmath\graph\container</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\nmath\graph\container\vert.hpp">
+      <Filter>Header Files\nmath\graph\container</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

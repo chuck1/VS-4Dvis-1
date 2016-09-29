@@ -65,6 +65,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Include\nmath\graph\container\edge.hpp" />
+    <ClInclude Include="Include\nmath\graph\container\vert.hpp" />
     <ClInclude Include="Include\nmath\graph\decl.hpp" />
     <ClInclude Include="Include\nmath\graph\edge.hpp" />
     <ClInclude Include="Include\nmath\graph\edge_data.hpp" />
