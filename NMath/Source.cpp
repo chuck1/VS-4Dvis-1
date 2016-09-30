@@ -12,6 +12,7 @@
 #include <nmath/test.h>
 #include <nmath/graph/graph.hpp>
 #include <nmath/graph/container/edge.hpp>
+#include <nmath/graph/GraphFunction.h>
 
 template<int M>
 std::ostream& operator<<(std::ostream& os, nmath::linalg::Vec<M> const & v)
@@ -49,7 +50,8 @@ void nmath::test()
 	auto v0 = std::make_shared<nmath::geometry::topo::Vertex>(g);
 	auto v1 = std::make_shared<nmath::geometry::topo::Vertex>(g);
 
-	g->add_edge(v0, v1);
+	//g->add_edge(v0, v1);
+	nmath::graph::graph::add_edge(*g, v0, v1);
 
 	std::cout << "graph" << std::endl;
 	std::cout << g->vert_size() << std::endl;

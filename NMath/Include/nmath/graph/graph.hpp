@@ -14,6 +14,10 @@
 #include <nmath/graph/iterator/edge_graph.hpp>
 #include <nmath/graph/container/vert.hpp>
 
+// experimental
+#include <nmath/graph/EdgeFunction.h>
+#include <nmath/graph/VertFunction.h>
+
 namespace nmath {
 	namespace graph {
 
@@ -31,19 +35,25 @@ namespace nmath {
 
 			void				edge_enable();
 			void				vert_enable();*/
-
-			void										add_edge_util(V_S v0, V_S v1, std::shared_ptr<nmath::graph::edge_data> const & edge_data)
+			/*
+			void						add_edge_util(V_S v0, V_S v1, std::shared_ptr<nmath::graph::edge_data> const & edge_data)
 			{
 				auto i = iter(v0);
-				(*i)->add_edge_util(v0, v1, edge_data);
+				//(*i)->add_edge_util(v0, v1, edge_data);
+				nmath::graph::vert::add_edge(**i, v0, v1, edge_data);
 			}
-			void										add_edge(V_S v0, V_S v1)
+			*/
+			/*
+			void						add_edge(V_S v0, V_S v1)
 			{
 				auto data = std::make_shared<nmath::graph::edge_data>();
-
+				
 				add_edge_util(v0, v1, data);
 				add_edge_util(v1, v0, data);
+				//nmath::graph::vert::add_edge(v0, v1, data);
+				//add_edge_util(v1, v0, data);
 			}
+			*/
 			nmath::graph::iterator::vert_graph<V>			iter(V_S v)
 			{
 				auto it = vert_find(v);
