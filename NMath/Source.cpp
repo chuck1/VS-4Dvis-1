@@ -8,6 +8,7 @@
 #include <nmath/linalg/NMath.h>
 #include <nmath/geometry/Polytope.h>
 #include <nmath/geometry/GraphTopology.h>
+#include <nmath/vclip/Vclip.h>
 
 #include <nmath/test.h>
 #include <nmath/graph/graph.hpp>

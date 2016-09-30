@@ -186,4 +186,12 @@
       <Filter>Source Files\graph\iterator</Filter>
     </ClCompile>
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="Include\nmath\vclip\vclip_pseudocode.txt">
+      <Filter>Header Files\nmath\vclip</Filter>
+    </Text>
+    <Text Include="Include\nmath\vclip\vclip_pseudocode_new.txt">
+      <Filter>Header Files\nmath\vclip</Filter>
+    </Text>
+  </ItemGroup>
 </Project>

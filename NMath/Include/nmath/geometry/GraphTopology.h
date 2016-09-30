@@ -1,7 +1,10 @@
 #ifndef NMATH_GEOMETRY_GRAPHTOPOLOGY
 #define NMATH_GEOMETRY_GRAPHTOPOLOGY
 
+#include <memory>
+
 #include <nmath/graph/graph.hpp>
+#include <nmath/graph/container/edge.hpp>
 
 namespace nmath {
 	namespace geometry {
@@ -13,7 +16,7 @@ namespace nmath {
 				typedef nmath::graph::Vert<Vertex> BASE;
 
 				Vertex(BASE::G_S g) :
-					BASE(g, std::make_shared<BASE::ECONT>())
+					BASE(g, std::make_shared<nmath::graph::container::Edge<Vertex>>())
 				{}
 				virtual bool		operator==(Vertex const & v)
 				{

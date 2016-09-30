@@ -1,10 +1,13 @@
 #ifndef NMATH_GEOMETRY_POLYTOPE
 #define NMATH_GEOMETRY_POLYTOPE
 
-
 #define NMATH_GEOMETRY_POLYTOPE_MAX_PLANES (32)
 #define NMATH_GEOMETRY_POLYTOPE_MAX_VORONOI_REGIONS (32)
 #define NMATH_GEOMETRY_VORONOIREGION_MAX_PLANES (32)
+
+#include <memory>
+
+#include <nmath/geometry/GraphTopology.h>
 
 namespace nmath {
 	namespace geometry {
@@ -32,7 +35,9 @@ namespace nmath {
 		class Polytope: public PolytopePrimitive<M>
 		{
 		public:
-			
+			/** graph
+			*/
+			std::shared_ptr<nmath::geometry::topo::Graph> _M_topology;
 		};
 	}
 }

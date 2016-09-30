@@ -113,6 +113,10 @@
     <ClCompile Include="Source\graph\vert.cpp" />
     <ClCompile Include="Source\graph\vert_comp.cpp" />
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="Include\nmath\vclip\vclip_pseudocode.txt" />
+    <Text Include="Include\nmath\vclip\vclip_pseudocode_new.txt" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
