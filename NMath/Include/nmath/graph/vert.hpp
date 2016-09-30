@@ -6,6 +6,7 @@
 #include <vector>
 
 #include <nmath/graph/decl.hpp>
+<<<<<<< HEAD
 //#include <nmath/graph/edge.hpp>
 #include <nmath/graph/iterator/edge_vert.hpp>
 //#include <nmath/graph/container/edge.hpp>
@@ -13,6 +14,9 @@
 
 // experimental
 #include <nmath/graph/EdgeFunction.h>
+=======
+#include <nmath/graph/iterator/edge_vert.hpp>
+>>>>>>> 2c62763c134a8484205fd6547a872d54976002a3
 
 namespace nmath {
 	namespace graph {
@@ -29,6 +33,7 @@ namespace nmath {
 			typedef std::shared_ptr<Graph<V>> G_S;
 			typedef std::weak_ptr<Graph<V>> G_W;
 
+<<<<<<< HEAD
 			typedef graph::container::Edge<V> ECONT;
 			typedef std::shared_ptr<ECONT> ECONT_S;
 
@@ -124,6 +129,38 @@ namespace nmath {
 
 			virtual bool		operator==(V const & x) = 0;
 			virtual bool		operator<(V const & x) = 0;
+=======
+			Vert(G_S);
+			virtual ~Vert();
+
+			bool			enabled() const;
+
+			G_S				get_graph();
+
+			/*
+			std::vector<S_Edge>	get_edges();
+			S_Node			get_other(graph::S_Edge e);
+			SET_Node		get_adjacent_verts();
+			VEC_PAIR		get_adjacent();
+			*/
+
+			graph::iterator::edge_vert	edge_begin();
+			graph::iterator::edge_vert	edge_end();
+			graph::iterator::edge_vert	edge_erase(graph::iterator::edge_vert &);
+
+			unsigned int		edge_size();
+
+			void				edge_erase_disconnected();
+
+			void				add_edge_util(
+					std::shared_ptr<V> v0,
+					std::shared_ptr<V> v1,
+					std::shared_ptr<graph::edge_data> const & edge_data);
+			void				edge_erase_util(std::shared_ptr<V> & v0, std::shared_ptr<V> & v1);
+
+			virtual bool		operator==(Vert<V> const &) = 0;
+			virtual bool		operator<(Vert<V> const &) = 0;
+>>>>>>> 2c62763c134a8484205fd6547a872d54976002a3
 
 			/////////////////////////////////////////
 
@@ -132,7 +169,11 @@ namespace nmath {
 
 			// for ditance algorithm
 			struct {
+<<<<<<< HEAD
 				double			_M_distance;
+=======
+				double		_M_distance;
+>>>>>>> 2c62763c134a8484205fd6547a872d54976002a3
 			} dist;
 
 			// for bridge-finding algorithm
@@ -159,4 +200,8 @@ namespace nmath {
 	}
 }
 
+<<<<<<< HEAD
 #endif
+=======
+#endif
+>>>>>>> 2c62763c134a8484205fd6547a872d54976002a3

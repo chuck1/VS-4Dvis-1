@@ -1,5 +1,8 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> 2c62763c134a8484205fd6547a872d54976002a3
 #include <iostream>
 #include <cassert>
 
@@ -74,6 +77,9 @@ bool				THIS::operator!=(nmath::graph::iterator::vert_graph const & i)
 
 
 
+<<<<<<< HEAD
+>>>>>>> 2c62763c134a8484205fd6547a872d54976002a3
+=======
 >>>>>>> 2c62763c134a8484205fd6547a872d54976002a3
 
 

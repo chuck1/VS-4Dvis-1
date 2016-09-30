@@ -1,12 +1,21 @@
+<<<<<<< HEAD
 #ifndef NMATH_GRAPH_CONTAINER_EDGE
 #define NMATH_GRAPH_CONTAINER_EDGE
+=======
+
+>>>>>>> 2c62763c134a8484205fd6547a872d54976002a3
 
 #include <memory>
 #include <set>
 #include <vector>
 
+<<<<<<< HEAD
 #include <nmath/graph/decl.hpp>
 #include <nmath/graph/EdgeFunction.h>
+=======
+#include "../../graph/decl.hpp"
+
+>>>>>>> 2c62763c134a8484205fd6547a872d54976002a3
 
 namespace nmath {
 	namespace graph {
@@ -16,6 +25,7 @@ namespace nmath {
 			class Edge
 			{
 			public:
+<<<<<<< HEAD
 				typedef typename E_C<V>::iterator iterator;
 				typedef std::shared_ptr<V> V_S;
 
@@ -60,6 +70,11 @@ namespace nmath {
 
 
 /*
+=======
+				typedef std::set<Edge<V>> CONT_EDGE;
+				typedef typename CONT_EDGE::iterator ITER;
+
+>>>>>>> 2c62763c134a8484205fd6547a872d54976002a3
 				ITER	begin() const;
 				ITER	end() const;
 
@@ -69,6 +84,7 @@ namespace nmath {
 
 				std::pair<typename ITER, bool>	insert(graph::Edge<V> const &);
 
+<<<<<<< HEAD
 				typename CONT_EDGE::size_type	size() const;*/
 
 				E_C<V>				_M_container;
@@ -79,3 +95,12 @@ namespace nmath {
 
 #endif
 
+=======
+				typename CONT_EDGE::size_type	size() const;
+
+				CONT_EDGE				_M_container;
+			};
+		}
+	}
+}
+>>>>>>> 2c62763c134a8484205fd6547a872d54976002a3

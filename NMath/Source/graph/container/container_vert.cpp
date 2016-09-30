@@ -1,6 +1,9 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 =======
+=======
+>>>>>>> 2c62763c134a8484205fd6547a872d54976002a3
 #include <cassert>
 #include <iostream>
 
@@ -48,6 +51,9 @@ nmath::graph::CONT_VERT::iterator		THIS::insert(
 {
 	return _M_container.insert(i, v);
 }
+<<<<<<< HEAD
+>>>>>>> 2c62763c134a8484205fd6547a872d54976002a3
+=======
 >>>>>>> 2c62763c134a8484205fd6547a872d54976002a3
 
 

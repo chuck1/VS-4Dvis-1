@@ -1,5 +1,8 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> 2c62763c134a8484205fd6547a872d54976002a3
 #include <cassert>
 #include <iostream>
 
@@ -117,6 +120,9 @@ bool				THIS::operator!=(nmath::graph::iterator::edge_graph const & i)
 {
 	return !(operator==(i));
 }
+<<<<<<< HEAD
+>>>>>>> 2c62763c134a8484205fd6547a872d54976002a3
+=======
 >>>>>>> 2c62763c134a8484205fd6547a872d54976002a3
 
 

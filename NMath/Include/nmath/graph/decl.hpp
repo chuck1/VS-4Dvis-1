@@ -48,12 +48,15 @@ namespace nmath{
 
 		typedef std::shared_ptr<EDGE_DATA>		EDGE_DATA_S;
 
+<<<<<<< HEAD
 		namespace edge {
 			template<typename V> class less;
 		}
 
 		template<typename V>
 		using E_C = std::set<nmath::graph::Edge<V>, nmath::graph::edge::less<V>>;
+=======
+>>>>>>> 2c62763c134a8484205fd6547a872d54976002a3
 
 		//typedef std::set<edge<V>>				std::set<edge<V>>;
 		
@@ -65,4 +68,8 @@ namespace nmath{
 	}
 }
 
+<<<<<<< HEAD
 #endif
+=======
+#endif
+>>>>>>> 2c62763c134a8484205fd6547a872d54976002a3

@@ -1,6 +1,10 @@
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 #include <nmath/util/Array.h>
+=======
+#include <nspace/util/Array.h>
+>>>>>>> 2c62763c134a8484205fd6547a872d54976002a3
 =======
 #include <nspace/util/Array.h>
 >>>>>>> 2c62763c134a8484205fd6547a872d54976002a3

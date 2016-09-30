@@ -1,6 +1,7 @@
 #ifndef NMATH_VCLIP_VCLIP
 #define NMATH_VCLIP_VCLIP
 
+<<<<<<< HEAD
 #include <memory>
 
 #include <nmath/geometry/GraphTopology.h>
@@ -26,12 +27,26 @@ namespace nmath {
 
 			std::shared_ptr<nmath::geometry::Polytope<M>> _M_p0;
 			std::shared_ptr<nmath::geometry::Polytope<M>> _M_p1;
+=======
+#include <nmath/graph/decl.hpp>
+
+namespace nmath {
+	namespace vclip {
+		class Vclip
+		{
+
+			// topology graphs
+			std::vector<nmath::graph::GRAPH_S> _M_topology;
+>>>>>>> 2c62763c134a8484205fd6547a872d54976002a3
 		};
 	}
 }
 
 #endif
+<<<<<<< HEAD
 
 
 
 
+=======
+>>>>>>> 2c62763c134a8484205fd6547a872d54976002a3

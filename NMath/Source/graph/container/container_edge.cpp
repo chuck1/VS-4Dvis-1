@@ -1,5 +1,8 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> 2c62763c134a8484205fd6547a872d54976002a3
 #include <nmath/graph/vert.hpp>
 #include <nmath/graph/edge.hpp> // gr/edge.hpp.in
 
@@ -43,5 +46,8 @@ nmath::graph::CONT_EDGE::size_type			THIS::size() const
 
 
 
+<<<<<<< HEAD
+>>>>>>> 2c62763c134a8484205fd6547a872d54976002a3
+=======
 >>>>>>> 2c62763c134a8484205fd6547a872d54976002a3
 

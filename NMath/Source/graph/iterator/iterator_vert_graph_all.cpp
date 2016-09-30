@@ -1,5 +1,8 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> 2c62763c134a8484205fd6547a872d54976002a3
 #include <iostream>
 #include <cassert>
 
@@ -10,6 +13,9 @@
 #include <nmath/graph/iterator/vert_graph_all.hpp>
 
 typedef nmath::graph::iterator::vert_graph_all THIS;
+<<<<<<< HEAD
+>>>>>>> 2c62763c134a8484205fd6547a872d54976002a3
+=======
 >>>>>>> 2c62763c134a8484205fd6547a872d54976002a3
 
 
