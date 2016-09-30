@@ -1,0 +1,189 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Source Files\graph">
+      <UniqueIdentifier>{f470e4eb-3020-4b9e-b292-74ad7a7cc9f7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\nmath">
+      <UniqueIdentifier>{fd267415-c6e9-492f-a881-87098976842c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\nmath\graph">
+      <UniqueIdentifier>{be3cc809-8e06-4b9a-bcad-f881449fcb58}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\nmath\graph\iterator">
+      <UniqueIdentifier>{075195cf-431c-4980-9bed-89ed02c2c2b0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\graph\iterator">
+      <UniqueIdentifier>{e93e6474-a592-4375-87db-d113c03cff92}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\graph\container">
+      <UniqueIdentifier>{8bc51f01-06bd-4ebe-b55e-c8e325fbcb15}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\nmath\vclip">
+      <UniqueIdentifier>{1981b7e4-7558-4380-96cf-4dea83588bb3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\nmath\linalg">
+      <UniqueIdentifier>{62ee67fa-f845-4c2e-a0e6-191aba686d9f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\nmath\graph\container">
+      <UniqueIdentifier>{f09921fd-e258-4042-8d57-d169b279aa43}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\nmath\geometry">
+      <UniqueIdentifier>{6cf4f87c-74b9-4217-9b43-cbcb730742cb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\nmath\util">
+      <UniqueIdentifier>{f4123c58-b7f6-4803-9d3a-12faff4e2a61}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Include\nmath\graph\decl.hpp">
+      <Filter>Header Files\nmath\graph</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\nmath\graph\edge.hpp">
+      <Filter>Header Files\nmath\graph</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\nmath\graph\edge_data.hpp">
+      <Filter>Header Files\nmath\graph</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\nmath\graph\gr.hpp">
+      <Filter>Header Files\nmath\graph</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\nmath\graph\graph.hpp">
+      <Filter>Header Files\nmath\graph</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\nmath\graph\layer.hpp">
+      <Filter>Header Files\nmath\graph</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\nmath\graph\pair.hpp">
+      <Filter>Header Files\nmath\graph</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\nmath\graph\pair_comp.hpp">
+      <Filter>Header Files\nmath\graph</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\nmath\graph\vert.hpp">
+      <Filter>Header Files\nmath\graph</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\nmath\graph\vert_comp.hpp">
+      <Filter>Header Files\nmath\graph</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\nmath\graph\iterator\edge_graph.hpp">
+      <Filter>Header Files\nmath\graph\iterator</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\nmath\graph\iterator\edge_vert.hpp">
+      <Filter>Header Files\nmath\graph\iterator</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\nmath\graph\iterator\vert_comp.hpp">
+      <Filter>Header Files\nmath\graph\iterator</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\nmath\graph\iterator\vert_graph.hpp">
+      <Filter>Header Files\nmath\graph\iterator</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\nmath\graph\iterator\vert_graph_all.hpp">
+      <Filter>Header Files\nmath\graph\iterator</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\nmath\vclip\Vclip.h">
+      <Filter>Header Files\nmath\vclip</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\nmath\linalg\Mat.h">
+      <Filter>Header Files\nmath\linalg</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\nmath\linalg\MatFunctions.h">
+      <Filter>Header Files\nmath\linalg</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\nmath\linalg\NMath.h">
+      <Filter>Header Files\nmath\linalg</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\nmath\linalg\Vec.h">
+      <Filter>Header Files\nmath\linalg</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\nmath\linalg\VecFunctions.h">
+      <Filter>Header Files\nmath\linalg</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\nmath\graph\container\edge.hpp">
+      <Filter>Header Files\nmath\graph\container</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\nmath\graph\container\vert.hpp">
+      <Filter>Header Files\nmath\graph\container</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\nmath\graph\EdgeFunction.h">
+      <Filter>Header Files\nmath\graph</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\nmath\geometry\Plane.h">
+      <Filter>Header Files\nmath\geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\nmath\geometry\Polytope.h">
+      <Filter>Header Files\nmath\geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\nmath\geometry\Ray.h">
+      <Filter>Header Files\nmath\geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\nmath\geometry\GraphTopology.h">
+      <Filter>Header Files\nmath\geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\nmath\graph\VertFunction.h">
+      <Filter>Header Files\nmath\graph</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Source.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\graph\edge.cpp">
+      <Filter>Source Files\graph</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\graph\edge_data.cpp">
+      <Filter>Source Files\graph</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\graph\graph.cpp">
+      <Filter>Source Files\graph</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\graph\layer.cpp">
+      <Filter>Source Files\graph</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\graph\pair.cpp">
+      <Filter>Source Files\graph</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\graph\pair_comp.cpp">
+      <Filter>Source Files\graph</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\graph\vert.cpp">
+      <Filter>Source Files\graph</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\graph\vert_comp.cpp">
+      <Filter>Source Files\graph</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\graph\container\container_edge.cpp">
+      <Filter>Source Files\graph\container</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\graph\container\container_vert.cpp">
+      <Filter>Source Files\graph\container</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\graph\iterator\iterator_vert_comp.cpp">
+      <Filter>Source Files\graph\iterator</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\graph\iterator\iterator_vert_graph.cpp">
+      <Filter>Source Files\graph\iterator</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\graph\iterator\iterator_vert_graph_all.cpp">
+      <Filter>Source Files\graph\iterator</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\graph\iterator\iterator_edge_vert.cpp">
+      <Filter>Source Files\graph\iterator</Filter>
+    </ClCompile>
+    <ClCompile Include="Source\graph\iterator\iterator_edge_graph.cpp">
+      <Filter>Source Files\graph\iterator</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

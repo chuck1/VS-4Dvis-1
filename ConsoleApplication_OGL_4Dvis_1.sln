@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.21005.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ConsoleApplication_OGL_4Dvis_1", "ConsoleApplication_OGL_4Dvis_1\ConsoleApplication_OGL_4Dvis_1.vcxproj", "{3CC2FDDF-306A-4F53-9A15-5DE500B2B5CB}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "NMath", "NMath\NMath.vcxproj", "{0F56F306-E052-4C77-B34A-4664D7974356}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ConsoleApplicationOpenCLTest", "ConsoleApplicationOpenCLTest\ConsoleApplicationOpenCLTest.vcxproj", "{50589E42-3595-41D1-84C7-28C1A3C663E7}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3CC2FDDF-306A-4F53-9A15-5DE500B2B5CB}.Debug|Win32.ActiveCfg = Debug|Win32
+		{3CC2FDDF-306A-4F53-9A15-5DE500B2B5CB}.Debug|Win32.Build.0 = Debug|Win32
+		{3CC2FDDF-306A-4F53-9A15-5DE500B2B5CB}.Release|Win32.ActiveCfg = Release|Win32
+		{3CC2FDDF-306A-4F53-9A15-5DE500B2B5CB}.Release|Win32.Build.0 = Release|Win32
+		{0F56F306-E052-4C77-B34A-4664D7974356}.Debug|Win32.ActiveCfg = Debug|Win32
+		{0F56F306-E052-4C77-B34A-4664D7974356}.Debug|Win32.Build.0 = Debug|Win32
+		{0F56F306-E052-4C77-B34A-4664D7974356}.Release|Win32.ActiveCfg = Release|Win32
+		{0F56F306-E052-4C77-B34A-4664D7974356}.Release|Win32.Build.0 = Release|Win32
+		{50589E42-3595-41D1-84C7-28C1A3C663E7}.Debug|Win32.ActiveCfg = Debug|Win32
+		{50589E42-3595-41D1-84C7-28C1A3C663E7}.Debug|Win32.Build.0 = Debug|Win32
+		{50589E42-3595-41D1-84C7-28C1A3C663E7}.Release|Win32.ActiveCfg = Release|Win32
+		{50589E42-3595-41D1-84C7-28C1A3C663E7}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
