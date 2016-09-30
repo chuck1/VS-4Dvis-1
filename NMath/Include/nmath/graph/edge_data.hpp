@@ -24,7 +24,12 @@ namespace nmath {
 <<<<<<< HEAD
 }
 
+<<<<<<< HEAD
 #endif
 =======
 }
 >>>>>>> 2c62763c134a8484205fd6547a872d54976002a3
+=======
+
+#endif
+>>>>>>> test2
