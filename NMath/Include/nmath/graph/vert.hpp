@@ -57,17 +57,17 @@ namespace nmath {
 			}
 			nmath::graph::iterator::edge_vert<V>		edge_begin()
 			{
-				return nmath::graph::iterator::edge_vert(*_M_edges, _M_edges->begin());
+				return nmath::graph::iterator::edge_vert<V>(*_M_edges, _M_edges->begin());
 			}
 			nmath::graph::iterator::edge_vert<V>		edge_end()
 			{
-				return nmath::graph::iterator::edge_vert(*_M_edges, _M_edges->end());
+				return nmath::graph::iterator::edge_vert<V>(*_M_edges, _M_edges->end());
 			}
 			nmath::graph::iterator::edge_vert<V>		edge_erase(nmath::graph::iterator::edge_vert<V> & i)
 			{
 				auto j = _M_edges->erase(i._M_i);
 
-				return nmath::graph::iterator::edge_vert(*_M_edges, j);
+				return nmath::graph::iterator::edge_vert<V>(*_M_edges, j);
 			}
 
 			void				edge_erase_disconnected()

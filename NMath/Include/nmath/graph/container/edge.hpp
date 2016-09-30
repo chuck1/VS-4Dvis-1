@@ -38,8 +38,8 @@ namespace nmath {
 				iterator	find(V_S const & u) const
 				{
 					for (auto it = begin(); it != end(); ++it) {
-						nmath::graph::edge const & edge = *it;
-						nmath::graph::VERT_S v = edge._M_v1.lock();
+						nmath::graph::Edge<V> const & edge = *it;
+						V_S v = edge._M_v1.lock();
 						if ((*v) == (*u)) return it;
 					}
 					return end();

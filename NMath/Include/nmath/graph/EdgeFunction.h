@@ -41,7 +41,7 @@ bool			operator<(nmath::graph::Edge<V> const & x, nmath::graph::Edge<V> const & 
 	V & v11 = *pv11;
 
 	if (v00 == v01) {
-		return v10.operator<(v11v);
+		return v10.operator<(v11);
 		//return (v10 < v11);
 	}
 

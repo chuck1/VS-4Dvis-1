@@ -6,15 +6,15 @@ namespace nmath {
 	template<int M, int N>
 	void subMat0(Mat<M, N> const & m, int i0)
 	{
-		Mat ret(_M_m - 1, _M_n);
+		Mat<M - 1, N> ret;
 
-		for (int i = 0, a = 0; i < _M_m; ++i)
+		for (int i = 0, a = 0; i < M; ++i)
 		{
 			if (i == i0) continue;
 
-			for (int j = 0, b = 0; j < _M_n; ++j)
+			for (int j = 0, b = 0; j < N; ++j)
 			{
-				ret(a, b) = operator()(i, j);
+				ret(a, b) = m(i, j);
 
 				++b;
 			}

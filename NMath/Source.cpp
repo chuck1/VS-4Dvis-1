@@ -9,6 +9,7 @@
 #include <nmath/geometry/Polytope.h>
 #include <nmath/geometry/GraphTopology.h>
 
+#include <nmath/test.h>
 #include <nmath/graph/graph.hpp>
 #include <nmath/graph/container/edge.hpp>
 
@@ -21,7 +22,7 @@ std::ostream& operator<<(std::ostream& os, nmath::linalg::Vec<M> const & v)
 
 
 
-void NMath::test()
+void nmath::test()
 {
 	nmath::linalg::Vec<5> a = nmath::linalg::Vec<5>::baseVec(0);
 	nmath::linalg::Vec<5> b = nmath::linalg::Vec<5>::baseVec(1);

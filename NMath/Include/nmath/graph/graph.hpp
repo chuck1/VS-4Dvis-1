@@ -4,6 +4,7 @@
 #include <memory>
 #include <set>
 #include <vector>
+#include <fstream>
 
 #include <nmath/graph/decl.hpp>
 #include <nmath/graph/edge_data.hpp>
@@ -21,6 +22,7 @@ namespace nmath {
 		{
 		public:
 			typedef std::shared_ptr<V> V_S;
+			typedef std::weak_ptr<V> V_W;
 			typedef std::function<bool(V_S const &)>	VFUNC;
 			typedef std::set<std::shared_ptr<V>, graph::vert_comp<V>> VCONT;
 
@@ -68,19 +70,19 @@ namespace nmath {
 			}
 			nmath::graph::iterator::vert_graph_all<V>		vert_begin_all()
 			{
-				return graph::iterator::vert_graph_all(_M_verts, _M_verts.begin());
+				return graph::iterator::vert_graph_all<V>(_M_verts, _M_verts.begin());
 			}
 			nmath::graph::iterator::vert_graph_all<V>		vert_end_all()
 			{
-				return graph::iterator::vert_graph_all(_M_verts, _M_verts.end());
+				return graph::iterator::vert_graph_all<V>(_M_verts, _M_verts.end());
 			}
 			nmath::graph::iterator::vert_graph_all<V>		vert_begin_all(VFUNC func)
 			{
-				return graph::iterator::vert_graph_all(_M_verts, _M_verts.begin(), func);
+				return graph::iterator::vert_graph_all<V>(_M_verts, _M_verts.begin(), func);
 			}
 			nmath::graph::iterator::vert_graph_all<V>		vert_end_all(VFUNC func)
 			{
-				return graph::iterator::vert_graph_all(_M_verts, _M_verts.end(), func);
+				return graph::iterator::vert_graph_all<V>(_M_verts, _M_verts.end(), func);
 			}
 
 
@@ -88,7 +90,7 @@ namespace nmath {
 
 			nmath::graph::iterator::vert_graph<V>		vert_erase(nmath::graph::iterator::vert_graph<V> & i)
 			{
-				graph::VERT_W w = *i;
+				V_W w = *i;
 				assert(!w.expired());
 
 				auto ret = _M_verts.erase(i._M_j);
@@ -97,7 +99,7 @@ namespace nmath {
 
 				edge_erase();
 
-				return graph::iterator::vert_graph(_M_verts, ret);
+				return graph::iterator::vert_graph<V>(_M_verts, ret);
 			}
 			nmath::graph::iterator::vert_graph<V>		vert_find(V_S v)
 			{
@@ -114,22 +116,22 @@ namespace nmath {
 			}
 			nmath::graph::iterator::edge_graph<V>		edge_begin()
 			{
-				return graph::iterator::edge_graph(_M_verts, _M_verts.begin());
+				return graph::iterator::edge_graph<V>(_M_verts, _M_verts.begin());
 			}
 			nmath::graph::iterator::edge_graph<V>		edge_end()
 			{
-				return graph::iterator::edge_graph(_M_verts, _M_verts.end());
+				return graph::iterator::edge_graph<V>(_M_verts, _M_verts.end());
 			}
 
 
 
 			nmath::graph::iterator::vert_comp<V>		comp_vert_begin(int c)
 			{
-				return graph::iterator::vert_comp(_M_verts, _M_verts.begin(), c);
+				return graph::iterator::vert_comp<V>(_M_verts, _M_verts.begin(), c);
 			}
 			nmath::graph::iterator::vert_comp<V>		comp_vert_end(int c)
 			{
-				return graph::iterator::vert_comp(_M_verts, _M_verts.end(), c);
+				return graph::iterator::vert_comp<V>(_M_verts, _M_verts.end(), c);
 			}
 
 
@@ -163,9 +165,9 @@ namespace nmath {
 			}
 			nmath::graph::iterator::edge_graph<V>	edge_erase(nmath::graph::iterator::edge_graph<V> i)
 			{
-				nmath::graph::iterator::edge_graph ret(i);
+				nmath::graph::iterator::edge_graph<V> ret(i);
 
-				nmath::graph::container::edge & container = *((*i._M_i)->_M_edges);
+				nmath::graph::container::Edge<V> & container = *((*i._M_i)->_M_edges);
 
 				ret._M_j = container.erase(i._M_j);
 
@@ -328,7 +330,7 @@ namespace nmath {
 				n->bridge._M_disc = n->bridge._M_low = ++t;
 
 				for (auto i = n->edge_begin(); i != n->edge_end(); ++i) {
-					nmath::std::shared_ptr<V> const & v = i->_M_v1.lock();
+					std::shared_ptr<V> const & v = i->_M_v1.lock();
 
 					assert(v);
 
@@ -350,7 +352,7 @@ namespace nmath {
 			}
 			std::vector<nmath::graph::Edge<V>>		bridges()
 			{
-				std::vector<nmath::graph::edge> ret;
+				std::vector<nmath::graph::Edge<V>> ret;
 
 				int t = 0;
 
@@ -399,7 +401,7 @@ namespace nmath {
 					unsigned int d = std::distance(i, i1);
 					assert(d != 0);
 
-					nmath::std::shared_ptr<V> const & v = i->_M_v1.lock();
+					std::shared_ptr<V> const & v = i->_M_v1.lock();
 
 					assert(u == i->_M_v0.lock());
 					assert(v != u);

@@ -79,7 +79,7 @@ namespace nmath {
 				}
 				vert_graph			operator++(int)
 				{
-					nmath::graph::iterator::vert_graph ret(_M_container, _M_j);
+					nmath::graph::iterator::vert_graph<V> ret(_M_container, _M_j);
 					operator++();
 					return ret;
 				}

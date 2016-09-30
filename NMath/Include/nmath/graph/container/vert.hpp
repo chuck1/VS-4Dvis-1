@@ -17,6 +17,7 @@ namespace nmath {
 			{
 			public:
 				typedef std::shared_ptr<V> V_S;
+				typedef std::weak_ptr<V> V_W;
 				typedef std::set<V_S, graph::vert_comp<V>> CONT;
 
 				typedef typename CONT::iterator	iterator;
@@ -53,7 +54,7 @@ namespace nmath {
 				}
 				iterator		erase(iterator & i)
 				{
-					nmath::graph::VERT_W w = *i;
+					V_W w = *i;
 
 					assert(!w.expired());
 

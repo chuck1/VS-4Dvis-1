@@ -83,8 +83,8 @@ namespace nmath {
 
 						if (_M_i == _M_container.end()) break;
 
-						nmath::graph::VERT_S const & pu = *_M_i;
-						nmath::graph::vert & u = *pu;
+						V_S const & pu = *_M_i;
+						V & u = *pu;
 
 						//std::cout << "iterator edge_graph j " << std::distance(_M_j, u._M_edges->end()) << std::endl;
 
@@ -98,14 +98,14 @@ namespace nmath {
 							continue;
 						}
 
-						nmath::graph::edge const & edge = *_M_j;
+						nmath::graph::Edge<V> const & edge = *_M_j;
 
 						if (!edge.enabled()) {
 							++_M_j;
 							continue;
 						}
 
-						nmath::graph::VERT_S const & v = _M_j->_M_v1.lock();
+						V_S const & v = _M_j->_M_v1.lock();
 
 						assert(v);
 
@@ -125,7 +125,7 @@ namespace nmath {
 				}
 				edge_graph			operator++(int)
 				{
-					THIS ret(_M_container, _M_i, _M_j);
+					edge_graph ret(_M_container, _M_i, _M_j);
 					operator++();
 					return ret;
 				}
@@ -141,7 +141,7 @@ namespace nmath {
 					//return &_M_value;
 				}
 
-				bool				operator==(nmath::graph::iterator::edge_graph const & i)
+				bool				operator==(nmath::graph::iterator::edge_graph<V> const & i)
 				{
 					if (_M_i == i._M_i) {
 						if (_M_i == _M_container.end()) return true;
@@ -152,7 +152,7 @@ namespace nmath {
 						return false;
 					}
 				}
-				bool				operator!=(nmath::graph::iterator::edge_graph const & i)
+				bool				operator!=(nmath::graph::iterator::edge_graph<V> const & i)
 				{
 					return !(operator==(i));
 				}

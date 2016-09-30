@@ -20,7 +20,7 @@ namespace nmath {
 				//typedef typename graph::CONT_EDGE::iterator iterator;
 				typedef std::iterator<std::input_iterator_tag, graph::Edge<V>> CONT;
 				
-				typedef CONT::iterator iterator;
+				typedef typename CONT::iterator iterator;
 
 				typedef graph::Edge<V> const &	reference;
 				typedef graph::Edge<V>		value_type;
@@ -63,7 +63,7 @@ namespace nmath {
 					while (true) {
 						if (_M_i == _M_container.end()) break;
 
-						nmath::graph::edge const & edge = *_M_i;
+						nmath::graph::Edge<V> const & edge = *_M_i;
 
 						if (!edge.enabled()) {
 							++_M_i;
@@ -81,7 +81,7 @@ namespace nmath {
 				}
 				edge_vert			operator++(int)
 				{
-					THIS ret(_M_container, _M_i);
+					edge_vert ret(_M_container, _M_i);
 					operator++();
 					return ret;
 				}

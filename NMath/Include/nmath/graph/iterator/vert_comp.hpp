@@ -18,6 +18,7 @@ namespace nmath {
 			class vert_comp : public std::iterator<std::input_iterator_tag, std::shared_ptr<V>>
 			{
 			public:
+				typedef std::shared_ptr<V> V_S;
 				typedef typename std::set<std::shared_ptr<V>, graph::vert_comp<V>>::iterator iterator;
 
 				typedef std::shared_ptr<V> const &	reference;
@@ -53,7 +54,7 @@ namespace nmath {
 					while (true) {
 						if (_M_j == _M_container.end()) break;
 
-						nmath::graph::VERT_S const & v = *_M_j;
+						V_S const & v = *_M_j;
 
 						assert(v);
 
@@ -73,11 +74,11 @@ namespace nmath {
 				{
 					++_M_j;
 					next();
-					return nmath::graph::iterator::vert_comp(_M_container, _M_j, _M_c);
+					return nmath::graph::iterator::vert_comp<V>(_M_container, _M_j, _M_c);
 				}
 				vert_comp			operator++(int)
 				{
-					nmath::graph::iterator::vert_comp ret(_M_container, _M_j, _M_c);
+					nmath::graph::iterator::vert_comp<V> ret(_M_container, _M_j, _M_c);
 					operator++();
 					return ret;
 				}
