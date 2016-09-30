@@ -1,4 +1,5 @@
-
+#ifndef NMATH_GRAPH_ITERATOR_VERTGRAPHALL
+#define NMATH_GRAPH_ITERATOR_VERTGRAPHALL
 
 #include <iterator>
 
@@ -108,3 +109,5 @@ namespace nmath {
 		}
 	}
 }
+
+#endif

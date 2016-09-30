@@ -1,3 +1,5 @@
+#ifndef NMATH_GRAPH_ITERATOR_EDGEGRAPH
+#define NMATH_GRAPH_ITERATOR_EDGEGRAPH
 
 #include <iterator>
 
@@ -175,3 +177,5 @@ namespace nmath {
 		}
 	}
 }
+
+#endif

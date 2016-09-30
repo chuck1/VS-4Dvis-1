@@ -1,4 +1,5 @@
-
+#ifndef NMATH_GRAPH_GRAPH
+#define NMATH_GRAPH_GRAPH
 
 #include <memory>
 #include <set>
@@ -572,3 +573,5 @@ namespace nmath {
 
 	}
 }
+
+#endif

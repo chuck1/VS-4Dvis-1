@@ -12,6 +12,7 @@
 #include <nmath/linalg/NMath.h>
 
 #include <nspace\actor\RigidBody.h>
+#include <nspace/tests.h>
 
 //Include the standard C++ headers
 #include <stdio.h>
@@ -427,7 +428,7 @@ void OCLtest2()
 int _tmain(int argc, _TCHAR* argv[])
 {
 	NMath::test();
-	
+	nspace::tests::test_array();
 	ocl.init();
 
 	OCLtest2();

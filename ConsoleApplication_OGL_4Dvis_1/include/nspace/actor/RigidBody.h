@@ -1,5 +1,5 @@
 
-#include <nspace/util/Array.h>
+#include <nmath/util/Array.h>
 
 #include <nmath/linalg/Vec.h>
 

@@ -116,8 +116,8 @@ namespace nmath {
 				//}
 			}
 
-			virtual bool		operator==(Vert<V> const & x) = 0;
-			virtual bool		operator<(Vert<V> const & x) = 0;
+			virtual bool		operator==(V const & x) = 0;
+			virtual bool		operator<(V const & x) = 0;
 
 			/////////////////////////////////////////
 
