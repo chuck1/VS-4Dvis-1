@@ -7,12 +7,16 @@
 
 #include <nmath/graph/decl.hpp>
 
+template<typename V> bool operator<(nmath::graph::Edge<V> const & x, nmath::graph::Edge<V> const & y);
+
 namespace nmath{
 	namespace graph{
 		template<typename V>
 		class Edge
 		{
 		public:
+			friend bool operator< <>(nmath::graph::Edge<V> const & x, nmath::graph::Edge<V> const & y);
+
 			typedef std::shared_ptr<V> V_S;
 			typedef std::weak_ptr<V> V_W;
 

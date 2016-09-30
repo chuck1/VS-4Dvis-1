@@ -16,8 +16,7 @@ namespace nmath {
 			class Edge
 			{
 			public:
-				typedef std::set<nmath::graph::Edge<V>> ECONT;
-				typedef typename ECONT::iterator iterator;
+				typedef typename E_C<V>::iterator iterator;
 				typedef std::shared_ptr<V> V_S;
 
 
@@ -44,11 +43,13 @@ namespace nmath {
 					}
 					return end();
 				}
-				std::pair<typename ECONT::iterator, bool>	insert(nmath::graph::Edge<V> const & e)
+				/*
+				std::pair<typename E_C<V>::iterator, bool>	insert(nmath::graph::Edge<V> const & e)
 				{
 					return _M_container.insert(e);
 				}
-				typename ECONT::size_type			size() const
+				*/
+				typename E_C<V>::size_type			size() const
 				{
 					return _M_container.size();
 				}
@@ -70,7 +71,7 @@ namespace nmath {
 
 				typename CONT_EDGE::size_type	size() const;*/
 
-				ECONT				_M_container;
+				E_C<V>				_M_container;
 			};
 		}
 	}

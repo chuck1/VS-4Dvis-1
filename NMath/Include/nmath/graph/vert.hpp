@@ -11,6 +11,9 @@
 //#include <nmath/graph/container/edge.hpp>
 #include <nmath/graph/layer.hpp>
 
+// experimental
+#include <nmath/graph/EdgeFunction.h>
+
 namespace nmath {
 	namespace graph {
 
@@ -89,6 +92,7 @@ namespace nmath {
 			{
 				return std::distance(edge_begin(), edge_end());
 			}
+			/*
 			void				add_edge_util(
 				V_S v0,
 				V_S v1,
@@ -98,8 +102,10 @@ namespace nmath {
 
 				nmath::graph::Edge<V> edge(v0, v1, edge_data);
 
-				_M_edges->insert(std::move(edge));
+				//_M_edges->insert(std::move(edge));
+				nmath::graph::edge::insert(*_M_edges, std::move(edge));
 			}
+			*/
 			void				edge_erase_util(V_S & v0, V_S & v1)
 			{
 				//graph::container::EDGE_S const & edges = (*i)->_M_edges;
