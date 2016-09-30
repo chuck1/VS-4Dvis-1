@@ -1,9 +1,5 @@
-<<<<<<< HEAD
 #ifndef NMATH_GRAPH_EDGEDATA
 #define NMATH_GRAPH_EDGEDATA
-=======
-
->>>>>>> 2c62763c134a8484205fd6547a872d54976002a3
 
 #include <memory>
 #include <set>
@@ -21,15 +17,9 @@ namespace nmath {
 		};
 
 	}
-<<<<<<< HEAD
+
 }
 
-<<<<<<< HEAD
-#endif
-=======
-}
->>>>>>> 2c62763c134a8484205fd6547a872d54976002a3
-=======
 
 #endif
->>>>>>> test2
+

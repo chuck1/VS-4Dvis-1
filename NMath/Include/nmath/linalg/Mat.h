@@ -41,21 +41,13 @@ namespace nmath {
 
 		double const & operator()(int i, int j) const
 		{
-<<<<<<< HEAD
 			if ((i >= M) || (j >= N)) throw std::exception();//"index out of range");
-=======
-			if ((i >= M) || (j >= N)) throw std::exception("index out of range");
->>>>>>> 2c62763c134a8484205fd6547a872d54976002a3
 
 			return _M_v[i*M + j];
 		}
 		double & operator()(int i, int j)
 		{
-<<<<<<< HEAD
 			if ((i >= M) || (j >= N)) throw std::exception();//"index out of range");
-=======
-			if ((i >= M) || (j >= N)) throw std::exception("index out of range");
->>>>>>> 2c62763c134a8484205fd6547a872d54976002a3
 
 			return _M_v[i*M + j];
 		}

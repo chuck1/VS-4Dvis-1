@@ -20,17 +20,12 @@ namespace nmath {
 				public std::iterator<std::input_iterator_tag, std::shared_ptr<V>>
 			{
 			public:
-<<<<<<< HEAD
 				typedef std::shared_ptr<V> V_S;
 				typedef typename std::set<std::shared_ptr<V>, nmath::graph::vert_comp<V>>::iterator iterator;
-=======
-				typedef typename std::set<std::shared_ptr<V>, graph::vert_comp<V>>::iterator iterator;
->>>>>>> 2c62763c134a8484205fd6547a872d54976002a3
 
 				typedef std::shared_ptr<V> const &	reference;
 				typedef std::shared_ptr<V>		value_type;
 
-<<<<<<< HEAD
 				//vert_graph(graph::container::vert &, iterator);
 				//vert_graph			operator=(vert_graph const &);
 
@@ -110,25 +105,6 @@ namespace nmath {
 
 				//private:
 				nmath::graph::container::Vert<V> &		_M_container;
-=======
-				vert_graph(graph::container::vert &, iterator);
-				vert_graph			operator=(vert_graph const &);
-
-				void				next();
-
-				graph::iterator::vert_graph	operator++();
-				/** postfix */
-				graph::iterator::vert_graph	operator++(int);
-
-				reference			operator*();
-				value_type const *		operator->();
-
-				bool				operator==(graph::iterator::vert_graph const &);
-				bool				operator!=(graph::iterator::vert_graph const &);
-
-				//private:
-				graph::container::vert &		_M_container;
->>>>>>> 2c62763c134a8484205fd6547a872d54976002a3
 				iterator			_M_j;
 			};
 
@@ -136,8 +112,4 @@ namespace nmath {
 	}
 }
 
-<<<<<<< HEAD
 #endif
-=======
-#endif
->>>>>>> 2c62763c134a8484205fd6547a872d54976002a3

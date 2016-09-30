@@ -13,7 +13,6 @@ namespace nmath {
 		namespace container {
 
 			template<typename V>
-<<<<<<< HEAD
 			class Vert
 			{
 			public:
@@ -23,33 +22,7 @@ namespace nmath {
 
 				typedef typename CONT::iterator	iterator;
 
-				/*iterator	begin();
-=======
-			class Vert<V>
-			{
-			public:
-				typedef std::set<std::shared_ptr<V>, graph::vert_comp> CONT;
-
-				typedef typename CONT::iterator	iterator;
-
-				iterator	begin();
->>>>>>> 2c62763c134a8484205fd6547a872d54976002a3
-				iterator	end();
-
-				unsigned int	size() const;
-
-<<<<<<< HEAD
-				iterator	find(V_S const &);
-
-				iterator	insert(iterator const &, CONT_VERT::value_type &);
-
-				iterator	erase(iterator &);*/
-
-
-
-
-
-
+		
 
 
 				iterator		begin()
@@ -94,13 +67,6 @@ namespace nmath {
 
 
 
-=======
-				iterator	find(graph::VERT_S const &);
-
-				iterator	insert(iterator const &, CONT_VERT::value_type &);
-
-				iterator	erase(iterator &);
->>>>>>> 2c62763c134a8484205fd6547a872d54976002a3
 			private:
 				CONT	_M_container;
 			};
@@ -109,8 +75,4 @@ namespace nmath {
 	}
 }
 
-<<<<<<< HEAD
 #endif
-=======
-#endif
->>>>>>> 2c62763c134a8484205fd6547a872d54976002a3

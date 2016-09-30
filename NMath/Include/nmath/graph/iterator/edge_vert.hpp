@@ -4,11 +4,8 @@
 #include <iterator>
 
 #include <nmath/graph/decl.hpp>
-<<<<<<< HEAD
+
 //#include <nmath/graph/edge.hpp>
-=======
-#include <nmath/graph/edge.hpp>
->>>>>>> 2c62763c134a8484205fd6547a872d54976002a3
 
 namespace nmath {
 	namespace graph {
@@ -24,7 +21,7 @@ namespace nmath {
 				//typedef typename graph::CONT_EDGE::iterator iterator;
 				typedef std::iterator<std::input_iterator_tag, graph::Edge<V>> CONT;
 				
-<<<<<<< HEAD
+
 				typedef typename CONT::iterator iterator;
 
 				typedef graph::Edge<V> const &	reference;
@@ -115,30 +112,6 @@ namespace nmath {
 
 				//private:
 				graph::container::Edge<V> &		_M_container;
-=======
-				typedef CONT::iterator iterator;
-
-				typedef graph::edge const &	reference;
-				typedef graph::edge		value_type;
-
-				edge_vert(graph::container::edge &, iterator);
-				edge_vert &			operator=(edge_vert const &);
-
-				void				next();
-
-				graph::iterator::edge_vert		operator++();
-				/** postfix */
-				graph::iterator::edge_vert		operator++(int);
-
-				reference			operator*();
-				value_type const *		operator->();
-
-				bool				operator==(graph::iterator::edge_vert const &);
-				bool				operator!=(graph::iterator::edge_vert const &);
-
-				//private:
-				graph::container::edge &		_M_container;
->>>>>>> 2c62763c134a8484205fd6547a872d54976002a3
 				iterator						_M_i;
 			};
 
@@ -147,8 +120,4 @@ namespace nmath {
 	}
 }
 
-<<<<<<< HEAD
 #endif
-=======
-#endif
->>>>>>> 2c62763c134a8484205fd6547a872d54976002a3
