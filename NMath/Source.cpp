@@ -43,7 +43,7 @@ void nmath::test()
 
 
 	// graph
-#if 0
+#if 1
 	auto g = std::make_shared<nmath::geometry::topo::Graph>();
 
 	auto v0 = std::make_shared<nmath::geometry::topo::Vertex>(g);

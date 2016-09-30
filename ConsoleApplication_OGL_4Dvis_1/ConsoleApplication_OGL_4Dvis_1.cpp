@@ -10,6 +10,7 @@
 #include <GLFW/glfw3.h>
 
 #include <nmath/linalg/NMath.h>
+#include <nmath/test.h>
 
 #include <nspace\actor\RigidBody.h>
 #include <nspace/tests.h>
@@ -24,6 +25,7 @@
 #include <string>
 
 #include "OCL.h"
+
 
 GLuint LoadShaders(const char * vertex_file_path, const char * fragment_file_path){
 
@@ -427,7 +429,7 @@ void OCLtest2()
 
 int _tmain(int argc, _TCHAR* argv[])
 {
-	NMath::test();
+	nmath::test();
 	nspace::tests::test_array();
 	ocl.init();
 
