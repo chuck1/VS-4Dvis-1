@@ -26,6 +26,7 @@ namespace nmath{
 			bool			enabled() const;
 
 			bool			operator<(edge const &) const;
+
 			bool			operator==(edge const &) const;*/
 
 
