@@ -1,9 +1,5 @@
-<<<<<<< HEAD
 #ifndef NMATH_GRAPH_ITERATOR_EDGEGRAPH
 #define NMATH_GRAPH_ITERATOR_EDGEGRAPH
-=======
-
->>>>>>> 2c62763c134a8484205fd6547a872d54976002a3
 
 #include <iterator>
 
@@ -24,7 +20,6 @@ namespace nmath {
 				public std::iterator<std::input_iterator_tag, nmath::graph::Edge<V>>
 			{
 			public:
-<<<<<<< HEAD
 				typedef std::shared_ptr<V> V_S;
 				
 				typedef nmath::graph::Edge<V> const &	reference;
@@ -176,45 +171,11 @@ namespace nmath {
 				nmath::graph::container::Vert<V> &		_M_container;
 				typename VCONT::iterator		_M_i;
 				typename ECONT::iterator		_M_j;
-=======
-				typedef nmath::graph::edge const &	reference;
-				typedef nmath::graph::edge		value_type;
-
-				typedef nmath::std::set<std::shared_ptr<V>, graph::vert_comp<V>>::iterator iterator0;
-				typedef nmath::graph::CONT_EDGE::iterator iterator1;
-
-				edge_graph(nmath::graph::container::vert &, iterator0 const &);
-				edge_graph(nmath::graph::container::vert &, iterator0 const &, iterator1 const &);
-
-				edge_graph			operator=(edge_graph const &);
-
-				/** prefix */
-				nmath::graph::iterator::edge_graph	operator++();
-				/** postfix */
-				nmath::graph::iterator::edge_graph	operator++(int);
-
-				void				next();
-
-				reference			operator*();
-				value_type const *		operator->();
-
-				bool				operator==(nmath::graph::iterator::edge_graph const &);
-				bool				operator!=(nmath::graph::iterator::edge_graph const &);
-
-				//private:
-				nmath::graph::container::vert &		_M_container;
-				nmath::std::set<std::shared_ptr<V>, graph::vert_comp<V>>::iterator		_M_i;
-				nmath::graph::CONT_EDGE::iterator		_M_j;
->>>>>>> 2c62763c134a8484205fd6547a872d54976002a3
 				//value_type			_M_value;
 			};
 
 		}
 	}
-<<<<<<< HEAD
 }
 
 #endif
-=======
-}
->>>>>>> 2c62763c134a8484205fd6547a872d54976002a3
