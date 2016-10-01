@@ -5,16 +5,6 @@
 
 #include <nmath/graph/decl.hpp>
 <<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-
-=======
->>>>>>> parent of f68be32... fix merge issue
-=======
->>>>>>> parent of f68be32... fix merge issue
-=======
->>>>>>> parent of f68be32... fix merge issue
 //#include <nmath/graph/edge.hpp>
 =======
 #include <nmath/graph/edge.hpp>
@@ -35,16 +25,6 @@ namespace nmath {
 				typedef std::iterator<std::input_iterator_tag, graph::Edge<V>> CONT;
 				
 <<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-
-=======
->>>>>>> parent of f68be32... fix merge issue
-=======
->>>>>>> parent of f68be32... fix merge issue
-=======
->>>>>>> parent of f68be32... fix merge issue
 				typedef typename CONT::iterator iterator;
 
 				typedef graph::Edge<V> const &	reference;
