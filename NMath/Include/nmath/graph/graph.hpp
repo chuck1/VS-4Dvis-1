@@ -533,7 +533,6 @@ namespace nmath {
 }
 
 #endif
-
 =======
 
 #include <nmath/graph/decl.hpp>
@@ -572,6 +571,47 @@ namespace nmath {
 			//graph::iterator::vert_graph		vert_begin();
 			//graph::iterator::vert_graph		vert_end();
 
+<<<<<<< HEAD
+=======
+
+#include <nmath/graph/decl.hpp>
+#include <nmath/graph/iterator/vert_comp.hpp>
+#include <nmath/graph/iterator/vert_graph.hpp>
+#include <nmath/graph/iterator/vert_graph_all.hpp>
+#include <nmath/graph/container/vert.hpp>
+
+namespace nmath {
+	namespace graph {
+
+		template<typename VERT>
+		class Graph : public std::enable_shared_from_this<Graph>
+		{
+		public:
+			typedef std::shared_ptr<VERT> VERT_S;
+
+			void				add_edge_util(VERT_S v0, VERT_S v1, std::shared_ptr<graph::edge_data> const &);
+			void				add_edge(VERT_S v0, VERT_S v1);
+
+			void				edge_enable();
+			void				vert_enable();
+
+			/** vert functions */
+
+			//graph::iterator::vert_graph		iter(std::shared_ptr<V> v);
+
+			//graph::iterator::vert_graph		vert_find(std::shared_ptr<V> v);
+			//graph::iterator::vert_graph		vert_erase(graph::iterator::vert_graph &);
+			//void							vert_erase_layer(unsigned int l);
+
+			//graph::iterator::vert_graph_all	vert_begin_all(VERT_FUNC);
+			//graph::iterator::vert_graph_all	vert_end_all(VERT_FUNC);
+			//graph::iterator::vert_graph_all	vert_begin_all();
+			//graph::iterator::vert_graph_all	vert_end_all();
+			//graph::iterator::vert_graph		vert_begin();
+			//graph::iterator::vert_graph		vert_end();
+
+=======
+>>>>>>> parent of f68be32... fix merge issue
 			//unsigned int			vert_size();
 
 			//graph::iterator::vert_comp		comp_vert_begin(int);

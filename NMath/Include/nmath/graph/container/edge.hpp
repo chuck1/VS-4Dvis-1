@@ -94,10 +94,15 @@ namespace nmath {
 }
 
 #endif
-
 =======
 				typename CONT_EDGE::size_type	size() const;
 
+<<<<<<< HEAD
+=======
+				typename CONT_EDGE::size_type	size() const;
+
+=======
+>>>>>>> parent of f68be32... fix merge issue
 				CONT_EDGE				_M_container;
 			};
 		}

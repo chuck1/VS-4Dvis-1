@@ -35,6 +35,23 @@ namespace nmath {
 				typedef typename std::set<V_S, graph::vert_comp<V>>::iterator iterator0;
 				typedef typename CONT::iterator iterator1;
 
+				//edge_graph(nmath::graph::container::vert &, iterator0 const &);
+				//edge_graph(nmath::graph::container::vert &, iterator0 const &, iterator1 const &);
+
+				//edge_graph			operator=(edge_graph const &);
+
+				///** prefix */
+				//nmath::graph::iterator::edge_graph	operator++();
+				///** postfix */
+				//nmath::graph::iterator::edge_graph	operator++(int);
+
+				//void				next();
+
+				//reference			operator*();
+				//value_type const *		operator->();
+
+				//bool				operator==(nmath::graph::iterator::edge_graph const &);
+				//bool				operator!=(nmath::graph::iterator::edge_graph const &);
 
 
 
