@@ -5,42 +5,27 @@
 #include <set>
 #include <vector>
 
-<<<<<<< HEAD
 #include <nmath/graph/decl.hpp>
 
 template<typename V> bool operator<(nmath::graph::Edge<V> const & x, nmath::graph::Edge<V> const & y);
-=======
-#include "../graph/decl.hpp"
->>>>>>> 2c62763c134a8484205fd6547a872d54976002a3
 
 namespace nmath{
 	namespace graph{
 		template<typename V>
-<<<<<<< HEAD
 		class Edge
 		{
 		public:
 			friend bool operator< <>(nmath::graph::Edge<V> const & x, nmath::graph::Edge<V> const & y);
 
-=======
-		class edge
-		{
-		public:
->>>>>>> 2c62763c134a8484205fd6547a872d54976002a3
 			typedef std::shared_ptr<V> V_S;
 			typedef std::weak_ptr<V> V_W;
 
 			//edge();
-<<<<<<< HEAD
 			/*edge(V_S const & v0, V_S const & v1, EDGE_DATA_S const & data);
-=======
-			edge(V_S const & v0, V_S const & v1, EDGE_DATA_S const & data);
->>>>>>> 2c62763c134a8484205fd6547a872d54976002a3
 
 			bool			enabled() const;
 
 			bool			operator<(edge const &) const;
-<<<<<<< HEAD
 
 			bool			operator==(edge const &) const;*/
 
@@ -73,9 +58,6 @@ namespace nmath{
 				return true;
 			}
 			
-=======
-			bool			operator==(edge const &) const;
->>>>>>> 2c62763c134a8484205fd6547a872d54976002a3
 
 			V_W		_M_v0;
 			V_W		_M_v1;

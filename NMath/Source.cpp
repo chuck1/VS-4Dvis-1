@@ -6,7 +6,6 @@
 #include <nmath/linalg/VecFunctions.h>
 #include <nmath/linalg/Mat.h>
 #include <nmath/linalg/NMath.h>
-<<<<<<< HEAD
 #include <nmath/geometry/Polytope.h>
 #include <nmath/geometry/GraphTopology.h>
 #include <nmath/vclip/Vclip.h>
@@ -15,10 +14,6 @@
 #include <nmath/graph/graph.hpp>
 #include <nmath/graph/container/edge.hpp>
 #include <nmath/graph/GraphFunction.h>
-=======
-
-#include <nmath/graph/graph.hpp>
->>>>>>> 2c62763c134a8484205fd6547a872d54976002a3
 
 template<int M>
 std::ostream& operator<<(std::ostream& os, nmath::linalg::Vec<M> const & v)
@@ -27,38 +22,9 @@ std::ostream& operator<<(std::ostream& os, nmath::linalg::Vec<M> const & v)
 	return os;
 }
 
-<<<<<<< HEAD
 
 
 void nmath::test()
-=======
-class Vertex : public nmath::graph::vert
-{
-public:
-	Vertex(nmath::graph::GRAPH_S g):
-		nmath::graph::vert(g)
-	{}
-	virtual bool		operator==(vert const & v)
-	{
-		Vertex const * v1 = dynamic_cast<Vertex const *>(&v);
-		return (v1->d == d) && (v1->i == i);
-	}
-	virtual bool		operator<(vert const & v)
-	{
-		Vertex const * v1 = dynamic_cast<Vertex const *>(&v);
-		if (v1->d == d)
-		{
-			return v1->i < i;
-		}
-		return v1->d < d;
-	}
-
-	int d;
-	int i;
-};
-
-void NMath::test()
->>>>>>> 2c62763c134a8484205fd6547a872d54976002a3
 {
 	nmath::linalg::Vec<5> a = nmath::linalg::Vec<5>::baseVec(0);
 	nmath::linalg::Vec<5> b = nmath::linalg::Vec<5>::baseVec(1);
@@ -79,7 +45,6 @@ void NMath::test()
 
 
 	// graph
-<<<<<<< HEAD
 #if 1
 	auto g = std::make_shared<nmath::geometry::topo::Graph>();
 
@@ -88,44 +53,15 @@ void NMath::test()
 
 	//g->add_edge(v0, v1);
 	nmath::graph::graph::add_edge(*g, v0, v1);
-=======
-
-	auto g = std::make_shared<nmath::graph::Graph>();
-
-	auto v0 = std::make_shared<Vertex>(g);
-	auto v1 = std::make_shared<Vertex>(g);
-
-	g->add_edge(v0, v1);
->>>>>>> 2c62763c134a8484205fd6547a872d54976002a3
 
 	std::cout << "graph" << std::endl;
 	std::cout << g->vert_size() << std::endl;
 
-<<<<<<< HEAD
 	// data use
 	std::cout << "PolytopePrimitive<4>   " << sizeof(nmath::geometry::PolytopePrimitive<4>) << std::endl;
 #endif
-=======
->>>>>>> 2c62763c134a8484205fd6547a872d54976002a3
 	getchar();
 
 	
-=======
-	getchar();
-<<<<<<< HEAD
-=======
-
-	
-=======
-	getchar();
-<<<<<<< HEAD
->>>>>>> parent of f68be32... fix merge issue
-=======
-
-	
-=======
-	getchar();
->>>>>>> parent of f68be32... fix merge issue
->>>>>>> 2c62763c134a8484205fd6547a872d54976002a3
 }
 

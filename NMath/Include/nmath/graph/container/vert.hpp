@@ -13,7 +13,6 @@ namespace nmath {
 		namespace container {
 
 			template<typename V>
-<<<<<<< HEAD
 			class Vert
 			{
 			public:
@@ -22,28 +21,6 @@ namespace nmath {
 				typedef std::set<V_S, graph::vert_comp<V>> CONT;
 
 				typedef typename CONT::iterator	iterator;
-
-				/*iterator	begin();
-=======
-			class Vert<V>
-			{
-			public:
-				typedef std::set<std::shared_ptr<V>, graph::vert_comp> CONT;
-
-				typedef typename CONT::iterator	iterator;
-
-				iterator	begin();
->>>>>>> 2c62763c134a8484205fd6547a872d54976002a3
-				iterator	end();
-
-				unsigned int	size() const;
-
-<<<<<<< HEAD
-				iterator	find(V_S const &);
-
-				iterator	insert(iterator const &, CONT_VERT::value_type &);
-
-				iterator	erase(iterator &);*/
 
 
 
@@ -91,37 +68,6 @@ namespace nmath {
 
 
 
-
-
-
-=======
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-			class Vert<V>
-			{
-			public:
-				typedef std::set<std::shared_ptr<V>, graph::vert_comp> CONT;
-
-				typedef typename CONT::iterator	iterator;
-
-				iterator	begin();
-				iterator	end();
-
-				unsigned int	size() const;
-
-=======
->>>>>>> parent of f68be32... fix merge issue
-=======
->>>>>>> parent of f68be32... fix merge issue
-=======
->>>>>>> parent of f68be32... fix merge issue
-				iterator	find(graph::VERT_S const &);
-
-				iterator	insert(iterator const &, CONT_VERT::value_type &);
-
-				iterator	erase(iterator &);
->>>>>>> 2c62763c134a8484205fd6547a872d54976002a3
 			private:
 				CONT	_M_container;
 			};
@@ -130,8 +76,4 @@ namespace nmath {
 	}
 }
 
-<<<<<<< HEAD
 #endif
-=======
-#endif
->>>>>>> 2c62763c134a8484205fd6547a872d54976002a3
