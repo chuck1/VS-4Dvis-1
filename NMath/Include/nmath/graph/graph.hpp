@@ -570,6 +570,7 @@ namespace nmath {
 			//graph::iterator::vert_graph_all	vert_end_all();
 			//graph::iterator::vert_graph		vert_begin();
 			//graph::iterator::vert_graph		vert_end();
+<<<<<<< HEAD
 
 <<<<<<< HEAD
 =======
@@ -611,6 +612,9 @@ namespace nmath {
 			//graph::iterator::vert_graph		vert_end();
 
 =======
+>>>>>>> parent of f68be32... fix merge issue
+=======
+
 >>>>>>> parent of f68be32... fix merge issue
 			//unsigned int			vert_size();
 

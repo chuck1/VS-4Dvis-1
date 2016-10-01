@@ -112,6 +112,13 @@ void NMath::test()
 	
 =======
 	getchar();
+<<<<<<< HEAD
+=======
+
+	
+=======
+	getchar();
+>>>>>>> parent of f68be32... fix merge issue
 >>>>>>> 2c62763c134a8484205fd6547a872d54976002a3
 }
 

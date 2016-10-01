@@ -96,6 +96,7 @@ namespace nmath {
 
 =======
 <<<<<<< HEAD
+<<<<<<< HEAD
 			class Vert<V>
 			{
 			public:
@@ -108,6 +109,8 @@ namespace nmath {
 
 				unsigned int	size() const;
 
+=======
+>>>>>>> parent of f68be32... fix merge issue
 =======
 >>>>>>> parent of f68be32... fix merge issue
 				iterator	find(graph::VERT_S const &);

@@ -6,7 +6,10 @@
 #include <nmath/graph/decl.hpp>
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 
+=======
+>>>>>>> parent of f68be32... fix merge issue
 =======
 >>>>>>> parent of f68be32... fix merge issue
 //#include <nmath/graph/edge.hpp>
@@ -30,7 +33,10 @@ namespace nmath {
 				
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 
+=======
+>>>>>>> parent of f68be32... fix merge issue
 =======
 >>>>>>> parent of f68be32... fix merge issue
 				typedef typename CONT::iterator iterator;

@@ -23,7 +23,10 @@ namespace nmath {
 	}
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 
+=======
+>>>>>>> parent of f68be32... fix merge issue
 =======
 >>>>>>> parent of f68be32... fix merge issue
 }
@@ -36,9 +39,14 @@ namespace nmath {
 =======
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 }
 >>>>>>> 2c62763c134a8484205fd6547a872d54976002a3
+=======
+#endif
+>>>>>>> test2
+>>>>>>> parent of f68be32... fix merge issue
 =======
 #endif
 >>>>>>> test2
