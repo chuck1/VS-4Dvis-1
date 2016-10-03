@@ -52,6 +52,28 @@ namespace nmath {
 			return _M_v[i*M + j];
 		}
 
+		Mat<N, M> transpose()
+		{
+			Mat<N, M> ret;
+			for (int i = 0; i < M; ++i)
+			{
+				for (int j = 0; j < N; ++j)
+				{
+					ret(j, i) = operator()(i, j);
+				}
+			}
+			return ret;
+		}
+
+		void swapRows(unsigned int i0, unsigned int i1)
+		{
+			for (int j = 0; j < N; ++j)
+			{
+				double x = operator()(i1, j);
+				operator()(i1, j) = operator()(i0, j);
+				operator()(i0, j) = x;
+			}
+		}
 
 	private:
 		double _M_v[M*N];

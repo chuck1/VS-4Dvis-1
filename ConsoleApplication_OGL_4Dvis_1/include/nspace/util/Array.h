@@ -1,3 +1,6 @@
+#ifndef NSPACE_UTIL_ARRAY
+#define NSPACE_UTIL_ARRAY
+
 #include <vector>
 #include <memory>
 
@@ -34,3 +37,5 @@ namespace nspace {
 		};
 	}
 }
+
+#endif

@@ -65,7 +65,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-
     <ClInclude Include="Include\nmath\geometry\GraphTopology.h" />
     <ClInclude Include="Include\nmath\geometry\Plane.h" />
     <ClInclude Include="Include\nmath\geometry\Polytope.h" />
@@ -74,10 +73,8 @@
     <ClInclude Include="Include\nmath\graph\container\vert.hpp" />
     <ClInclude Include="Include\nmath\graph\decl.hpp" />
     <ClInclude Include="Include\nmath\graph\edge.hpp" />
-
     <ClInclude Include="Include\nmath\graph\EdgeFunction.h" />
     <ClInclude Include="Include\nmath\graph\edge_data.hpp" />
-    <ClInclude Include="Include\nmath\graph\gr.hpp" />
     <ClInclude Include="Include\nmath\graph\graph.hpp" />
     <ClInclude Include="Include\nmath\graph\iterator\edge_graph.hpp" />
     <ClInclude Include="Include\nmath\graph\iterator\edge_vert.hpp" />
@@ -85,7 +82,6 @@
     <ClInclude Include="Include\nmath\graph\iterator\vert_graph.hpp" />
     <ClInclude Include="Include\nmath\graph\iterator\vert_graph_all.hpp" />
     <ClInclude Include="Include\nmath\graph\layer.hpp" />
-    <ClInclude Include="Include\nmath\graph\pair.hpp" />
     <ClInclude Include="Include\nmath\graph\pair_comp.hpp" />
     <ClInclude Include="Include\nmath\graph\vert.hpp" />
     <ClInclude Include="Include\nmath\graph\VertFunction.h" />
@@ -98,26 +94,12 @@
     <ClInclude Include="Include\nmath\vclip\Vclip.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Source.cpp" />
-    <ClCompile Include="Source\graph\container\container_edge.cpp" />
-    <ClCompile Include="Source\graph\container\container_vert.cpp" />
-    <ClCompile Include="Source\graph\edge.cpp" />
-    <ClCompile Include="Source\graph\edge_data.cpp" />
-    <ClCompile Include="Source\graph\graph.cpp" />
-    <ClCompile Include="Source\graph\iterator\iterator_edge_graph.cpp" />
-    <ClCompile Include="Source\graph\iterator\iterator_edge_vert.cpp" />
-    <ClCompile Include="Source\graph\iterator\iterator_vert_comp.cpp" />
-    <ClCompile Include="Source\graph\iterator\iterator_vert_graph.cpp" />
-    <ClCompile Include="Source\graph\iterator\iterator_vert_graph_all.cpp" />
-    <ClCompile Include="Source\graph\layer.cpp" />
-    <ClCompile Include="Source\graph\pair.cpp" />
-    <ClCompile Include="Source\graph\pair_comp.cpp" />
-    <ClCompile Include="Source\graph\vert.cpp" />
-    <ClCompile Include="Source\graph\vert_comp.cpp" />
-  </ItemGroup>
-  <ItemGroup>
     <Text Include="Include\nmath\vclip\vclip_pseudocode.txt" />
     <Text Include="Include\nmath\vclip\vclip_pseudocode_new.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Source.cpp" />
+    <ClCompile Include="Source\graph\edge_data.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

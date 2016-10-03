@@ -10,20 +10,13 @@
 #include <GLFW/glfw3.h>
 
 #include <nmath/linalg/NMath.h>
-<<<<<<< HEAD
-<<<<<<< HEAD
+
 #include <nmath/test.h>
 
 #include <nspace\actor\RigidBody.h>
 #include <nspace/tests.h>
-=======
 
-#include <nspace\actor\RigidBody.h>
->>>>>>> 2c62763c134a8484205fd6547a872d54976002a3
-=======
 
-#include <nspace\actor\RigidBody.h>
->>>>>>> 2c62763c134a8484205fd6547a872d54976002a3
 
 //Include the standard C++ headers
 #include <stdio.h>
@@ -36,13 +29,7 @@
 
 #include "OCL.h"
 
-<<<<<<< HEAD
-<<<<<<< HEAD
 
-=======
->>>>>>> 2c62763c134a8484205fd6547a872d54976002a3
-=======
->>>>>>> 2c62763c134a8484205fd6547a872d54976002a3
 GLuint LoadShaders(const char * vertex_file_path, const char * fragment_file_path){
 
 	// Create the shaders
@@ -445,18 +432,12 @@ void OCLtest2()
 
 int _tmain(int argc, _TCHAR* argv[])
 {
-<<<<<<< HEAD
-<<<<<<< HEAD
+
+
 	nmath::test();
 	nspace::tests::test_array();
-=======
-	NMath::test();
-	
->>>>>>> 2c62763c134a8484205fd6547a872d54976002a3
-=======
-	NMath::test();
-	
->>>>>>> 2c62763c134a8484205fd6547a872d54976002a3
+
+
 	ocl.init();
 
 	OCLtest2();

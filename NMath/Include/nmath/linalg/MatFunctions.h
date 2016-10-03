@@ -1,6 +1,8 @@
 #include <algorithm>
+#include <exception>
 
 #include "Mat.h"
+#include <nmath/linalg/Vec.h>
 
 namespace nmath {
 
@@ -96,11 +98,90 @@ namespace nmath {
 	}
 
 	template<int M, int N>
+	nmath::linalg::Vec<M> column(Mat<M, N> const & m, int j)
+	{
+		nmath::linalg::Vec<M> ret;
+		for (int i = 0; i < M; ++i)
+		{
+			ret(i) = m(i, j);
+		}
+		return ret;
+	}
+
+	template<int M, int N>
+	int argmax(Mat<M, N> & m, int k)
+	{
+		int i0 = k;
+		double d0 = m(i0, k);
+
+		for (int i = i0 + 1; i < M; ++i)
+		{
+			if (m(i, k)>d0)
+			{
+				d0 = m(i, k);
+				i0 = i;
+			}
+		}
+
+		return i0;
+	}
+
+	template<int M, int N>
+	void subtractRow(Mat<M, N> & m, int i0, int i1, double f)
+	{
+		for (int j = 0; j < N; ++j)
+		{
+			m(i0, j) -= m(i1, j) * f;
+		}
+	}
+
+	template<int M, int N>
 	void gaussianElimination(Mat<M, N> & m)
 	{
 		for (unsigned int k = 0; k < std::min(M, N); ++k)
 		{
+			int i_max = argmax(m, k);
+			
+			if (m(i_max, k) == 0) throw new std::exception();
 
+			m.swapRows(k, i_max);
+
+			for (int i = k + 1; i < M; ++i)
+			{
+				double f = m(i, k) / m(k, k);
+
+				for (int j = k + 1; j < N; ++j)
+				{
+					m(i, j) = m(i, j) - m(k, j) * f;
+				}
+
+				m(i, k) = 0;
+			}
+		}
+	}
+	template<int M, int N>
+	void gaussianElimination2(Mat<M, N> & m, Mat<N, N> & m1)
+	{
+		for (unsigned int k = 0; k < std::min(M, N); ++k)
+		{
+			int i_max = argmax(m, k);
+
+			if (m(i_max, k) == 0) throw new std::exception();
+
+			m.swapRows(k, i_max);
+			m1.swapRows(k, i_max);
+
+			for (int i = k + 1; i < M; ++i)
+			{
+				double f = m(i, k) / m(k, k);
+
+				for (int j = k + 1; j < N; ++j)
+				{
+					m(i, j) = m(i, j) - m(k, j) * f;
+				}
+
+				m(i, k) = 0;
+			}
 		}
 	}
 }

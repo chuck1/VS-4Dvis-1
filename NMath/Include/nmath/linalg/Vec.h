@@ -2,6 +2,8 @@
 #ifndef NMATH_VEC
 #define NMATH_VEC
 
+#include <limits>
+
 namespace nmath {
 	namespace linalg {
 
@@ -72,6 +74,31 @@ namespace nmath {
 				if (i >= M) throw std::exception();//"index out of range");
 
 				return _M_v[i];
+			}
+
+			Vec<M> abs() const
+			{
+				Vec<M> ret;
+				for (int i = 0; i < M; ++i)
+				{
+					ret(i) = ::abs(operator()(i));
+				}
+			}
+			int argmax() const
+			{
+				double d = operator()(0);
+				int i0 = 0;
+
+				for (int i = 1; i < M; ++i)
+				{
+					double x = operator()(i);
+					if (x > d)
+					{
+						d = x;
+						i0 = i;
+					}
+				}
+				return i0;
 			}
 
 			double _M_v[M];

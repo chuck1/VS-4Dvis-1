@@ -22,10 +22,52 @@ std::ostream& operator<<(std::ostream& os, nmath::linalg::Vec<M> const & v)
 	return os;
 }
 
+template<int M, int N>
+std::ostream& operator<<(std::ostream& os, nmath::Mat<M,N> const & m)
+{
+	for (int i = 0; i < M; ++i) {
+		for (int j = 0; j < N; ++j) {
+			os << m(i,j) << " ";
+		}
+		os << std::endl;
+	}
+	return os;
+}
 
+void test_gauss_elim()
+{
+	nmath::Mat<3, 5> m;
+	
+
+	m(0, 0) = 7;
+	m(0, 1) = 1;
+	m(0, 2) = 1;
+	
+	m(1, 1) = 1;
+	m(1, 2) = 2;
+	
+	m(2, 0) = 1;
+	m(2, 1) = 0;
+	m(2, 2) = 4;
+
+	auto m1 = m.transpose();
+
+	std::cout << m << std::endl;
+	
+	nmath::gaussianElimination(m);
+
+	std::cout << m << std::endl;
+
+	std::cout << m1 << std::endl;
+	nmath::gaussianElimination(m1);
+	std::cout << m1 << std::endl;
+}
 
 void nmath::test()
 {
+	test_gauss_elim();
+
+
 	nmath::linalg::Vec<5> a = nmath::linalg::Vec<5>::baseVec(0);
 	nmath::linalg::Vec<5> b = nmath::linalg::Vec<5>::baseVec(1);
 	nmath::linalg::Vec<5> c = nmath::linalg::Vec<5>::baseVec(2);
@@ -60,8 +102,19 @@ void nmath::test()
 	// data use
 	std::cout << "PolytopePrimitive<4>   " << sizeof(nmath::geometry::PolytopePrimitive<4>) << std::endl;
 #endif
+
+
+
+
+
+
+
+
 	getchar();
 
 	
+
+	
+
 }
 
