@@ -86,8 +86,12 @@ void test_gauss_elim()
 
 void nmath::test()
 {
-	test_gauss_elim();
-
+	try{
+		test_gauss_elim();
+	}
+	catch (...)
+	{
+	}
 
 	nmath::linalg::Vec<5> a = nmath::linalg::Vec<5>::baseVec(0);
 	nmath::linalg::Vec<5> b = nmath::linalg::Vec<5>::baseVec(1);
