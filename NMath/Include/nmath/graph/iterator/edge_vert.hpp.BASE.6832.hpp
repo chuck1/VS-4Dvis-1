@@ -5,6 +5,8 @@
 
 #include <nmath/graph/decl.hpp>
 
+//#include <nmath/graph/edge.hpp>
+
 namespace nmath {
 	namespace graph {
 		namespace iterator {
@@ -19,6 +21,7 @@ namespace nmath {
 				//typedef typename graph::CONT_EDGE::iterator iterator;
 				typedef std::iterator<std::input_iterator_tag, graph::Edge<V>> CONT;
 				
+
 				typedef typename CONT::iterator iterator;
 
 				typedef graph::Edge<V> const &	reference;

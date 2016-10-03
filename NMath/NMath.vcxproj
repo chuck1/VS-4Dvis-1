@@ -65,15 +65,27 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+<<<<<<< HEAD
+<<<<<<< HEAD
     <ClInclude Include="Include\nmath\geometry\GraphTopology.h" />
     <ClInclude Include="Include\nmath\geometry\Plane.h" />
     <ClInclude Include="Include\nmath\geometry\Polytope.h" />
     <ClInclude Include="Include\nmath\geometry\Ray.h" />
+=======
+>>>>>>> 2c62763c134a8484205fd6547a872d54976002a3
+=======
+>>>>>>> 2c62763c134a8484205fd6547a872d54976002a3
     <ClInclude Include="Include\nmath\graph\container\edge.hpp" />
     <ClInclude Include="Include\nmath\graph\container\vert.hpp" />
     <ClInclude Include="Include\nmath\graph\decl.hpp" />
     <ClInclude Include="Include\nmath\graph\edge.hpp" />
+<<<<<<< HEAD
+<<<<<<< HEAD
     <ClInclude Include="Include\nmath\graph\EdgeFunction.h" />
+=======
+>>>>>>> 2c62763c134a8484205fd6547a872d54976002a3
+=======
+>>>>>>> 2c62763c134a8484205fd6547a872d54976002a3
     <ClInclude Include="Include\nmath\graph\edge_data.hpp" />
     <ClInclude Include="Include\nmath\graph\gr.hpp" />
     <ClInclude Include="Include\nmath\graph\graph.hpp" />
@@ -86,7 +98,13 @@
     <ClInclude Include="Include\nmath\graph\pair.hpp" />
     <ClInclude Include="Include\nmath\graph\pair_comp.hpp" />
     <ClInclude Include="Include\nmath\graph\vert.hpp" />
+<<<<<<< HEAD
+<<<<<<< HEAD
     <ClInclude Include="Include\nmath\graph\VertFunction.h" />
+=======
+>>>>>>> 2c62763c134a8484205fd6547a872d54976002a3
+=======
+>>>>>>> 2c62763c134a8484205fd6547a872d54976002a3
     <ClInclude Include="Include\nmath\graph\vert_comp.hpp" />
     <ClInclude Include="Include\nmath\linalg\Mat.h" />
     <ClInclude Include="Include\nmath\linalg\MatFunctions.h" />
@@ -113,10 +131,16 @@
     <ClCompile Include="Source\graph\vert.cpp" />
     <ClCompile Include="Source\graph\vert_comp.cpp" />
   </ItemGroup>
+<<<<<<< HEAD
+<<<<<<< HEAD
   <ItemGroup>
     <Text Include="Include\nmath\vclip\vclip_pseudocode.txt" />
     <Text Include="Include\nmath\vclip\vclip_pseudocode_new.txt" />
   </ItemGroup>
+=======
+>>>>>>> 2c62763c134a8484205fd6547a872d54976002a3
+=======
+>>>>>>> 2c62763c134a8484205fd6547a872d54976002a3
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

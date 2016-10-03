@@ -1,5 +1,7 @@
 #include "stdafx.h"
 
+<<<<<<< HEAD
+<<<<<<< HEAD
 #include <iostream>
 
 #include <nmath/util/Array.h>
@@ -33,6 +35,24 @@ void nspace::tests::test_array()
 	auto d1 = arr->push_back_index_ref(0, std::bind(&test_index_ref::set_i, tir, std::placeholders::_1), std::bind(&test_index_ref::get_i, tir));
 
 	std::cout << "array size " << arr->size() << std::endl;
+=======
+=======
+>>>>>>> 2c62763c134a8484205fd6547a872d54976002a3
+
+#include <nspace/tests.h>
+#include <nspace/util/Array.h>
+
+void nspace::tests::test_array()
+{
+	nspace::util::Array<double> arr;
+
+	auto d0 = arr.push_back(0);
+
+
+<<<<<<< HEAD
+>>>>>>> 2c62763c134a8484205fd6547a872d54976002a3
+=======
+>>>>>>> 2c62763c134a8484205fd6547a872d54976002a3
 }
 
 

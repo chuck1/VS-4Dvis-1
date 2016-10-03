@@ -40,12 +40,18 @@
     <Filter Include="Header Files\nmath\graph\container">
       <UniqueIdentifier>{f09921fd-e258-4042-8d57-d169b279aa43}</UniqueIdentifier>
     </Filter>
+<<<<<<< HEAD
+<<<<<<< HEAD
     <Filter Include="Header Files\nmath\geometry">
       <UniqueIdentifier>{6cf4f87c-74b9-4217-9b43-cbcb730742cb}</UniqueIdentifier>
     </Filter>
     <Filter Include="Header Files\nmath\util">
       <UniqueIdentifier>{f4123c58-b7f6-4803-9d3a-12faff4e2a61}</UniqueIdentifier>
     </Filter>
+=======
+>>>>>>> 2c62763c134a8484205fd6547a872d54976002a3
+=======
+>>>>>>> 2c62763c134a8484205fd6547a872d54976002a3
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Include\nmath\graph\decl.hpp">
@@ -117,6 +123,8 @@
     <ClInclude Include="Include\nmath\graph\container\vert.hpp">
       <Filter>Header Files\nmath\graph\container</Filter>
     </ClInclude>
+<<<<<<< HEAD
+<<<<<<< HEAD
     <ClInclude Include="Include\nmath\graph\EdgeFunction.h">
       <Filter>Header Files\nmath\graph</Filter>
     </ClInclude>
@@ -135,6 +143,10 @@
     <ClInclude Include="Include\nmath\graph\VertFunction.h">
       <Filter>Header Files\nmath\graph</Filter>
     </ClInclude>
+=======
+>>>>>>> 2c62763c134a8484205fd6547a872d54976002a3
+=======
+>>>>>>> 2c62763c134a8484205fd6547a872d54976002a3
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source.cpp">
@@ -186,6 +198,8 @@
       <Filter>Source Files\graph\iterator</Filter>
     </ClCompile>
   </ItemGroup>
+<<<<<<< HEAD
+<<<<<<< HEAD
   <ItemGroup>
     <Text Include="Include\nmath\vclip\vclip_pseudocode.txt">
       <Filter>Header Files\nmath\vclip</Filter>
@@ -194,4 +208,8 @@
       <Filter>Header Files\nmath\vclip</Filter>
     </Text>
   </ItemGroup>
+=======
+>>>>>>> 2c62763c134a8484205fd6547a872d54976002a3
+=======
+>>>>>>> 2c62763c134a8484205fd6547a872d54976002a3
 </Project>
