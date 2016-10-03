@@ -1,3 +1,4 @@
+#include <algorithm>
 
 #include "Mat.h"
 
@@ -97,7 +98,7 @@ namespace nmath {
 	template<int M, int N>
 	void gaussianElimination(Mat<M, N> & m)
 	{
-		for (unsigned int k = 0; k < min(M, N); ++k)
+		for (unsigned int k = 0; k < std::min(M, N); ++k)
 		{
 
 		}

@@ -7,7 +7,7 @@
 
 #include <nmath/graph/decl.hpp>
 
-template<typename V> bool operator<(nmath::graph::Edge<V> const & x, nmath::graph::Edge<V> const & y);
+template<typename V> bool operator<(::nmath::graph::Edge<V> const & x, ::nmath::graph::Edge<V> const & y);
 
 namespace nmath{
 	namespace graph{

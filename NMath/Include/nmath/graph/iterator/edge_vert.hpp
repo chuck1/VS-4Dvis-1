@@ -12,12 +12,12 @@ namespace nmath {
 			 * iterates on each edge in a vert's edge container
 			 */
 			template<typename V>
-			class edge_vert :
-				public std::iterator<std::input_iterator_tag, graph::Edge<V>>
+			class edge_vert:
+				public std::iterator<std::input_iterator_tag, ::nmath::graph::Edge<V>>
 			{
 			public:
 				//typedef typename graph::CONT_EDGE::iterator iterator;
-				typedef std::iterator<std::input_iterator_tag, graph::Edge<V>> CONT;
+				typedef std::iterator<std::input_iterator_tag, nmath::graph::Edge<V>> CONT;
 				
 				typedef typename CONT::iterator iterator;
 
