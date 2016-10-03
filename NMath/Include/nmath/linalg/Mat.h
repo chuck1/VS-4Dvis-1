@@ -16,8 +16,6 @@ namespace nmath {
 	class Mat
 	{
 	public:
-
-
 		Mat<M, N>()
 		{
 			for (int i = 0; i < M; ++i)
@@ -43,13 +41,13 @@ namespace nmath {
 		{
 			if ((i >= M) || (j >= N)) throw std::exception();//"index out of range");
 
-			return _M_v[i*M + j];
+			return _M_v[i*N + j];
 		}
 		double & operator()(int i, int j)
 		{
 			if ((i >= M) || (j >= N)) throw std::exception();//"index out of range");
 
-			return _M_v[i*M + j];
+			return _M_v[i*N + j];
 		}
 
 		Mat<N, M> transpose()
@@ -69,9 +67,10 @@ namespace nmath {
 		{
 			for (int j = 0; j < N; ++j)
 			{
-				double x = operator()(i1, j);
+				/*double x = operator()(i1, j);
 				operator()(i1, j) = operator()(i0, j);
-				operator()(i0, j) = x;
+				operator()(i0, j) = x;*/
+				std::swap(operator()(i0, j), operator()(i1, j));
 			}
 		}
 

@@ -136,6 +136,24 @@ namespace nmath {
 	}
 
 	template<int M, int N>
+	void multiplyRow(Mat<M, N> & m, int i, double f)
+	{
+		for (int j = 0; j < N; ++j)
+		{
+			m(i, j) *= f;
+		}
+	}
+
+	template<int M, int N>
+	void divideRow(Mat<M, N> & m, int i, double f)
+	{
+		for (int j = 0; j < N; ++j)
+		{
+			m(i, j) /= f;
+		}
+	}
+
+	template<int M, int N>
 	void gaussianElimination(Mat<M, N> & m)
 	{
 		for (unsigned int k = 0; k < std::min(M, N); ++k)
@@ -144,11 +162,29 @@ namespace nmath {
 			
 			if (m(i_max, k) == 0) throw new std::exception();
 
-			m.swapRows(k, i_max);
+			if (k != i_max) m.swapRows(k, i_max);
+
+			// experimental
+			// make first non-zero term of the row equal to 1
+			//std::cout << "m(k,k)=" << m(k, k) << std::endl;
+
+			for (int j = k + 1; j < N; ++j)
+			{
+				m(k, j) /= m(k, k);
+			}
+			m(k, k) = 1;
+
+			// experimental
+			// for each previous row
+			for (int i = 0; i < k; ++i)
+			{
+				subtractRow(m, i, k, m(i, k));
+			}
+
 
 			for (int i = k + 1; i < M; ++i)
 			{
-				double f = m(i, k) / m(k, k);
+				double f = m(i, k);
 
 				for (int j = k + 1; j < N; ++j)
 				{
@@ -159,8 +195,9 @@ namespace nmath {
 			}
 		}
 	}
-	template<int M, int N>
-	void gaussianElimination2(Mat<M, N> & m, Mat<N, N> & m1)
+
+	template<int M, int N, int N1>
+	void gaussianElimination(Mat<M, N> & m, Mat<M, N1> & m1)
 	{
 		for (unsigned int k = 0; k < std::min(M, N); ++k)
 		{
@@ -171,16 +208,41 @@ namespace nmath {
 			m.swapRows(k, i_max);
 			m1.swapRows(k, i_max);
 
+			// experimental
+			// make first non-zero term of the row equal to 1
+
+			double d = m(k, k);
+			for (int j = k + 1; j < N; ++j)
+			{
+				m(k, j) /= d;
+			}
+			m(k, k) = 1;
+
+			divideRow(m1, k, d);
+
+			// experimental
+			// for each previous row
+			for (int i = 0; i < k; ++i)
+			{
+				subtractRow(m, i, k, m(i, k));
+
+				subtractRow(m1, i, k, m(i, k));
+			}
+			
+
+			// for each lower row
 			for (int i = k + 1; i < M; ++i)
 			{
-				double f = m(i, k) / m(k, k);
+				double f = m(i, k);
 
 				for (int j = k + 1; j < N; ++j)
 				{
-					m(i, j) = m(i, j) - m(k, j) * f;
+					m(i, j) -= m(k, j) * f;
 				}
 
 				m(i, k) = 0;
+
+				subtractRow(m1, i, k, f);
 			}
 		}
 	}
