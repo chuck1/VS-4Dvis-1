@@ -17,7 +17,7 @@ namespace nmath {
 		};
 
 	}
-
+}
 
 #endif
 
