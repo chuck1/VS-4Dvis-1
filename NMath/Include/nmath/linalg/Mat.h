@@ -41,7 +41,7 @@ namespace nmath {
 		{
 			assert(i<M);
 			assert(j<N);
-			if ((i >= M) || (j >= N)) throw std::exception("index out of range");
+			if ((i >= M) || (j >= N)) throw std::exception();
 
 			return _M_v[i*N + j];
 		}
@@ -49,7 +49,7 @@ namespace nmath {
 		{
 			assert(i<M);
 			assert(j<N);
-			if ((i >= M) || (j >= N)) throw std::exception("index out of range");
+			if ((i >= M) || (j >= N)) throw std::exception();
 
 			return _M_v[i*N + j];
 		}

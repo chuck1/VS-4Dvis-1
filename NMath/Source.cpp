@@ -86,6 +86,7 @@ void test_gauss_elim()
 
 void nmath::test()
 {
+	test_gauss_elim();
 	try{
 		test_gauss_elim();
 	}
