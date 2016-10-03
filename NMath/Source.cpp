@@ -1,6 +1,7 @@
 
 #include <iostream>
 #include <cstdio>
+#include <iomanip>
 
 #include <nmath/linalg/Vec.h>
 #include <nmath/linalg/VecFunctions.h>
@@ -27,7 +28,7 @@ std::ostream& operator<<(std::ostream& os, nmath::Mat<M,N> const & m)
 {
 	for (int i = 0; i < M; ++i) {
 		for (int j = 0; j < N; ++j) {
-			os << m(i,j) << " ";
+			os << std::setprecision(2) << std::fixed << m(i, j) << " ";
 		}
 		os << std::endl;
 	}
@@ -36,19 +37,28 @@ std::ostream& operator<<(std::ostream& os, nmath::Mat<M,N> const & m)
 
 void test_gauss_elim()
 {
-	nmath::Mat<3, 5> m;
+	nmath::Mat<3, 6> m;
 	
+	m(0, 0) = 1;
+	m(0, 1) = 0;
+	m(0, 2) =-3;
+	m(0, 3) = 0;
+	m(0, 4) = 2;
+	m(0, 5) =-8;
 
-	m(0, 0) = 7;
-	m(0, 1) = 1;
-	m(0, 2) = 1;
-	
+	m(1, 0) = 0;
 	m(1, 1) = 1;
-	m(1, 2) = 2;
-	
-	m(2, 0) = 1;
+	m(1, 2) = 5;
+	m(1, 3) = 0;
+	m(1, 4) =-1;
+	m(1, 5) = 4;
+
+	m(2, 0) = 0;
 	m(2, 1) = 0;
-	m(2, 2) = 4;
+	m(2, 2) = 0;
+	m(2, 3) = 1;
+	m(2, 4) = 7;
+	m(2, 5) =-9;
 
 	auto m1 = m.transpose();
 
@@ -57,10 +67,21 @@ void test_gauss_elim()
 	nmath::gaussianElimination(m);
 
 	std::cout << m << std::endl;
+	
+	////////////
 
+	
+
+	auto m2 = nmath::SMat<6>::Identity();
+	
 	std::cout << m1 << std::endl;
-	nmath::gaussianElimination(m1);
+	std::cout << m2 << std::endl;
+	
+	nmath::gaussianElimination(m1, m2);
+	
 	std::cout << m1 << std::endl;
+	std::cout << m2 << std::endl;
+
 }
 
 void nmath::test()
