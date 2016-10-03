@@ -94,6 +94,14 @@ namespace nmath {
 		return m(0, 0);
 	}
 
+	template<int M, int N>
+	void gaussianElimination(Mat<M, N> & m)
+	{
+		for (unsigned int k = 0; k < min(M, N); ++k)
+		{
+
+		}
+	}
 }
 
 
