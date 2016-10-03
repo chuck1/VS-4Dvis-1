@@ -51,6 +51,12 @@ namespace nmath {
 			return ret;
 		}
 
-
+		template<int M>
+		double dot(Vec<M> const & a, Vec<M> const & b)
+		{
+			double d = 0;
+			for (int i = 0; i < M; ++i) d += a(i)*b(i);
+			return d;
+		}
 	}
 }

@@ -28,7 +28,7 @@ std::ostream& operator<<(std::ostream& os, nmath::Mat<M,N> const & m)
 {
 	for (int i = 0; i < M; ++i) {
 		for (int j = 0; j < N; ++j) {
-			os << std::setprecision(2) << std::fixed << m(i, j) << " ";
+			os << std::setw(5) << std::setprecision(2) << std::fixed << m(i, j) << " ";
 		}
 		os << std::endl;
 	}
@@ -62,11 +62,11 @@ void test_gauss_elim()
 
 	auto m1 = m.transpose();
 
-	std::cout << m << std::endl;
+	//std::cout << m << std::endl;
 	
-	nmath::gaussianElimination(m);
+	//nmath::gaussianElimination(m);
 
-	std::cout << m << std::endl;
+	//std::cout << m << std::endl;
 	
 	////////////
 
@@ -75,13 +75,21 @@ void test_gauss_elim()
 	auto m2 = nmath::SMat<6>::Identity();
 	
 	std::cout << m1 << std::endl;
-	std::cout << m2 << std::endl;
+	//std::cout << m2 << std::endl;
 	
 	nmath::gaussianElimination(m1, m2);
 	
-	std::cout << m1 << std::endl;
-	std::cout << m2 << std::endl;
+	std::cout << m1.transpose() << std::endl;
+	
+	std::cout << m2.transpose() << std::endl;
 
+	std::cout << "dot" << std::endl;
+	for (int i = 0; i < 3; ++i)
+	{
+		for (int j = 3; j < 6; ++j)
+			std::cout << nmath::linalg::dot(nmath::row(m, i), nmath::column(m2.transpose(), j)) << std::endl;
+	}
+	std::cout << "dot" << std::endl;
 }
 
 void nmath::test()
