@@ -107,6 +107,17 @@ namespace nmath {
 		}
 		return ret;
 	}
+	template<int M, int N>
+	nmath::linalg::Vec<N> row(Mat<M, N> const & m, int i)
+	{
+		nmath::linalg::Vec<N> ret;
+		for (int j = 0; j < N; ++j)
+		{
+			ret(j) = m(i, j);
+		}
+		return ret;
+	}
+
 
 	template<int M, int N>
 	int argmax(Mat<M, N> & m, int k)
@@ -160,7 +171,10 @@ namespace nmath {
 		{
 			int i_max = argmax(m, k);
 			
-			if (m(i_max, k) == 0) throw new std::exception();
+			if (m(i_max, k) == 0){
+				//throw new std::exception();
+				continue;
+			}
 
 			if (k != i_max) m.swapRows(k, i_max);
 
