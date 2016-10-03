@@ -38,10 +38,6 @@ namespace nmath {
 				//bool				operator==(graph::iterator::vert_comp const &);
 				//bool				operator!=(graph::iterator::vert_comp const &);
 
-
-
-
-
 				vert_comp(nmath::graph::container::Vert<V> & container, iterator j, int c) :
 					_M_container(container),
 					_M_j(j),
@@ -108,7 +104,7 @@ namespace nmath {
 
 
 			private:
-				graph::container::Vert<V> &		_M_container;
+				nmath::graph::container::Vert<V> &		_M_container;
 				iterator			_M_j;
 				int					_M_c;
 			};
