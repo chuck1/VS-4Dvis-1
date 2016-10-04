@@ -18,7 +18,7 @@ namespace nmath {
 			public:
 				typedef std::shared_ptr<V> V_S;
 				typedef std::weak_ptr<V> V_W;
-				typedef std::set<V_S, graph::vert_comp<V>> CONT;
+				typedef std::set<V_S, nmath::graph::vert_comp<V>> CONT;
 
 				typedef typename CONT::iterator	iterator;
 

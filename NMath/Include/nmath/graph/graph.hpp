@@ -28,7 +28,7 @@ namespace nmath {
 			typedef std::shared_ptr<V> V_S;
 			typedef std::weak_ptr<V> V_W;
 			typedef std::function<bool(V_S const &)>	VFUNC;
-			typedef std::set<std::shared_ptr<V>, graph::vert_comp<V>> VCONT;
+			typedef std::set<std::shared_ptr<V>, nmath::graph::vert_comp<V>> VCONT;
 
 			/*void				add_edge_util(V_S v0, V_S v1, std::shared_ptr<graph::edge_data> const &);
 			void				add_edge(V_S v0, V_S v1);
@@ -519,9 +519,9 @@ namespace nmath {
 
 
 
-			std::vector<graph::LAYER_S>	_M_layers;
+			std::vector<nmath::graph::LAYER_S>	_M_layers;
 
-			graph::container::Vert<V>		_M_verts;
+			nmath::graph::container::Vert<V>		_M_verts;
 		};
 
 	}

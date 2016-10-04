@@ -33,7 +33,7 @@ namespace nmath {
 			{
 				for (int j = 0; j < N; ++j)
 				{
-					Vecs[i].resize(N);
+					//Vecs[i].resize(N);
 					m0(i, j) = Vecs[i](j);
 				}
 			}

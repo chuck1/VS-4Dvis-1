@@ -21,7 +21,7 @@ namespace nmath {
 		class Vert : public std::enable_shared_from_this<Vert<V>>
 		{
 		public:
-			friend class graph::iterator::edge_graph<V>;
+			friend class nmath::graph::iterator::edge_graph<V>;
 
 			typedef std::shared_ptr<V> V_S;
 			typedef std::weak_ptr<V> V_W;
@@ -29,7 +29,7 @@ namespace nmath {
 			typedef std::shared_ptr<Graph<V>> G_S;
 			typedef std::weak_ptr<Graph<V>> G_W;
 
-			typedef graph::container::Edge<V> ECONT;
+			typedef nmath::graph::container::Edge<V> ECONT;
 			typedef std::shared_ptr<ECONT> ECONT_S;
 
 			Vert(G_S g, ECONT_S c) :
@@ -151,7 +151,7 @@ namespace nmath {
 			
 			G_W							_M_graph;
 			
-			std::shared_ptr<graph::container::Edge<V>>	_M_edges;
+			std::shared_ptr<nmath::graph::container::Edge<V>>	_M_edges;
 		public:
 			LAYER_W						_M_layer;
 		};

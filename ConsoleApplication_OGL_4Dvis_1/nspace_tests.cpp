@@ -25,7 +25,7 @@ private:
 
 void nspace::tests::test_array()
 {
-	auto arr = std::make_shared<nspace::util::Array<double>>();
+	auto arr = std::make_shared<nmath::util::Array<double>>();
 
 	auto d0 = arr->push_back(0);
 

@@ -12,7 +12,7 @@ namespace nspace {
 		class RigidBody
 		{
 		public:
-			typedef std::shared_ptr<nspace::util::ArrayRef< nmath::linalg::Vec<N> > > VECTOR;
+			typedef std::shared_ptr<nmath::util::ArrayRef< nmath::linalg::Vec<N> > > VECTOR;
 			
 			VECTOR _M_ref_p;
 		};

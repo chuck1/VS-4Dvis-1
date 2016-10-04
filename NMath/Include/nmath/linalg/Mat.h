@@ -5,6 +5,8 @@
 #include <cassert>
 #include <exception>
 
+#include <nmath/linalg/Vec.h>
+
 namespace nmath {
 
 	/**
@@ -62,6 +64,36 @@ namespace nmath {
 				for (int j = 0; j < N; ++j)
 				{
 					ret(j, i) = operator()(i, j);
+				}
+			}
+			return ret;
+		}
+
+		template<int O>
+		Mat<M, O> operator*(Mat<N, O> const & m)
+		{
+			Mat<M, O> ret;
+			for (int i = 0; i < M; ++i)
+			{
+				for (int j = 0; j < O; ++j)
+				{
+					for (int k = 0; k < N; ++k)
+					{
+						ret(i, j) += operator()(i, k) * m(k, j);
+					}
+				}
+			}
+			return ret;
+		}
+
+		nmath::linalg::Vec<M> operator*(nmath::linalg::Vec<N> v)
+		{
+			nmath::linalg::Vec<M> ret;
+			for (int i = 0; i < M; ++i)
+			{
+				for (int j = 0; j < N; ++j)
+				{
+					ret(i) += operator()(i, j) * v(j);
 				}
 			}
 			return ret;

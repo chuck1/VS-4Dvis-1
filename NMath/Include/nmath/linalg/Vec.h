@@ -22,10 +22,6 @@ namespace nmath {
 			{
 				for (int i = 0; i < M; ++i) operator()(i) = 0;
 			}
-			void resize(int n)
-			{
-
-			}
 			void operator=(Vec const & v)
 			{
 				for (int i = 0; i < M; ++i)

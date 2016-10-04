@@ -18,11 +18,11 @@ namespace nmath {
 			/**
 			* a vertex of the topology graph for shape 0
 			*/
-			std::shared_ptr<nmath::geometry::topo::Vertex> _M_v0;
+			std::shared_ptr<nmath::geometry::topo::VertexBase<M>> _M_v0;
 			/**
 			* a vertex of the topology graph for shape 1
 			*/
-			std::shared_ptr<nmath::geometry::topo::Vertex> _M_v1;
+			std::shared_ptr<nmath::geometry::topo::VertexBase<M>> _M_v1;
 
 			std::shared_ptr<nmath::geometry::Polytope<M>> _M_p0;
 			std::shared_ptr<nmath::geometry::Polytope<M>> _M_p1;

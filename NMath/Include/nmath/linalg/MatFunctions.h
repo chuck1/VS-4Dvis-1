@@ -7,7 +7,7 @@
 namespace nmath {
 
 	template<int M, int N>
-	void subMat0(Mat<M, N> const & m, int i0)
+	Mat<M - 1, N> subMat0(Mat<M, N> const & m, int i0)
 	{
 		Mat<M - 1, N> ret;
 
@@ -24,6 +24,7 @@ namespace nmath {
 
 			++a;
 		}
+		return ret;
 	}
 	template<int M, int N>
 	Mat<M, N - 1> subMat1(Mat<M, N> const & m, int j0)

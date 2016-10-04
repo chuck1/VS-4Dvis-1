@@ -23,8 +23,11 @@ namespace nmath {
 			{
 				auto data = std::make_shared<nmath::graph::edge_data>();
 				
-				nmath::graph::graph::add_edge(g, v0, v1, data);
-				nmath::graph::graph::add_edge(g, v1, v0, data);
+				add_edge<V>(g, v0, v1, data);
+				add_edge<V>(g, v1, v0, data);
+
+				//nmath::graph::graph::add_edge(g, v0, v1, data);
+				//nmath::graph::graph::add_edge(g, v1, v0, data);
 				//nmath::graph::vert::add_edge(v0, v1, data);
 				//add_edge_util(v1, v0, data);
 			}

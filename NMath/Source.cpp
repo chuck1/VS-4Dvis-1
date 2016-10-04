@@ -91,16 +91,88 @@ void test_gauss_elim()
 	}
 	std::cout << "dot" << std::endl;
 }
+void test_array()
+{
+	auto arr = std::make_shared<nmath::util::Array<double>>();
+
+	auto d = arr->push_back(0);
+
+	d->ref() = 1;
+
+}
+void test_polytope()
+{
+	std::cout << "polytope" << std::endl;
+
+	auto planes = std::make_shared<nmath::util::Array<nmath::geometry::Plane<4>>>();
+
+	auto p = std::make_shared<nmath::geometry::Polytope<4>>();
+
+	// hyperplanes
+
+	/*p->_M_planes[0] = planes->push_back_index_ref(
+		nmath::geometry::Plane<4>(nmath::linalg::Vec<4>::baseVec(0), 0),
+		[&](unsigned int i){ p->_M_planes_ref[0] = i; },
+		[&](){ return p->_M_planes_ref[0]; });*/
+
+	// faces
+
+	p->_M_faces[0]._M_plane.n = nmath::linalg::Vec<4>::baseVec(0);
+	p->_M_faces[0]._M_plane.d = 1;
+	p->_M_faces[0].calc_basis();
+	p->_M_faces[0]._M_p = p->_M_faces[0]._M_plane.n;
+
+	p->_M_faces[1]._M_plane.n = nmath::linalg::Vec<4>::baseVec(1);
+	p->_M_faces[1]._M_plane.d = 1;
+	p->_M_faces[1].calc_basis();
+	p->_M_faces[1]._M_p = p->_M_faces[1]._M_plane.n;
+
+	p->_M_faces[2]._M_plane.n = nmath::linalg::Vec<4>::baseVec(2);
+	p->_M_faces[2]._M_plane.d = 1;
+	p->_M_faces[2].calc_basis();
+	p->_M_faces[2]._M_p = p->_M_faces[2]._M_plane.n;
+
+	p->_M_faces[0].AddHyperplaneIntersection(p->_M_faces[1]._M_plane);
+	p->_M_faces[0].AddHyperplaneIntersection(p->_M_faces[2]._M_plane);
+
+	std::cout << "Face 0" << std::endl;
+	std::cout << "n" << std::endl;
+	std::cout << p->_M_faces[0]._M_plane.n << std::endl;
+	std::cout << "A" << std::endl;
+	std::cout << p->_M_faces[0]._M_A << std::endl;
+	std::cout << "inequalities" << std::endl;
+	for (int i = 0; i < 2; ++i)
+	{
+		std::cout << "a" << std::endl;
+		std::cout << p->_M_faces[0]._M_inequalities[i]._M_a << std::endl;
+		std::cout << "d = " << p->_M_faces[0]._M_inequalities[i]._M_d << std::endl;
+	}
+	
+	// features
+	// k = 0
+	p->nmath::geometry::FeatureSet<4, 0>::_M_features[0] = std::make_shared<nmath::geometry::Feature<4, 0>>();
+
+	// topology
+
+	p->_M_topology = std::make_shared<nmath::geometry::topo::Graph<4>>();
+
+	auto v0_0 = std::make_shared<nmath::geometry::topo::Vertex<4, 0>>(p->_M_topology, p->nmath::geometry::FeatureSet<4, 0>::_M_features[0]);
+	auto v0_1 = std::make_shared<nmath::geometry::topo::Vertex<4, 0>>(p->_M_topology, p->nmath::geometry::FeatureSet<4, 0>::_M_features[1]);
+	
+	auto v1_0 = std::make_shared<nmath::geometry::topo::Vertex<4, 1>>(p->_M_topology, p->nmath::geometry::FeatureSet<4, 1>::_M_features[0]);
+
+	nmath::graph::graph::add_edge<nmath::geometry::topo::VertexBase<4>>(*(p->_M_topology), v0_0, v1_0);
+	nmath::graph::graph::add_edge<nmath::geometry::topo::VertexBase<4>>(*(p->_M_topology), v0_1, v1_0);
+
+	std::cout << "graph size = " << p->_M_topology->vert_size() << std::endl;
+	std::cout << std::endl;
+}
 
 void nmath::test()
 {
 	test_gauss_elim();
-	try{
-		test_gauss_elim();
-	}
-	catch (...)
-	{
-	}
+	test_array();
+	test_polytope();
 
 	nmath::linalg::Vec<5> a = nmath::linalg::Vec<5>::baseVec(0);
 	nmath::linalg::Vec<5> b = nmath::linalg::Vec<5>::baseVec(1);
@@ -121,14 +193,14 @@ void nmath::test()
 
 
 	// graph
-#if 1
-	auto g = std::make_shared<nmath::geometry::topo::Graph>();
+#if 0
+	auto g = std::make_shared<nmath::geometry::topo::Graph<4>>();
 
-	auto v0 = std::make_shared<nmath::geometry::topo::Vertex>(g);
-	auto v1 = std::make_shared<nmath::geometry::topo::Vertex>(g);
+	auto v0 = std::make_shared<nmath::geometry::topo::Vertex<4,0>>(g);
+	auto v1 = std::make_shared<nmath::geometry::topo::Vertex<4,0>>(g);
 
 	//g->add_edge(v0, v1);
-	nmath::graph::graph::add_edge(*g, v0, v1);
+	nmath::graph::graph::add_edge<nmath::geometry::topo::VertexBase<4>>(*g, v0, v1);
 
 	std::cout << "graph" << std::endl;
 	std::cout << g->vert_size() << std::endl;

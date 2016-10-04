@@ -48,9 +48,6 @@
     <ClInclude Include="include\nspace\actor\RigidBody.h">
       <Filter>Header Files\nspace\actor</Filter>
     </ClInclude>
-    <ClInclude Include="include\nspace\util\Array.h">
-      <Filter>Header Files\nspace\util</Filter>
-    </ClInclude>
     <ClInclude Include="include\nspace\app\App.h">
       <Filter>Header Files\nspace\app</Filter>
     </ClInclude>
