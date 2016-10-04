@@ -104,8 +104,17 @@ namespace nmath {
 
 				if (k1 > k) return false;
 
-				k = k1;
+				// test boundaries
+				auto x = ray.x(k1);
+				auto s1 = s(x);
 
+				for (unsigned int i = 0; i < _M_inequalities._M_size; ++i)
+				{
+					if (!_M_inequalities[i].eval(s1)) return false;;
+				}
+
+				// passed
+				k = k1;
 				return true;
 			}
 

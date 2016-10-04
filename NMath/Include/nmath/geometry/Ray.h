@@ -9,6 +9,10 @@ namespace nmath {
 		class Ray
 		{
 		public:
+			nmath::linalg::Vec<M> x(double k)
+			{
+				return p + v*k;
+			}
 			nmath::linalg::Vec<M> p;
 			nmath::linalg::Vec<M> v;
 		};
