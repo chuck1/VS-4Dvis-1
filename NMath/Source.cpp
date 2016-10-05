@@ -100,6 +100,36 @@ void test_array()
 	d->ref() = 1;
 
 }
+
+class ArrayIndirectTestClass
+{
+public:
+	std::vector<unsigned int> v;
+	unsigned int size_byte() const
+	{
+		return v.size() * sizeof(unsigned int);
+	}
+	void serialize(char * c) const
+	{
+		auto l = size_byte();
+		if (l == 0) return;
+		memcpy(c, &v[0], l);
+	}
+};
+void test_array_indirect()
+{
+	std::cout << "test_array_indirect" << std::endl;
+
+	auto arr = std::make_shared < nmath::util::ArrayIndirect<ArrayIndirectTestClass>>();
+
+	std::cout << arr->size_buffer() << std::endl;
+
+	ArrayIndirectTestClass c0;
+
+	auto v0 = arr->push_back(c0);
+
+	std::cout << arr->size_buffer() << std::endl;
+}
 void test_polytope()
 {
 	std::cout << "polytope" << std::endl;
@@ -117,37 +147,54 @@ void test_polytope()
 
 	// faces
 
-	p->_M_faces[0]._M_plane.n = nmath::linalg::Vec<4>::baseVec(0);
-	p->_M_faces[0]._M_plane.d = 1;
-	p->_M_faces[0].calc_basis();
-	p->_M_faces[0]._M_p = p->_M_faces[0]._M_plane.n;
-
-	p->_M_faces[1]._M_plane.n = nmath::linalg::Vec<4>::baseVec(1);
-	p->_M_faces[1]._M_plane.d = 1;
-	p->_M_faces[1].calc_basis();
-	p->_M_faces[1]._M_p = p->_M_faces[1]._M_plane.n;
-
-	p->_M_faces[2]._M_plane.n = nmath::linalg::Vec<4>::baseVec(2);
-	p->_M_faces[2]._M_plane.d = 1;
-	p->_M_faces[2].calc_basis();
-	p->_M_faces[2]._M_p = p->_M_faces[2]._M_plane.n;
-
-	p->_M_faces[0].AddHyperplaneIntersection(p->_M_faces[1]._M_plane);
-	p->_M_faces[0].AddHyperplaneIntersection(p->_M_faces[2]._M_plane);
-
-	std::cout << "Face 0" << std::endl;
-	std::cout << "n" << std::endl;
-	std::cout << p->_M_faces[0]._M_plane.n << std::endl;
-	std::cout << "A" << std::endl;
-	std::cout << p->_M_faces[0]._M_A << std::endl;
-	std::cout << "inequalities" << std::endl;
-	for (int i = 0; i < 2; ++i)
+	for (int j = 0; j < 4; ++j)
 	{
-		std::cout << "a" << std::endl;
-		std::cout << p->_M_faces[0]._M_inequalities[i]._M_a << std::endl;
-		std::cout << "d = " << p->_M_faces[0]._M_inequalities[i]._M_d << std::endl;
+		p->_M_faces[2 * j + 0]._M_plane.n = nmath::linalg::Vec<4>::baseVec(j);
+		p->_M_faces[2 * j + 0]._M_plane.d = 1;
+		p->_M_faces[2 * j + 0].calc_basis();
+		p->_M_faces[2 * j + 0]._M_p = p->_M_faces[2 * j + 0]._M_plane.n;
+
+		p->_M_faces[2 * j + 1]._M_plane.n = -nmath::linalg::Vec<4>::baseVec(j);
+		p->_M_faces[2 * j + 1]._M_plane.d = 1;
+		p->_M_faces[2 * j + 1].calc_basis();
+		p->_M_faces[2 * j + 1]._M_p = p->_M_faces[2 * j + 1]._M_plane.n;
+
 	}
 	
+	
+	for (int i = 0; i < 4; ++i)
+	{
+		for (int j = 0; j < 4; ++j)
+		{
+			if (i == j) continue;
+
+			p->_M_faces[2*i + 0].AddHyperplaneIntersection(p->_M_faces[2 * j + 0]._M_plane);
+			p->_M_faces[2*i + 0].AddHyperplaneIntersection(p->_M_faces[2 * j + 1]._M_plane);
+
+			p->_M_faces[2*i + 1].AddHyperplaneIntersection(p->_M_faces[2 * j + 0]._M_plane);
+			p->_M_faces[2*i + 1].AddHyperplaneIntersection(p->_M_faces[2 * j + 1]._M_plane);
+		}
+	}
+
+	
+
+	for (int i = 0; i < 8; ++i)
+	{
+		std::cout << "Face " << i << std::endl;
+		std::cout << "  n" << std::endl;
+		std::cout << p->_M_faces[i]._M_plane.n << std::endl;
+		std::cout << "  A" << std::endl;
+		std::cout << p->_M_faces[i]._M_A << std::endl;
+		std::cout << "  inequalities" << std::endl;
+
+		for (int j = 0; j < p->_M_faces[i]._M_inequalities.size(); ++j)
+		{
+			std::cout << "    a" << std::endl;
+			std::cout << p->_M_faces[i]._M_inequalities[j]._M_a << std::endl;
+			std::cout << "    d = " << p->_M_faces[i]._M_inequalities[j]._M_d << std::endl;
+		}
+	}
+
 	// features
 	// k = 0
 	p->nmath::geometry::FeatureSet<4, 0>::_M_features[0] = std::make_shared<nmath::geometry::Feature<4, 0>>();
@@ -167,14 +214,9 @@ void test_polytope()
 	std::cout << "graph size = " << p->_M_topology->vert_size() << std::endl;
 	std::cout << std::endl;
 }
-
-void nmath::test()
+void test_linalg()
 {
-	test_gauss_elim();
-	test_array();
-	test_polytope();
-
-	nmath::linalg::Vec<5> a = nmath::linalg::Vec<5>::baseVec(0);
+nmath::linalg::Vec<5> a = nmath::linalg::Vec<5>::baseVec(0);
 	nmath::linalg::Vec<5> b = nmath::linalg::Vec<5>::baseVec(1);
 	nmath::linalg::Vec<5> c = nmath::linalg::Vec<5>::baseVec(2);
 	nmath::linalg::Vec<5> d = nmath::linalg::Vec<5>::baseVec(3);
@@ -190,6 +232,30 @@ void nmath::test()
 	std::cout << e << std::endl;
 
 	std::cout << det(m) << std::endl;
+}
+void test_ray()
+{
+	std::cout << "test_ray" << std::endl;
+
+	nmath::geometry::Ray<3> r;
+	
+	std::cout << ((int)&(r.p) - (int)&(r)) << std::endl;
+	std::cout << ((int)&(r.v) - (int)&(r)) << std::endl;
+	std::cout << ((int)&(r.temp.intersection.k) - (int)&(r)) << std::endl;
+	std::cout << ((int)&(r.temp.intersection.face_index) - (int)&(r)) << std::endl;
+	std::cout << sizeof(r) << std::endl;
+}
+
+void nmath::test()
+{
+	//test_gauss_elim();
+	//test_array();
+	//test_polytope();
+	//test_ray();
+	test_array_indirect();
+
+	getchar();
+	exit(0);
 
 
 	// graph

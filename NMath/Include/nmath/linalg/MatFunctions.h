@@ -216,6 +216,16 @@ namespace nmath {
 	{
 		for (unsigned int k = 0; k < std::min(M, N); ++k)
 		{
+			// fix negative
+			for (int i = k; i < M; ++i)
+			{
+				if (m(i, k) < 0)
+				{
+					multiplyRow(m, i, -1);
+				}
+			}
+
+			// swap
 			int i_max = argmax(m, k);
 
 			if (m(i_max, k) == 0) throw new std::exception();

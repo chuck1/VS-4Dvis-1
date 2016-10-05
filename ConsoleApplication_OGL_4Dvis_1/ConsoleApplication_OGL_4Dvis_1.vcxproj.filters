@@ -57,6 +57,15 @@
     <ClInclude Include="include\nspace\tests.h">
       <Filter>Header Files\nspace</Filter>
     </ClInclude>
+    <ClInclude Include="include\nspace\graphics\raycast\Viewport.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\nspace\graphics\Color.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\nspace\app\ManagerBuffer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -69,6 +78,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="nspace_tests.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="nspace_app_App.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

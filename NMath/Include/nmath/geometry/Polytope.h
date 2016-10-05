@@ -141,7 +141,6 @@ namespace nmath {
 
 			Face<M> _M_faces[16];
 			
-
 			/** graph
 			*/
 			std::shared_ptr<nmath::geometry::topo::Graph<M>> _M_topology;

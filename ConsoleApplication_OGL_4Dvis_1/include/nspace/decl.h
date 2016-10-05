@@ -4,7 +4,7 @@
 namespace nspace {
 	namespace actor {
 		class Base;
-		class RigidBody;
+		class RigidBodyBase;
 	}
 }
 

@@ -3,6 +3,7 @@
 #define NMATH_VEC
 
 #include <limits>
+#include <cmath>
 
 namespace nmath {
 	namespace linalg {
@@ -52,6 +53,15 @@ namespace nmath {
 					_M_v[i] += b._M_v[i];
 				}
 			}
+			Vec operator-()
+			{
+				Vec<M> ret;
+				for (int i = 0; i < M; ++i)
+				{
+					ret(i) = -operator()(i);
+				}
+				return ret;
+			}
 			Vec<M> operator*(int const & b)
 			{
 				Vec<M> c;
@@ -61,6 +71,28 @@ namespace nmath {
 				}
 				return c;
 			}
+			
+			void length() const
+			{
+				double d = 0;
+				for (int i = 0; i < M; ++i)
+				{
+					d += operator()(i) * operator()(i);
+				}
+				return sqrt(d);
+			}
+			void normalize()
+			{
+				double d = length();
+
+				assert(d > 0);
+
+				for (int i = 0; i < M; ++i)
+				{
+					operator()(i) /= d;
+				}
+			}
+
 			double const & operator()(int i) const
 			{
 				return _M_v[i];
@@ -71,7 +103,7 @@ namespace nmath {
 
 				return _M_v[i];
 			}
-
+			
 			Vec<M> abs() const
 			{
 				Vec<M> ret;
@@ -102,5 +134,5 @@ namespace nmath {
 	}
 }
 
-
 #endif
+
