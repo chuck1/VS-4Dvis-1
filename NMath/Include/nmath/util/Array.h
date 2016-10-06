@@ -7,7 +7,7 @@
 namespace nmath {
 	namespace util {
 
-		template<typename T, unsigned int L>
+		/*template<typename T, unsigned int L>
 		class ArraySimple
 		{
 		public:
@@ -30,7 +30,7 @@ namespace nmath {
 		private:
 			T _M_t[L];
 			unsigned int _M_size;
-		};
+		};*/
 
 		template<typename T> class Array;
 		/**
@@ -96,11 +96,12 @@ namespace nmath {
 
 			virtual std::shared_ptr< ArrayRef<T> > push_back(T const & t)
 			{
+				unsigned int index = _M_v.size();
 				auto r = std::make_shared< ArrayRef<T> >(shared_from_this(), _M_v.size());
 				_M_v.push_back(TUPLE(t,0));
 				return r;
 			}
-			std::shared_ptr< ArrayRefIndexRef<T> > push_back_index_ref(
+			virtual std::shared_ptr< ArrayRefIndexRef<T> > push_back_index_ref(
 				T const & t, 
 				std::function<void(unsigned int)> f_set, 
 				std::function<unsigned int()> f_get)
@@ -162,32 +163,42 @@ namespace nmath {
 				}
 			}
 
-			virtual std::shared_ptr< ArrayRef<T> > push_back(T const & t)
+			void push_back_buffer(T const & t, unsigned int index)
 			{
-				unsigned int index = _M_v.size();
-				auto r = std::make_shared< ArrayRef<T> >(shared_from_this(), _M_v.size());
-				_M_v.push_back(TUPLE(t,0));
-
 				// write to buffer
 				unsigned int l = t.size_byte();
-				unsigned int block_size = sizeof(unsigned int) + l;
+				unsigned int block_size = sizeof(unsigned int)+l;
 				resize(buffer_size + block_size);
 				char * c = seek(index);
 				*((unsigned int *)c) = block_size;
 				c += sizeof(unsigned int);
 				t.serialize(c);
+			}
+
+			virtual std::shared_ptr< ArrayRef<T> > push_back(T const & t)
+			{
+				unsigned int index = _M_v.size();
+				auto r = std::make_shared< ArrayRef<T> >(shared_from_this(), index);
+				_M_v.push_back(TUPLE(t,0));
+
+				push_back_buffer(t, index);
 
 				return r;
 			}
-			std::shared_ptr< ArrayRefIndexRef<T> > push_back_index_ref(
+			virtual std::shared_ptr< ArrayRefIndexRef<T> > push_back_index_ref(
 				T const & t,
 				std::function<void(unsigned int)> f_set,
 				std::function<unsigned int()> f_get)
 			{
-				auto r = std::make_shared< ArrayRefIndexRef<T> >(shared_from_this(), f_set, f_get, _M_v.size());
-				_M_v.push_back(t);
+				unsigned int index = _M_v.size();
+				auto r = std::make_shared< ArrayRefIndexRef<T> >(shared_from_this(), f_set, f_get, index);
+				_M_v.push_back(TUPLE(t,0));
+
+				push_back_buffer(t, index);
+
 				return r;
 			}
+			
 			unsigned int size() const
 			{
 				return _M_v.size();

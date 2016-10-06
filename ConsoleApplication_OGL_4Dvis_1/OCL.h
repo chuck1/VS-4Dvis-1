@@ -65,7 +65,7 @@ public:
 		free(source_str);
 
 		/* Build Kernel Program */
-		ret = clBuildProgram(program, 1, &device_id, NULL, NULL, NULL);
+		ret = clBuildProgram(program, 1, &device_id, "-D N=(4)", NULL, NULL);
 
 		if (ret != CL_SUCCESS) {
 			char* programLog;

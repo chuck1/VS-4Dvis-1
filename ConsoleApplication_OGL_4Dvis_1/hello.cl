@@ -1,4 +1,20 @@
 
+struct Ray
+{
+	float p[N];
+	float v[N];
+
+	// intersection data
+	double k;
+	int face_index;
+	float color[3];
+};
+
+struct Face
+{
+
+};
+
 __kernel void math_dot(__global const float * x, __global const float * y, const uint m, __global float * res)
 {
 	*res = 0;
@@ -6,6 +22,11 @@ __kernel void math_dot(__global const float * x, __global const float * y, const
 	{
 		*res += x[i] * y[i];
 	}
+}
+
+__kernel void ray_face_intersect(__global struct Ray * ray, __global struct Face * face)
+{
+
 }
 
 __kernel void hello(__global char* string)
@@ -24,6 +45,7 @@ __kernel void hello(__global char* string)
 	string[11] = 'd';
 	string[12] = '!';
 	string[13] = '\0';
+	string[N] = 'Z';
 }
 
 
