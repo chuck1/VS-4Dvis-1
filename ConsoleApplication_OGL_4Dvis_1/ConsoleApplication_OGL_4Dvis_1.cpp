@@ -434,14 +434,16 @@ int _tmain(int argc, _TCHAR* argv[])
 {
 
 
-	nmath::test();
-	nspace::tests::test_array();
+	//nmath::test();
+	//nspace::tests::test_array();
 
 
 	ocl.init();
 
 	OCLtest2();
 
+	getchar();
+	exit(0);
 
 
 	//Set the error callback

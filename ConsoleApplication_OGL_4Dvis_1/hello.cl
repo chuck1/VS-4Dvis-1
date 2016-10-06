@@ -1,3 +1,13 @@
+
+__kernel void math_dot(__global const float * x, __global const float * y, const uint m, __global float * res)
+{
+	*res = 0;
+	for (int i = 0; i < m; ++i)
+	{
+		*res += x[i] * y[i];
+	}
+}
+
 __kernel void hello(__global char* string)
 {
 	string[0] = 'H';
@@ -15,3 +25,8 @@ __kernel void hello(__global char* string)
 	string[12] = '!';
 	string[13] = '\0';
 }
+
+
+
+
+

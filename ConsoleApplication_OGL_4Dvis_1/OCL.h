@@ -67,6 +67,22 @@ public:
 		/* Build Kernel Program */
 		ret = clBuildProgram(program, 1, &device_id, NULL, NULL, NULL);
 
+		if (ret != CL_SUCCESS) {
+			char* programLog;
+			cl_build_status status;
+			size_t logSize;
+
+			// check build error and build status first
+			clGetProgramBuildInfo(program, device_id, CL_PROGRAM_BUILD_STATUS, sizeof(cl_build_status), &status, NULL);
+
+			// check build log
+			clGetProgramBuildInfo(program, device_id, CL_PROGRAM_BUILD_LOG, 0, NULL, &logSize);
+			programLog = (char*)calloc(logSize + 1, sizeof(char));
+			clGetProgramBuildInfo(program, device_id, CL_PROGRAM_BUILD_LOG, logSize + 1, programLog, NULL);
+			printf("Build failed; error=%d, status=%d, programLog:nn%s", ret, status, programLog);
+			free(programLog);
+		}
+
 		return program;
 	}
 	void flush()

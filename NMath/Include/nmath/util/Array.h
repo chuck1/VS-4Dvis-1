@@ -1,5 +1,5 @@
 
-
+#include <iomanip>
 #include <vector>
 #include <memory>
 #include <functional>
@@ -44,7 +44,12 @@ namespace nmath {
 
 			T & ref()
 			{
-				return _M_array.lock()->_M_v[_M_i];
+				++std::get<1>(_M_array.lock()->_M_v[_M_i]);
+				return std::get<0>(_M_array.lock()->_M_v[_M_i]);
+			}
+			T const & ref() const
+			{
+				return std::get<0>(_M_array.lock()->_M_v[_M_i]);
 			}
 
 			ArrayRef(std::weak_ptr<Array<T>> arr, unsigned int i) :
@@ -87,10 +92,12 @@ namespace nmath {
 		public:
 			friend class ArrayRef<T>;
 
+			typedef std::tuple<T, unsigned int> TUPLE;
+
 			virtual std::shared_ptr< ArrayRef<T> > push_back(T const & t)
 			{
 				auto r = std::make_shared< ArrayRef<T> >(shared_from_this(), _M_v.size());
-				_M_v.push_back(t);
+				_M_v.push_back(TUPLE(t,0));
 				return r;
 			}
 			std::shared_ptr< ArrayRefIndexRef<T> > push_back_index_ref(
@@ -99,7 +106,7 @@ namespace nmath {
 				std::function<unsigned int()> f_get)
 			{
 				auto r = std::make_shared< ArrayRefIndexRef<T> >(shared_from_this(), f_set, f_get, _M_v.size());
-				_M_v.push_back(t);
+				_M_v.push_back(TUPLE(t,0));
 				return r;
 			}
 			unsigned int size() const
@@ -107,7 +114,7 @@ namespace nmath {
 				return _M_v.size();
 			}
 		protected:
-			std::vector<T> _M_v;
+			std::vector<TUPLE> _M_v;
 		};
 
 		/*
@@ -127,27 +134,46 @@ namespace nmath {
 		public:
 			friend class ArrayRef<T>;
 
-			ArrayIndirect() : buffer(0), buffer_size(0){}
+			ArrayIndirect() : buffer(0), buffer_size(0) {}
 			/*
 			* for any elements that have changed since last refresh
 			* resize if necessary and copy data to buffer
 			*/
 			void refresh()
 			{
+				for (int i = 0; i < _M_v.size(); ++i)
+				{
+					if (std::get<1>(_M_v[i]) > 0)
+					{
+						char * c = seek(i);
 
+						unsigned int block_size = *((unsigned int*)c);
+
+						unsigned int block_size_new = std::get<0>(_M_v[i]).size_byte() + sizeof(unsigned int);
+
+						if (block_size_new != block_size) resize(i, block_size_new);
+
+						c = seek(i);
+						
+						*((unsigned int*)c) = block_size_new;
+						c += sizeof(unsigned int);
+						std::get<0>(_M_v[i]).serialize(c);
+					}
+				}
 			}
 
 			virtual std::shared_ptr< ArrayRef<T> > push_back(T const & t)
 			{
 				unsigned int index = _M_v.size();
 				auto r = std::make_shared< ArrayRef<T> >(shared_from_this(), _M_v.size());
-				_M_v.push_back(t);
+				_M_v.push_back(TUPLE(t,0));
 
 				// write to buffer
 				unsigned int l = t.size_byte();
-				resize(buffer_size + sizeof(unsigned int) + l);
+				unsigned int block_size = sizeof(unsigned int) + l;
+				resize(buffer_size + block_size);
 				char * c = seek(index);
-				*((unsigned int *)c) = l;
+				*((unsigned int *)c) = block_size;
 				c += sizeof(unsigned int);
 				t.serialize(c);
 
@@ -254,9 +280,30 @@ namespace nmath {
 			{
 				return buffer_size;
 			}
-		private:
-			//std::vector<T> _M_v;
 
+			void print()
+			{
+				// for debugging
+				char * c = buffer;
+				while (true)
+				{
+					for (int i = 0; i < 4; ++i)
+					{
+						if (c == (buffer + buffer_size)) break;
+						
+						//std::cout << std::showbase << std::internal << std::setw(4) << std::hex << *((short*)c) << " ";
+						std::cout << *((unsigned int*)c) << " ";
+						c += sizeof(int);
+					}
+					std::cout << std::endl;
+
+					if (c == (buffer + buffer_size)) break;
+				}
+
+				std::cout << std::dec;
+			}
+		private:
+			
 			/* data storage
 			* the buffer is divided into block, one for each element
 			* each element starts with an unsigned int that contains the full length of the block in bytes
@@ -266,4 +313,6 @@ namespace nmath {
 		};
 	}
 }
+
+
 

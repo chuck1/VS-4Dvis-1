@@ -2,12 +2,13 @@
 
 #include <cstdio>
 #include <stdlib.h>
+#include <iostream>
 
 #include"OCL.h"
 
 void OCLtest(OCL& ocl)
 {
-	
+	std::cout << "OCLtest" << std::endl;
 
 	
 

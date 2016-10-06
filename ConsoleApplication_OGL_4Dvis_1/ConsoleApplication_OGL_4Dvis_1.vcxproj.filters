@@ -25,6 +25,9 @@
     <Filter Include="Header Files\nspace\app">
       <UniqueIdentifier>{7ee3cb4d-4cd2-49fb-8036-25865556f61f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\cl">
+      <UniqueIdentifier>{189721b5-3297-4b79-b252-031750aa80d3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -86,7 +89,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="hello.cl">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\cl</Filter>
     </None>
   </ItemGroup>
 </Project>

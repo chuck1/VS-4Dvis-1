@@ -123,12 +123,21 @@ void test_array_indirect()
 	auto arr = std::make_shared < nmath::util::ArrayIndirect<ArrayIndirectTestClass>>();
 
 	std::cout << arr->size_buffer() << std::endl;
+	arr->print();
 
 	ArrayIndirectTestClass c0;
 
 	auto v0 = arr->push_back(c0);
 
 	std::cout << arr->size_buffer() << std::endl;
+	arr->print();
+
+	v0->ref().v.push_back(1);
+
+	arr->refresh();
+
+	std::cout << arr->size_buffer() << std::endl;
+	arr->print();
 }
 void test_polytope()
 {
