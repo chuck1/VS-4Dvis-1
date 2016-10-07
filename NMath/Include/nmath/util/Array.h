@@ -1,3 +1,5 @@
+#ifndef NMATH_UTIL_ARRAY
+#define NMATH_UTIL_ARRAY
 
 #include <iomanip>
 #include <vector>
@@ -150,7 +152,12 @@ namespace nmath {
 
 						unsigned int block_size = *((unsigned int*)c);
 
-						unsigned int block_size_new = std::get<0>(_M_v[i]).size_byte() + sizeof(unsigned int);
+						T & t = std::get<0>(_M_v[i]);
+
+						nmath::util::BufferSizeCounter counter;
+						t.serialize(counter);
+
+						unsigned int block_size_new = counter._M_s + sizeof(unsigned int);
 
 						if (block_size_new != block_size) resize(i, block_size_new);
 
@@ -166,7 +173,11 @@ namespace nmath {
 			void push_back_buffer(T const & t, unsigned int index)
 			{
 				// write to buffer
-				unsigned int l = t.size_byte();
+
+				nmath::util::BufferSizeCounter counter;
+				t.serialize(counter);
+
+				unsigned int l = counter._M_s;
 				unsigned int block_size = sizeof(unsigned int)+l;
 				resize(buffer_size + block_size);
 				char * c = seek(index);
@@ -326,4 +337,4 @@ namespace nmath {
 }
 
 
-
+#endif

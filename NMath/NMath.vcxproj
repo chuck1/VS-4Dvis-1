@@ -66,9 +66,12 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Include\nmath\geometry\GraphTopology.h" />
+    <ClInclude Include="Include\nmath\geometry\Inequality.h" />
     <ClInclude Include="Include\nmath\geometry\Plane.h" />
     <ClInclude Include="Include\nmath\geometry\Polytope.h" />
     <ClInclude Include="Include\nmath\geometry\Ray.h" />
+    <ClInclude Include="Include\nmath\geometry\Subspace.h" />
+    <ClInclude Include="Include\nmath\geometry\VoronoiRegion.h" />
     <ClInclude Include="Include\nmath\graph\container\edge.hpp" />
     <ClInclude Include="Include\nmath\graph\container\vert.hpp" />
     <ClInclude Include="Include\nmath\graph\decl.hpp" />
@@ -92,6 +95,7 @@
     <ClInclude Include="Include\nmath\linalg\Vec.h" />
     <ClInclude Include="Include\nmath\linalg\VecFunctions.h" />
     <ClInclude Include="Include\nmath\util\Array.h" />
+    <ClInclude Include="Include\nmath\util\Serializable.h" />
     <ClInclude Include="Include\nmath\vclip\Feature.h" />
     <ClInclude Include="Include\nmath\vclip\Vclip.h" />
   </ItemGroup>

@@ -1,35 +1,105 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClInclude Include="Include\nmath\geometry\GraphTopology.h" />
-    <ClInclude Include="Include\nmath\geometry\Plane.h" />
-    <ClInclude Include="Include\nmath\geometry\Polytope.h" />
-    <ClInclude Include="Include\nmath\geometry\Ray.h" />
-    <ClInclude Include="Include\nmath\graph\container\edge.hpp" />
-    <ClInclude Include="Include\nmath\graph\container\vert.hpp" />
-    <ClInclude Include="Include\nmath\graph\decl.hpp" />
-    <ClInclude Include="Include\nmath\graph\edge.hpp" />
-    <ClInclude Include="Include\nmath\graph\EdgeFunction.h" />
-    <ClInclude Include="Include\nmath\graph\edge_data.hpp" />
-    <ClInclude Include="Include\nmath\graph\graph.hpp" />
-    <ClInclude Include="Include\nmath\graph\iterator\edge_graph.hpp" />
-    <ClInclude Include="Include\nmath\graph\iterator\edge_vert.hpp" />
-    <ClInclude Include="Include\nmath\graph\iterator\vert_comp.hpp" />
-    <ClInclude Include="Include\nmath\graph\iterator\vert_graph.hpp" />
-    <ClInclude Include="Include\nmath\graph\iterator\vert_graph_all.hpp" />
-    <ClInclude Include="Include\nmath\graph\layer.hpp" />
-    <ClInclude Include="Include\nmath\graph\pair_comp.hpp" />
-    <ClInclude Include="Include\nmath\graph\vert.hpp" />
-    <ClInclude Include="Include\nmath\graph\VertFunction.h" />
-    <ClInclude Include="Include\nmath\graph\vert_comp.hpp" />
-    <ClInclude Include="Include\nmath\linalg\Mat.h" />
-    <ClInclude Include="Include\nmath\linalg\MatFunctions.h" />
-    <ClInclude Include="Include\nmath\linalg\NMath.h" />
-    <ClInclude Include="Include\nmath\linalg\Vec.h" />
-    <ClInclude Include="Include\nmath\linalg\VecFunctions.h" />
-    <ClInclude Include="Include\nmath\vclip\Vclip.h" />
-    <ClInclude Include="Include\nmath\util\Array.h" />
-    <ClInclude Include="Include\nmath\vclip\Feature.h" />
+    <ClInclude Include="Include\nmath\graph\decl.hpp">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\nmath\vclip\Feature.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\nmath\graph\layer.hpp">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\nmath\linalg\NMath.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\nmath\graph\pair_comp.hpp">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\nmath\vclip\Vclip.h">
+      <Filter>Headers</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\nmath\graph\edge.hpp">
+      <Filter>Headers\graph</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\nmath\graph\container\edge.hpp">
+      <Filter>Headers\graph</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\nmath\graph\edge_data.hpp">
+      <Filter>Headers\graph</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\nmath\graph\iterator\edge_graph.hpp">
+      <Filter>Headers\graph</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\nmath\graph\iterator\edge_vert.hpp">
+      <Filter>Headers\graph</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\nmath\graph\EdgeFunction.h">
+      <Filter>Headers\graph</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\nmath\graph\graph.hpp">
+      <Filter>Headers\graph</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\nmath\graph\vert.hpp">
+      <Filter>Headers\graph</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\nmath\graph\container\vert.hpp">
+      <Filter>Headers\graph</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\nmath\graph\iterator\vert_comp.hpp">
+      <Filter>Headers\graph</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\nmath\graph\vert_comp.hpp">
+      <Filter>Headers\graph</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\nmath\graph\iterator\vert_graph.hpp">
+      <Filter>Headers\graph</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\nmath\graph\iterator\vert_graph_all.hpp">
+      <Filter>Headers\graph</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\nmath\graph\VertFunction.h">
+      <Filter>Headers\graph</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\nmath\geometry\Plane.h">
+      <Filter>Headers\geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\nmath\geometry\Polytope.h">
+      <Filter>Headers\geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\nmath\geometry\Ray.h">
+      <Filter>Headers\geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\nmath\geometry\Subspace.h">
+      <Filter>Headers\geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\nmath\geometry\Inequality.h">
+      <Filter>Headers\geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\nmath\linalg\Mat.h">
+      <Filter>Headers\linalg</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\nmath\linalg\MatFunctions.h">
+      <Filter>Headers\linalg</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\nmath\linalg\Vec.h">
+      <Filter>Headers\linalg</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\nmath\linalg\VecFunctions.h">
+      <Filter>Headers\linalg</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\nmath\geometry\VoronoiRegion.h">
+      <Filter>Headers\geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\nmath\geometry\GraphTopology.h">
+      <Filter>Headers\geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\nmath\util\Array.h">
+      <Filter>Headers\util</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\nmath\util\Serializable.h">
+      <Filter>Headers\util</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="Include\nmath\vclip\vclip_pseudocode.txt" />
@@ -38,5 +108,22 @@
   <ItemGroup>
     <ClCompile Include="Source.cpp" />
     <ClCompile Include="Source\graph\edge_data.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Headers">
+      <UniqueIdentifier>{cdff5d62-bf87-46a2-b58e-165580a8a784}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Headers\geometry">
+      <UniqueIdentifier>{e142a0c7-91fa-4757-bc3e-cd36420ab76e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Headers\graph">
+      <UniqueIdentifier>{2d360229-520e-40c2-8139-d3c77fb45775}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Headers\linalg">
+      <UniqueIdentifier>{504dbb4f-2e99-4055-8d04-8c4acfbc2e60}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Headers\util">
+      <UniqueIdentifier>{8ea04d76-1020-4858-af9c-92c1b4a69019}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
 </Project>

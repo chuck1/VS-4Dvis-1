@@ -13,6 +13,13 @@ namespace nmath {
 			Plane<M>(nmath::linalg::Vec<M> nn, double nd) :
 				n(nn), d(nd)
 			{}
+
+			void	translate(nmath::linalg::Vec<M> t)
+			{
+				d += nmath::linalg::dot(t, n);
+			}
+
+		public:
 			nmath::linalg::Vec<M> n;
 			double d;
 		};
