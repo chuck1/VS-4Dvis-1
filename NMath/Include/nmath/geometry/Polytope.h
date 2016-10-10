@@ -64,8 +64,11 @@ namespace nmath {
 			nmath::geometry::Plane<M> _M_plane;
 		};
 
+		class PolytopeBase
+		{};
+
 		template<unsigned int M>
-		class Polytope: public FeatureSet<M, M-1>
+		class Polytope: public FeatureSet<M, M-1>, public PolytopeBase
 		{
 		public:
 			template<typename BUFFER>
@@ -94,7 +97,7 @@ namespace nmath {
 
 			}
 			
-
+		public:
 			std::vector<Face<M>>			_M_faces;
 			
 			/** graph

@@ -28,6 +28,9 @@
     <Filter Include="Source Files\cl">
       <UniqueIdentifier>{189721b5-3297-4b79-b252-031750aa80d3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\nspace\light">
+      <UniqueIdentifier>{f10d8996-a8ae-4421-9116-cd89d0ebf6c2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -68,6 +71,9 @@
     </ClInclude>
     <ClInclude Include="include\nspace\app\ManagerBuffer.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\nspace\light\Light.h">
+      <Filter>Header Files\nspace\light</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
