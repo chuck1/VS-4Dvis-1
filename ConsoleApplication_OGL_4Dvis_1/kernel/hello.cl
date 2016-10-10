@@ -15,7 +15,7 @@ struct Face
 
 };
 
-__kernel void math_dot(__global const float * x, __global const float * y, const uint m, __global float * res)
+void math_dot(__global const float * x, __global const float * y, const uint m, __global float * res)
 {
 	*res = 0;
 	for (int i = 0; i < m; ++i)
@@ -24,13 +24,45 @@ __kernel void math_dot(__global const float * x, __global const float * y, const
 	}
 }
 
-__kernel void ray_face_intersect(__global struct Ray * ray, __global struct Face * face)
-{
+//void ray_face_intersect(__global struct Ray * ray, __global struct Face * face)
 
+
+struct RayFaceInterceptTask
+{
+	unsigned int shape;
+	unsigned int face;
+	unsigned int ray;
+	float k;
+};
+
+
+__kernel void ray_cast(
+		__global struct RayFaceInterceptTask * tasks,
+		unsigned int tasks_len,
+		__global float3 * pixel_color,
+		volatile __global uint * counter)
+{
+	while (true){
+		int task_id = atomic_inc(counter);
+		if (task_id > (tasks_len - 1)) return;
+	}
 }
 
-__kernel void hello(__global char* string)
+__kernel void hello(
+	__global char* string,
+	volatile __global uint * counter)
 {
+	constant char * s = "Hello, World!";
+
+	while (true)
+	{
+		int task_id = atomic_inc(counter);
+
+		if (task_id > 13) return;
+
+		string[task_id] = s[task_id];
+	}
+	/*
 	string[0] = 'H';
 	string[1] = 'e';
 	string[2] = 'l';
@@ -45,7 +77,9 @@ __kernel void hello(__global char* string)
 	string[11] = 'd';
 	string[12] = '!';
 	string[13] = '\0';
+	*/
 }
+
 
 
 

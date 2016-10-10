@@ -14,11 +14,13 @@ namespace nspace {
 		class App
 		{
 		public:
+			void init_render();
 			void render();
+			
 
-			std::shared_ptr<nspace::graphics::raycast::ViewportBase> _M_viewport;
-
-			std::vector< std::shared_ptr<nspace::actor::Base> >		_M_actors;
+			std::shared_ptr<nspace::graphics::raycast::ViewportBase>	_M_viewport;
+			std::vector< std::shared_ptr<nspace::actor::Base> >			_M_actors;
+			std::vector< std::shared_ptr<nspace::light::Base> >			_M_lights;
 		};
 	}
 }
