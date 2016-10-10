@@ -45,7 +45,6 @@ __kernel void hello(__global char* string)
 	string[11] = 'd';
 	string[12] = '!';
 	string[13] = '\0';
-	string[N] = 'Z';
 }
 
 

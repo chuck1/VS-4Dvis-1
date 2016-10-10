@@ -30,7 +30,7 @@ public:
 		memobj = clCreateBuffer(context, CL_MEM_READ_WRITE, MEM_SIZE * sizeof(char), NULL, &ret);
 
 		/* Create Kernel Program from the source */
-		program = createProgram(context, "hello.cl");
+		program = createProgram(context, "kernel/hello.cl");
 
 		/* Create OpenCL Kernel */
 		kernel = clCreateKernel(program, "hello", &ret);
@@ -50,6 +50,7 @@ public:
 		fopen_s(&fp, fileName, "r");
 		if (!fp) {
 			throw std::exception("Failed to load kernel");
+			abort();
 		}
 		
 		source_str = (char*)malloc(MAX_SOURCE_SIZE);

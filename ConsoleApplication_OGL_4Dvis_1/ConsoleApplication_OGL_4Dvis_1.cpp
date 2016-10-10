@@ -434,7 +434,7 @@ int _tmain(int argc, _TCHAR* argv[])
 {
 
 
-	nmath::test();
+	//nmath::test();
 	//nspace::tests::test_array();
 
 
