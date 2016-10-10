@@ -13,15 +13,10 @@ namespace nmath {
 			{
 				return p + v*k;
 			}
+
+		public:
 			nmath::linalg::Vec<M> p;
 			nmath::linalg::Vec<M> v;
-
-			struct {
-				struct{
-					double k;
-					unsigned int face_index;
-				} intersection;
-			} temp;
 		};
 	}
 }

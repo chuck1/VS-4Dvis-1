@@ -414,13 +414,13 @@ static void key_callback(GLFWwindow* window, int key, int scancode, int action, 
 Cube4 cube;
 Triangle tri;
 
-OCL ocl;
+std::shared_ptr<OCL::Manager> ocl;
 
 
 void OCLtest2()
 {
 	try{
-		OCLtest(ocl);
+		OCLtest(*ocl);
 	}
 	catch (std::exception & e)
 	{
@@ -433,12 +433,11 @@ void OCLtest2()
 int _tmain(int argc, _TCHAR* argv[])
 {
 
-
-	nmath::test();
+	//nmath::test();
 	//nspace::tests::test_array();
 
-
-	ocl.init();
+	ocl = std::make_shared<OCL::Manager>();
+	ocl->init();
 
 	OCLtest2();
 
@@ -541,8 +540,8 @@ int _tmain(int argc, _TCHAR* argv[])
 
 
 	// OpenCL cleanup
-	ocl.flush();
-	ocl.shutdown();
+	ocl->flush();
+	ocl->shutdown();
 
 	exit(EXIT_SUCCESS);
 }

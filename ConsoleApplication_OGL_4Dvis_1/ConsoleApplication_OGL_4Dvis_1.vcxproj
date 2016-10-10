@@ -88,6 +88,7 @@
     <ClInclude Include="include\nspace\decl.h" />
     <ClInclude Include="include\nspace\graphics\Color.h" />
     <ClInclude Include="include\nspace\graphics\raycast\Viewport.h" />
+    <ClInclude Include="include\nspace\light\Light.h" />
     <ClInclude Include="include\nspace\tests.h" />
     <ClInclude Include="OCL.h" />
     <ClInclude Include="stdafx.h" />
@@ -121,7 +122,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="hello.cl" />
+    <None Include="kernel\hello.cl" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

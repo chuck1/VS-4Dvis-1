@@ -250,10 +250,8 @@ void test_ray()
 
 	nmath::geometry::Ray<3> r;
 	
-	std::cout << ((int)&(r.p) - (int)&(r)) << std::endl;
-	std::cout << ((int)&(r.v) - (int)&(r)) << std::endl;
-	std::cout << ((int)&(r.temp.intersection.k) - (int)&(r)) << std::endl;
-	std::cout << ((int)&(r.temp.intersection.face_index) - (int)&(r)) << std::endl;
+	std::cout << ((long)&(r.p) - (long)&(r)) << std::endl;
+	std::cout << ((long)&(r.v) - (long)&(r)) << std::endl;
 	std::cout << sizeof(r) << std::endl;
 }
 

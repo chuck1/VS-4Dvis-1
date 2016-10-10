@@ -17,7 +17,7 @@ namespace nmath {
 			public:
 				typedef nmath::graph::Vert<VertexBase<M>> BASE;
 
-				VertexBase<M>(BASE::G_S g) :
+				VertexBase<M>(typename BASE::G_S g) :
 					BASE(g, std::make_shared<nmath::graph::container::Edge<VertexBase<M>>>())
 				{}
 
@@ -32,17 +32,17 @@ namespace nmath {
 			public:
 				typedef nmath::graph::Vert<VertexBase<M>> BASE;
 
-				Vertex<M, K>(BASE::G_S g, std::shared_ptr<nmath::geometry::Feature<M, K>> f) :
-					VertexBase(g),
+				Vertex<M, K>(typename BASE::G_S g, std::shared_ptr<nmath::geometry::Feature<M, K>> f) :
+					VertexBase<M>(g),
 					_M_feature(f)
 				{}
 
 
-				virtual bool		operator==(VertexBase const & v)
+				virtual bool		operator==(VertexBase<M> const & v)
 				{
 					return (v.k() == k()) && (v.feature() == feature());
 				}
-				virtual bool		operator<(VertexBase const & v)
+				virtual bool		operator<(VertexBase<M> const & v)
 				{
 					if (v.k() == k())
 					{

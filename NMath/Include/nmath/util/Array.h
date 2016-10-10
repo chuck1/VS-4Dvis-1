@@ -5,6 +5,9 @@
 #include <vector>
 #include <memory>
 #include <functional>
+#include <cstring>
+
+#include <nmath/util/Serializable.h>
 
 namespace nmath {
 	namespace util {
@@ -95,11 +98,12 @@ namespace nmath {
 			friend class ArrayRef<T>;
 
 			typedef std::tuple<T, unsigned int> TUPLE;
+			typedef std::enable_shared_from_this<Array<T>> ESFT;
 
 			virtual std::shared_ptr< ArrayRef<T> > push_back(T const & t)
 			{
 				unsigned int index = _M_v.size();
-				auto r = std::make_shared< ArrayRef<T> >(shared_from_this(), _M_v.size());
+				auto r = std::make_shared< ArrayRef<T> >(ESFT::shared_from_this(), _M_v.size());
 				_M_v.push_back(TUPLE(t,0));
 				return r;
 			}
@@ -108,7 +112,7 @@ namespace nmath {
 				std::function<void(unsigned int)> f_set, 
 				std::function<unsigned int()> f_get)
 			{
-				auto r = std::make_shared< ArrayRefIndexRef<T> >(shared_from_this(), f_set, f_get, _M_v.size());
+				auto r = std::make_shared< ArrayRefIndexRef<T> >(ESFT::shared_from_this(), f_set, f_get, _M_v.size());
 				_M_v.push_back(TUPLE(t,0));
 				return r;
 			}
@@ -136,6 +140,11 @@ namespace nmath {
 		{
 		public:
 			friend class ArrayRef<T>;
+
+			using Array<T>::_M_v;
+
+			typedef std::enable_shared_from_this<Array<T>> ESFT; 
+			typedef std::tuple<T, unsigned int> TUPLE;
 
 			ArrayIndirect() : buffer(0), buffer_size(0) {}
 			/*
@@ -189,7 +198,7 @@ namespace nmath {
 			virtual std::shared_ptr< ArrayRef<T> > push_back(T const & t)
 			{
 				unsigned int index = _M_v.size();
-				auto r = std::make_shared< ArrayRef<T> >(shared_from_this(), index);
+				auto r = std::make_shared< ArrayRef<T> >(ESFT::shared_from_this(), index);
 				_M_v.push_back(TUPLE(t,0));
 
 				push_back_buffer(t, index);
@@ -202,7 +211,7 @@ namespace nmath {
 				std::function<unsigned int()> f_get)
 			{
 				unsigned int index = _M_v.size();
-				auto r = std::make_shared< ArrayRefIndexRef<T> >(shared_from_this(), f_set, f_get, index);
+				auto r = std::make_shared< ArrayRefIndexRef<T> >(ESFT::shared_from_this(), f_set, f_get, index);
 				_M_v.push_back(TUPLE(t,0));
 
 				push_back_buffer(t, index);

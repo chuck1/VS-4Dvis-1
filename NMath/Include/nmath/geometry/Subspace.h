@@ -26,6 +26,9 @@ namespace nmath {
 		class SubspaceBounded : public Subspace<M, K>
 		{
 		public:
+			using Subspace<M,K>::_M_A;
+			using Subspace<M,K>::_M_p;
+
 			/**
 			* Add the intersection of this subspace and hyperplane p to the list of inequalities.
 			* So add p as a boundary of the subspace.
