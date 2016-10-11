@@ -34,7 +34,7 @@ namespace nspace {
 
 		
 			void init_render();
-			void render();
+			virtual void												render();
 
 			virtual RAY_S												make_ray() = 0;
 			

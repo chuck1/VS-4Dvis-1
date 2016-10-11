@@ -78,7 +78,7 @@ namespace nmath {
 			void AddHyperplaneIntersection(nmath::geometry::Plane<M> const & p)
 			{
 				auto a = _M_A.transpose() * p.n;
-				double d = p.d - nmath::linalg::dot(p.n, _M_p);
+				float d = p.d - nmath::linalg::dot(p.n, _M_p);
 				_M_inequalities.push_back(Inequality<K>(a, d));
 			}
 

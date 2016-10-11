@@ -2,6 +2,8 @@
 #define NMATH_GEOMETRY_PLANE
 
 #include <nmath/linalg/Vec.h>
+#include <nmath/linalg/Mat.h>
+//#include <nmath/geometry/Ray.h>
 
 namespace nmath {
 	namespace geometry {
@@ -18,6 +20,11 @@ namespace nmath {
 			{
 				d += nmath::linalg::dot(t, n);
 			}
+			void rotate(nmath::SMat<M> const & r)
+			{
+				n = r*n;
+			}
+
 
 		public:
 			nmath::linalg::Vec<M> n;

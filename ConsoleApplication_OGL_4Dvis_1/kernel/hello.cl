@@ -84,7 +84,7 @@ __global char * polytope_get_face(__global char * polytope, unsigned int i)
 }
 __global char * face_get_subspace(__global char * face)
 {
-
+	return face;
 }
 __global char * face_get_plane(__global char * face)
 {
@@ -93,22 +93,30 @@ __global char * face_get_plane(__global char * face)
 
 // subspace
 __global float *	subspace_get_A(__global char * subspace)
-{}
+{
+	return 0;
+}
 __global float *	subspace_get_p(__global char * subspace)
-{}
+{
+	return 0;
+}
 unsigned int		subspace_get_M(__global char * subspace)
-{}
+{
+	return 0;
+}
 unsigned int		subspace_get_K(__global char * subspace)
-{}
+{
+	return 0;
+}
 void				subspace_s(__global char * subspace, float * s, float * x)
 {
 	// _M_A.transpose()*(x - _M_p);
 
-	float[N] a;
+	float a[N];
 
-	vec_sub_gg(a, x, subspace_get_p(subspace));
+	vec_sub_pg(a, x, subspace_get_p(subspace));
 
-	float[N] b;
+	float b[N];
 
 	mat_mul_transpose_gp(b, subspace_get_A(subspace), a);
 }

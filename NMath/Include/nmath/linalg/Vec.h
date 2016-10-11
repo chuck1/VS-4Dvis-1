@@ -40,6 +40,15 @@ namespace nmath {
 				}
 				return c;
 			}
+			Vec operator+(Vec const & b)
+			{
+				Vec c;
+				for (int i = 0; i < M; ++i)
+				{
+					c._M_v[i] = _M_v[i] + b._M_v[i];
+				}
+				return c;
+			}
 			void operator-=(Vec const & b)
 			{
 				for (int i = 0; i < M; ++i)
@@ -73,9 +82,9 @@ namespace nmath {
 				return c;
 			}
 			
-			void length() const
+			float length() const
 			{
-				double d = 0;
+				float d = 0;
 				for (int i = 0; i < M; ++i)
 				{
 					d += operator()(i) * operator()(i);
@@ -84,7 +93,7 @@ namespace nmath {
 			}
 			void normalize()
 			{
-				double d = length();
+				float d = length();
 
 				assert(d > 0);
 

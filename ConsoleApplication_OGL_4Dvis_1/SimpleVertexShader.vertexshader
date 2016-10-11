@@ -2,11 +2,15 @@
 
 layout(location = 0) in vec4 vertexPosition_modelspace;
 
+out vec2 uv;
+
 void main()
 {
   gl_Position = vertexPosition_modelspace;
   
-  gl_Position *= 0.5;
+  uv = (gl_Position.xy + 1.0) * 0.5;
+
+  //gl_Position *= 0.5;
 
   gl_Position.z = 0;
 

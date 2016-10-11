@@ -16,9 +16,20 @@ namespace nspace {
 		};
 
 		template<unsigned int M>
-		class Point
+		class Point: public Base
 		{
 		public:
+			virtual void serialize(nmath::util::Buffer & c) const
+			{
+
+			}
+			virtual void deserialize(nmath::util::Buffer & c)
+			{
+
+			}
+
+
+
 			nmath::linalg::Vec<M>	_M_p;
 			float _M_atten[3];
 			nspace::graphics::Color	_M_color;

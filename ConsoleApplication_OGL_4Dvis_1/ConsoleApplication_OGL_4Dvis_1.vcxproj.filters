@@ -31,6 +31,9 @@
     <Filter Include="Header Files\nspace\light">
       <UniqueIdentifier>{f10d8996-a8ae-4421-9116-cd89d0ebf6c2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\gl">
+      <UniqueIdentifier>{ee467ae1-02c4-449f-83d1-ee9933ca09de}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -39,6 +42,12 @@
     </Text>
     <Text Include="SimpleVertexShader.vertexshader">
       <Filter>Source Files</Filter>
+    </Text>
+    <Text Include="gl\raycast_vertex_shader.txt">
+      <Filter>Source Files\gl</Filter>
+    </Text>
+    <Text Include="gl\raycast_fragment_shader.txt">
+      <Filter>Source Files\gl</Filter>
     </Text>
   </ItemGroup>
   <ItemGroup>

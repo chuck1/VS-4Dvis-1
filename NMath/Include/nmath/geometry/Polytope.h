@@ -9,7 +9,7 @@
 #include <nmath/geometry/Ray.h>
 #include <nmath/geometry/Subspace.h>
 #include <nmath/util/Serializable.h>
-
+#include <nmath/linalg/VecFunctions.h>
 
 namespace nmath {
 	namespace geometry {
@@ -56,6 +56,22 @@ namespace nmath {
 				return true;
 			}
 
+			bool eval(nmath::linalg::Vec<M-1> const & s)
+			{
+				for (unsigned int j = 0; j < _M_inequalities.size(); ++j)
+				{
+					nmath::geometry::Inequality<M - 1> & ineq = _M_inequalities[j];
+
+					if (!ineq.eval(s)) return false;
+				}
+
+				return true;
+			}
+
+			void rotate(nmath::SMat<M> const & r)
+			{
+				_M_plane.rotate(r);
+			}
 
 			void serialize(nmath::util::Buffer & c) const
 			{
@@ -127,6 +143,55 @@ namespace nmath {
 
 			}
 			
+			void rotate(nmath::SMat<M> const & r)
+			{
+				for (unsigned int i = 0; i < _M_faces.size(); ++i)
+				{
+					Face<M> & f = _M_faces[i];
+
+					f.rotate(r);
+				}
+			}
+
+			bool intersect(float & dist, unsigned int & face_i, nmath::linalg::Vec<M> & N, nmath::geometry::Ray<M> ray)
+			{
+				bool b = false;
+
+				for (unsigned int i = 0; i < _M_faces.size(); ++i)
+				{
+					Face<M> & f = _M_faces[i];
+
+					float nv;
+
+					float d = nmath::linalg::intersect(nv, ray, f._M_plane);
+
+					if (nv > 0) continue; // no intersection
+					if (d < 0) continue;
+
+					if (false){
+						std::cout << "ray.p   " << ray.p << std::endl;
+						std::cout << "ray.v   " << ray.v << std::endl;
+						std::cout << "plane.n " << f._M_plane.n << std::endl;
+						std::cout << "plane.d " << f._M_plane.d << std::endl;
+						printf("ray plane intersect at dist=%f\n", d);
+					}
+
+					nmath::linalg::Vec<M-1> s = f.s(ray.x(d));
+
+					if (!f.eval(s)) continue;
+					
+					b = true;
+					if (d < dist)
+					{
+						dist = d;
+						face_i = i;
+						N = f._M_plane.n;
+					}
+				}
+
+				return b;
+			}
+
 			virtual unsigned int	faces_len()
 			{
 				return _M_faces.size();

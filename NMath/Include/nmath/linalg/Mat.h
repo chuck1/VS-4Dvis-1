@@ -70,7 +70,7 @@ namespace nmath {
 		}
 
 		template<int O>
-		Mat<M, O> operator*(Mat<N, O> const & m)
+		Mat<M, O> operator*(Mat<N, O> const & m) const
 		{
 			Mat<M, O> ret;
 			for (int i = 0; i < M; ++i)
@@ -86,7 +86,7 @@ namespace nmath {
 			return ret;
 		}
 
-		nmath::linalg::Vec<M> operator*(nmath::linalg::Vec<N> v)
+		nmath::linalg::Vec<M> operator*(nmath::linalg::Vec<N> const & v) const
 		{
 			nmath::linalg::Vec<M> ret;
 			for (int i = 0; i < M; ++i)

@@ -16,24 +16,7 @@
 #include <nmath/graph/container/edge.hpp>
 #include <nmath/graph/GraphFunction.h>
 
-template<int M>
-std::ostream& operator<<(std::ostream& os, nmath::linalg::Vec<M> const & v)
-{
-	for (int i = 0; i < M; ++i) os << v(i) << " ";
-	return os;
-}
 
-template<int M, int N>
-std::ostream& operator<<(std::ostream& os, nmath::Mat<M,N> const & m)
-{
-	for (int i = 0; i < M; ++i) {
-		for (int j = 0; j < N; ++j) {
-			os << std::setw(5) << std::setprecision(2) << std::fixed << m(i, j) << " ";
-		}
-		os << std::endl;
-	}
-	return os;
-}
 
 void test_gauss_elim()
 {
@@ -196,7 +179,7 @@ void test_polytope()
 		std::cout << p->_M_faces[i]._M_A << std::endl;
 		std::cout << "  inequalities" << std::endl;
 
-		for (int j = 0; j < p->_M_faces[i]._M_inequalities.size(); ++j)
+		for (unsigned int j = 0; j < p->_M_faces[i]._M_inequalities.size(); ++j)
 		{
 			std::cout << "    a" << std::endl;
 			std::cout << p->_M_faces[i]._M_inequalities[j]._M_a << std::endl;

@@ -1,6 +1,7 @@
 #ifndef NMATH_GEOMETRY_RAY
 #define NMATH_GEOMETRY_RAY
 
+#include <nmath/util/Serializable.h>
 #include <nmath/linalg/Vec.h>
 
 namespace nmath {

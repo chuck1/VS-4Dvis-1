@@ -1,3 +1,6 @@
+#ifndef NMATH_LINALG_MATFUNCTION
+#define NMATH_LINALG_MATFUNCTION
+
 #include <algorithm>
 #include <exception>
 
@@ -80,7 +83,7 @@ namespace nmath {
 	}
 
 	template<int M>
-	double det(SMat<M> const & m)
+	float det(SMat<M> const & m)
 	{
 		double ret = 0;
 
@@ -93,7 +96,7 @@ namespace nmath {
 	}
 
 	template<>
-	double det(SMat<1> const & m)
+	inline float det(SMat<1> const & m)
 	{
 		return m(0, 0);
 	}
@@ -211,7 +214,7 @@ namespace nmath {
 		}
 	}
 
-	template<int M, int N, int N1>
+	template<unsigned int M, unsigned int N, int N1>
 	void gaussianElimination(Mat<M, N> & m, Mat<M, N1> & m1)
 	{
 		for (unsigned int k = 0; k < std::min(M, N); ++k)
@@ -247,7 +250,7 @@ namespace nmath {
 
 			// experimental
 			// for each previous row
-			for (int i = 0; i < k; ++i)
+			for (unsigned int i = 0; i < k; ++i)
 			{
 				subtractRow(m, i, k, m(i, k));
 
@@ -256,11 +259,11 @@ namespace nmath {
 			
 
 			// for each lower row
-			for (int i = k + 1; i < M; ++i)
+			for (unsigned int i = k + 1; i < M; ++i)
 			{
 				double f = m(i, k);
 
-				for (int j = k + 1; j < N; ++j)
+				for (unsigned int j = k + 1; j < N; ++j)
 				{
 					m(i, j) -= m(k, j) * f;
 				}
@@ -274,3 +277,4 @@ namespace nmath {
 }
 
 
+#endif

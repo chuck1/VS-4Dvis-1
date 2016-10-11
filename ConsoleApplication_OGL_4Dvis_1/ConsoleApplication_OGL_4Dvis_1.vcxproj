@@ -79,6 +79,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <Text Include="gl\raycast_vertex_shader.txt" />
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
@@ -98,6 +99,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ConsoleApplication_OGL_4Dvis_1.cpp" />
+    <Text Include="gl\raycast_fragment_shader.txt">
+      <FileType>Text</FileType>
+    </Text>
     <ClCompile Include="nspace_app_App.cpp" />
     <ClCompile Include="nspace_tests.cpp" />
     <ClCompile Include="OpenCL.cpp" />

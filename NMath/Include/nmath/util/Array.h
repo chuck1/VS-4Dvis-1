@@ -161,14 +161,14 @@ namespace nmath {
 			typedef std::enable_shared_from_this<Array<T>> ESFT; 
 			
 
-			ArrayIndirect() : buffer_size(0) {}
+			ArrayIndirect() : _M_buffer(0), buffer_size(0) {}
 			/*
 			* for any elements that have changed since last refresh
 			* resize if necessary and copy data to buffer
 			*/
 			void refresh()
 			{
-				for (int i = 0; i < _M_v.size(); ++i)
+				for (unsigned int i = 0; i < _M_v.size(); ++i)
 				{
 					if (std::get<1>(_M_v[i]) > 0)
 					{
@@ -245,7 +245,7 @@ namespace nmath {
 			{
 				char * c = _M_buffer;
 
-				for (int j = 0; j < i; ++j)
+				for (unsigned int j = 0; j < i; ++j)
 				{
 					unsigned int l = *((unsigned int *)c);
 
@@ -256,7 +256,7 @@ namespace nmath {
 			}
 			char * seek(char * c, unsigned int i)
 			{
-				for (int j = 0; j < i; ++j)
+				for (unsigned int j = 0; j < i; ++j)
 				{
 					unsigned int l = *((unsigned int *)c);
 
