@@ -10,7 +10,9 @@ namespace nspace {
 
 		class Base
 		{
-
+		public:
+			virtual void serialize(nmath::util::Buffer & c) const = 0;
+			virtual void deserialize(nmath::util::Buffer & c) = 0;
 		};
 
 		template<unsigned int M>

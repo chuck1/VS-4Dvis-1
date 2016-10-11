@@ -10,7 +10,7 @@ namespace nmath {
 		{
 		public:
 			Plane<M>(){}
-			Plane<M>(nmath::linalg::Vec<M> nn, double nd) :
+			Plane<M>(nmath::linalg::Vec<M> nn, float nd) :
 				n(nn), d(nd)
 			{}
 
@@ -21,7 +21,7 @@ namespace nmath {
 
 		public:
 			nmath::linalg::Vec<M> n;
-			double d;
+			float d;
 		};
 	}
 }

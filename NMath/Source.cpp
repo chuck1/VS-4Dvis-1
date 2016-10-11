@@ -97,25 +97,25 @@ void test_array()
 
 	auto d = arr->push_back(0);
 
-	d->ref() = 1;
+	*d->ref() = 1;
 
 }
 
-class ArrayIndirectTestClass
-{
-public:
-	std::vector<unsigned int> v;
-	unsigned int size_byte() const
-	{
-		return v.size() * sizeof(unsigned int);
-	}
-	void serialize(char * c) const
-	{
-		auto l = size_byte();
-		if (l == 0) return;
-		memcpy(c, &v[0], l);
-	}
-};
+//class ArrayIndirectTestClass
+//{
+//public:
+//	std::vector<unsigned int> v;
+//	unsigned int size_byte() const
+//	{
+//		return v.size() * sizeof(unsigned int);
+//	}
+//	void serialize(char * c) const
+//	{
+//		auto l = size_byte();
+//		if (l == 0) return;
+//		memcpy(c, &v[0], l);
+//	}
+//};
 template<unsigned int M>
 void test_array_indirect()
 {
@@ -126,10 +126,8 @@ void test_array_indirect()
 	std::cout << arr->size_buffer() << std::endl;
 	arr->print();
 
-	//ArrayIndirectTestClass c0;
-	nmath::geometry::Polytope<M> p0;
 
-	auto v0 = arr->push_back(p0);
+	auto v0 = arr->push_back(std::make_shared<nmath::geometry::Polytope<M>>());
 
 	std::cout << arr->size_buffer() << std::endl;
 	arr->print();

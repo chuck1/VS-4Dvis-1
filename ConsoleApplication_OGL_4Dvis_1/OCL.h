@@ -118,6 +118,8 @@ namespace OCL {
 
 			free(source_str);
 
+			printf("building program %s\n", fileName);
+
 			/* Build Kernel Program */
 			ret = clBuildProgram(program, 1, &device_id, "-D N=(4)", NULL, NULL);
 
@@ -136,6 +138,8 @@ namespace OCL {
 				printf("Build failed; error=%d, status=%d, programLog:nn%s", ret, status, programLog);
 				free(programLog);
 			}
+
+			printf("build successful\n");
 
 			return program;
 		}

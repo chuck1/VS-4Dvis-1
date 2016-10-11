@@ -3,6 +3,8 @@
 
 #include <vector>
 
+#include <nmath/util/SerializeVector.h>
+#include <nmath/linalg/Mat.h>
 #include <nmath/geometry/Inequality.h>
 
 namespace nmath {
@@ -17,6 +19,26 @@ namespace nmath {
 				return _M_A.transpose()*(x - _M_p);
 			}
 
+			virtual void serialize(nmath::util::Buffer & c) const
+			{
+				unsigned int c1 = c.pointer();
+
+				{
+					c.write((char*)&_M_A, sizeof(nmath::Mat<M, K>));
+					c.write((char*)&_M_p, sizeof(nmath::linalg::Vec<M>));
+				}
+
+				unsigned int s1 = c - c1;
+
+				c -= s1;
+				c.write((char*)&s1, sizeof(unsigned int));
+				c += s1;
+			}
+			virtual void deserialize(nmath::util::Buffer & c)
+			{
+			}
+
+
 			/* parameterization */
 			nmath::Mat<M, K> _M_A;
 			nmath::linalg::Vec<M> _M_p;
@@ -28,6 +50,26 @@ namespace nmath {
 		public:
 			using Subspace<M,K>::_M_A;
 			using Subspace<M,K>::_M_p;
+
+			virtual void serialize(nmath::util::Buffer & c) const
+			{
+				unsigned int c1 = c.pointer();
+
+				{
+					Subspace<M, K>::serialize(c);
+					nmath::util::serialize(c, _M_inequalities);
+				}
+
+				unsigned int s1 = c - c1;
+
+				c -= s1;
+				c.write((char*)&s1, sizeof(unsigned int));
+				c += s1;
+			}
+			virtual void deserialize(nmath::util::Buffer & c)
+			{
+
+			}
 
 			/**
 			* Add the intersection of this subspace and hyperplane p to the list of inequalities.

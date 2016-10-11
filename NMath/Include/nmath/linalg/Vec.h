@@ -94,11 +94,11 @@ namespace nmath {
 				}
 			}
 
-			double const & operator()(int i) const
+			float const & operator()(int i) const
 			{
 				return _M_v[i];
 			}
-			double & operator()(int i)
+			float & operator()(int i)
 			{
 				if (i >= M) throw std::exception();//"index out of range");
 
@@ -130,7 +130,7 @@ namespace nmath {
 				return i0;
 			}
 
-			double _M_v[M];
+			float _M_v[M];
 		};
 	}
 }

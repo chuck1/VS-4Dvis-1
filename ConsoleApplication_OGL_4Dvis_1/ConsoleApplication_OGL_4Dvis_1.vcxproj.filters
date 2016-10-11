@@ -75,6 +75,12 @@
     <ClInclude Include="include\nspace\light\Light.h">
       <Filter>Header Files\nspace\light</Filter>
     </ClInclude>
+    <ClInclude Include="include\nspace\app\AppTemplate.h">
+      <Filter>Header Files\nspace\app</Filter>
+    </ClInclude>
+    <ClInclude Include="include\nspace\util\Task.h">
+      <Filter>Header Files\nspace\util</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">

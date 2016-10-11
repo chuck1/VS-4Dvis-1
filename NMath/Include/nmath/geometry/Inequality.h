@@ -11,12 +11,12 @@ namespace nmath {
 		{
 		public:
 			Inequality(){}
-			Inequality(nmath::linalg::Vec<K> const & a, double d) :
+			Inequality(nmath::linalg::Vec<K> const & a, float d) :
 				_M_a(a),
 				_M_d(d)
 			{}
 
-			double d(nmath::linalg::Vec<K> const & s)
+			float d(nmath::linalg::Vec<K> const & s)
 			{
 				return nmath::linalg::dot(_M_a, s);
 			}
@@ -25,8 +25,19 @@ namespace nmath {
 				return (d(s) < _M_d);
 			}
 
+			virtual void serialize(nmath::util::Buffer & c) const
+			{
+				c.write((char*)&_M_a, sizeof(nmath::linalg::Vec<K>));
+				c.write((char*)&_M_d, sizeof(float));
+			}
+			virtual void deserialize(nmath::util::Buffer & c)
+			{
+
+			}
+
+		public:
 			nmath::linalg::Vec<K> _M_a;
-			double _M_d;
+			float _M_d;
 		};
 
 	}

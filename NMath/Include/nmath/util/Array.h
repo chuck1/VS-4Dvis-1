@@ -1,6 +1,7 @@
 #ifndef NMATH_UTIL_ARRAY
 #define NMATH_UTIL_ARRAY
 
+#include <cassert>
 #include <iomanip>
 #include <vector>
 #include <memory>
@@ -47,12 +48,14 @@ namespace nmath {
 		public:
 			friend class Array<T>;
 
-			T & ref()
+			typedef std::shared_ptr<T> T_S;
+
+			T_S & ref()
 			{
 				++std::get<1>(_M_array.lock()->_M_v[_M_i]);
 				return std::get<0>(_M_array.lock()->_M_v[_M_i]);
 			}
-			T const & ref() const
+			T_S const & ref() const
 			{
 				return std::get<0>(_M_array.lock()->_M_v[_M_i]);
 			}
@@ -97,10 +100,12 @@ namespace nmath {
 		public:
 			friend class ArrayRef<T>;
 
-			typedef std::tuple<T, unsigned int> TUPLE;
+			typedef std::shared_ptr<T> T_S;
+
+			typedef std::tuple<T_S, unsigned int> TUPLE;
 			typedef std::enable_shared_from_this<Array<T>> ESFT;
 
-			virtual std::shared_ptr< ArrayRef<T> > push_back(T const & t)
+			virtual std::shared_ptr< ArrayRef<T> > push_back(T_S const & t)
 			{
 				unsigned int index = _M_v.size();
 				auto r = std::make_shared< ArrayRef<T> >(ESFT::shared_from_this(), _M_v.size());
@@ -108,7 +113,7 @@ namespace nmath {
 				return r;
 			}
 			virtual std::shared_ptr< ArrayRefIndexRef<T> > push_back_index_ref(
-				T const & t, 
+				T_S const & t, 
 				std::function<void(unsigned int)> f_set, 
 				std::function<unsigned int()> f_get)
 			{
@@ -116,6 +121,13 @@ namespace nmath {
 				_M_v.push_back(TUPLE(t,0));
 				return r;
 			}
+
+			T_S										operator[](unsigned int i)
+			{
+				assert(i < _M_v.size());
+				return std::get<0>(_M_v[i]);
+			}
+
 			unsigned int size() const
 			{
 				return _M_v.size();
@@ -142,11 +154,14 @@ namespace nmath {
 			friend class ArrayRef<T>;
 
 			using Array<T>::_M_v;
+			typedef Array<T>::TUPLE TUPLE;
+
+			typedef std::shared_ptr<T> T_S;
 
 			typedef std::enable_shared_from_this<Array<T>> ESFT; 
-			typedef std::tuple<T, unsigned int> TUPLE;
+			
 
-			ArrayIndirect() : buffer(0), buffer_size(0) {}
+			ArrayIndirect() : buffer_size(0) {}
 			/*
 			* for any elements that have changed since last refresh
 			* resize if necessary and copy data to buffer
@@ -157,45 +172,47 @@ namespace nmath {
 				{
 					if (std::get<1>(_M_v[i]) > 0)
 					{
-						char * c = seek(i);
+						nmath::util::BufferChar c(seek(i));
 
-						unsigned int block_size = *((unsigned int*)c);
+						unsigned int block_size = *((unsigned int*)c._M_c);
 
-						T & t = std::get<0>(_M_v[i]);
+						T_S & t = std::get<0>(_M_v[i]);
 
 						nmath::util::BufferSizeCounter counter;
-						t.serialize(counter);
+						t->serialize(counter);
 
-						unsigned int block_size_new = counter._M_s + sizeof(unsigned int);
+						unsigned int block_size_new = counter.pointer() + sizeof(unsigned int);
 
 						if (block_size_new != block_size) resize(i, block_size_new);
 
-						c = seek(i);
+						c._M_c = seek(i);
 						
-						*((unsigned int*)c) = block_size_new;
-						c += sizeof(unsigned int);
-						std::get<0>(_M_v[i]).serialize(c);
+						c.write(&block_size_new, sizeof(unsigned int));
+
+						std::get<0>(_M_v[i])->serialize(c);
 					}
 				}
 			}
 
-			void push_back_buffer(T const & t, unsigned int index)
+			void push_back_buffer(T_S const & t, unsigned int index)
 			{
 				// write to buffer
 
 				nmath::util::BufferSizeCounter counter;
-				t.serialize(counter);
+				t->serialize(counter);
 
-				unsigned int l = counter._M_s;
+				unsigned int l = counter.pointer();
 				unsigned int block_size = sizeof(unsigned int)+l;
 				resize(buffer_size + block_size);
-				char * c = seek(index);
-				*((unsigned int *)c) = block_size;
-				c += sizeof(unsigned int);
-				t.serialize(c);
+				
+				nmath::util::BufferChar c(seek(index));
+
+				c.write(&block_size, sizeof(unsigned int));
+
+				t->serialize(c);
 			}
 
-			virtual std::shared_ptr< ArrayRef<T> > push_back(T const & t)
+			virtual std::shared_ptr< ArrayRef<T> > push_back(T_S const & t)
 			{
 				unsigned int index = _M_v.size();
 				auto r = std::make_shared< ArrayRef<T> >(ESFT::shared_from_this(), index);
@@ -206,7 +223,7 @@ namespace nmath {
 				return r;
 			}
 			virtual std::shared_ptr< ArrayRefIndexRef<T> > push_back_index_ref(
-				T const & t,
+				T_S const & t,
 				std::function<void(unsigned int)> f_set,
 				std::function<unsigned int()> f_get)
 			{
@@ -226,7 +243,7 @@ namespace nmath {
 
 			char * seek(unsigned int i)
 			{
-				char * c = buffer;
+				char * c = _M_buffer;
 
 				for (int j = 0; j < i; ++j)
 				{
@@ -269,25 +286,25 @@ namespace nmath {
 						char * c_old = c + old_size;
 						char * c_new = c + new_size;
 
-						memcpy(c_new, c_old, buffer_size - (c_old - buffer));
+						memcpy(c_new, c_old, buffer_size - (c_old - _M_buffer));
 					}
 				}
 				else if (new_size > old_size)
 				{
 					char * new_buffer = new char[buffer_size + new_size - old_size];
 					
-					memcpy(new_buffer, buffer, c - buffer);
+					memcpy(new_buffer, _M_buffer, c - _M_buffer);
 
 					if (i < (_M_v.size() - 1))
 					{
 						char * c_old = c + old_size;
-						char * c_new = new_buffer + (c - buffer) + new_size;
+						char * c_new = new_buffer + (c - _M_buffer) + new_size;
 
-						memcpy(c_new, c_old, buffer_size - (c_old - buffer));
+						memcpy(c_new, c_old, buffer_size - (c_old - _M_buffer));
 					}
 
-					delete[] buffer;
-					buffer = new_buffer;
+					delete[] _M_buffer;
+					_M_buffer = new_buffer;
 				}
 
 				// common
@@ -299,10 +316,10 @@ namespace nmath {
 
 				char * new_buffer = new char[new_size];
 
-				memcpy(new_buffer, buffer, buffer_size);
+				memcpy(new_buffer, _M_buffer, buffer_size);
 
-				if (buffer) delete[] buffer;
-				buffer = new_buffer;
+				if (_M_buffer) delete[] _M_buffer;
+				_M_buffer = new_buffer;
 
 				buffer_size = new_size;
 			}
@@ -315,12 +332,12 @@ namespace nmath {
 			void print()
 			{
 				// for debugging
-				char * c = buffer;
+				char * c = _M_buffer;
 				while (true)
 				{
 					for (int i = 0; i < 4; ++i)
 					{
-						if (c == (buffer + buffer_size)) break;
+						if (c == (_M_buffer + buffer_size)) break;
 						
 						//std::cout << std::showbase << std::internal << std::setw(4) << std::hex << *((short*)c) << " ";
 						std::cout << *((unsigned int*)c) << " ";
@@ -328,7 +345,7 @@ namespace nmath {
 					}
 					std::cout << std::endl;
 
-					if (c == (buffer + buffer_size)) break;
+					if (c == (_M_buffer + buffer_size)) break;
 				}
 
 				std::cout << std::dec;
@@ -339,7 +356,7 @@ namespace nmath {
 			* the buffer is divided into block, one for each element
 			* each element starts with an unsigned int that contains the full length of the block in bytes
 			*/
-			char * buffer;
+			char * _M_buffer;
 			unsigned int buffer_size;
 		};
 	}

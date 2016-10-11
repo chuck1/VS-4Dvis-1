@@ -14,6 +14,8 @@
 namespace nmath {
 	namespace geometry {
 
+
+
 		template<unsigned int M>
 		class Face : public SubspaceBounded<M, M - 1>
 		{
@@ -21,16 +23,7 @@ namespace nmath {
 			using SubspaceBounded<M, M - 1>::_M_A;
 			using SubspaceBounded<M, M - 1>::_M_inequalities;
 
-			template<typename BUFFER>
-			void serialize(BUFFER & c) const
-			{
-
-			}
-			template<typename BUFFER>
-			void deserialize(BUFFER & c)
-			{
-
-			}
+			
 
 			void calc_basis()
 			{
@@ -62,43 +55,83 @@ namespace nmath {
 				k = k1;
 				return true;
 			}
+
+
+			void serialize(nmath::util::Buffer & c) const
+			{
+				SubspaceBounded<M, M - 1>::serialize(c);
+
+				c.write((void*)&_M_plane, sizeof(nmath::geometry::Plane<M>));
+			}
+			void deserialize(nmath::util::Buffer & c)
+			{
+
+			}
+
 		public:
 			nmath::geometry::Plane<M> _M_plane;
 		};
 
 		class PolytopeBase
-		{};
+		{
+		public:
+			virtual unsigned int	faces_len() = 0;
+
+			virtual void serialize(nmath::util::Buffer & c) const = 0;
+			virtual void deserialize(nmath::util::Buffer & c) = 0;
+		};
 
 		template<unsigned int M>
 		class Polytope: public FeatureSet<M, M-1>, public PolytopeBase
 		{
 		public:
-			template<typename BUFFER>
-			void serialize(BUFFER & c) const
+			virtual void serialize(nmath::util::Buffer & c) const
 			{
 				// faces
 
-				// placeholder to write byte-size of vector block
-				BUFFER d = c; c += sizeof(unsigned int);
+				nmath::util::serialize(c, _M_faces);
 
-				unsigned int s = _M_faces.size();
-				nmath::util::write(c, &s);
-				
-				for (auto it = _M_faces.begin(); it != _M_faces.end(); ++it)
-				{
-					(*it).serialize(c);
-				}
+				//// placeholder to write byte-size of vector block
+				//
+				//unsigned int d = c.pointer();
+				//
+				//c += sizeof(unsigned int);
 
-				unsigned int sb = c - d;
+				//unsigned int s = _M_faces.size();
 
-				nmath::util::write(d, &sb);
+				//c.write(&s, sizeof(unsigned int));
+				//
+				//for (auto it = _M_faces.begin(); it != _M_faces.end(); ++it)
+				//{
+				//	// placeholder
+				//	unsigned int c1 = c.pointer();
+				//	c += sizeof(unsigned int);
+
+				//	(*it).serialize(c);
+
+				//	unsigned int s1 = c - c1;
+
+				//	c -= s1;
+				//	c.write((void*)&s1, sizeof(unsigned int));
+				//	c += s1;
+				//}
+
+				//unsigned int sb = c - d;
+
+				//c -= sb;
+				//c.write(&sb, sizeof(unsigned int));
+				//c += sb;
 			}
-			template<typename BUFFER>
-			void deserialize(BUFFER & c)
+			virtual void deserialize(nmath::util::Buffer & c)
 			{
 
 			}
 			
+			virtual unsigned int	faces_len()
+			{
+				return _M_faces.size();
+			}
+
 		public:
 			std::vector<Face<M>>			_M_faces;
 			
