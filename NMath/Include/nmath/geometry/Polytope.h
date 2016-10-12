@@ -32,13 +32,27 @@ namespace nmath {
 
 				auto m2 = nmath::SMat<M>::Identity();
 
+				NMATH_DEBUG(40){
+					std::cout << "gaussian elimination" << std::endl;
+					std::cout << m << std::endl;
+					std::cout << m2 << std::endl;
+				}
+
 				nmath::gaussianElimination(m, m2);
+
+				NMATH_DEBUG(40){
+					std::cout << "result" << std::endl;
+					std::cout << m << std::endl;
+					std::cout << m2 << std::endl;
+				}
 
 				_M_A = nmath::subMat1(m2.transpose(), 0);
 
 				// normalize column vectors of A
-
-				//std::cout << _M_A << std::endl;
+				NMATH_DEBUG(40){
+					std::cout << "_M_A" << std::endl;
+					std::cout << _M_A << std::endl;
+				}
 
 				normalize();
 
@@ -200,18 +214,21 @@ namespace nmath {
 					if (nv > 0) continue; // no intersection
 					if (d < 0) continue;
 
+					nmath::linalg::Vec<M - 1> s = f.s(ray.x(d));
+
+					if (!f.eval(s)) continue;
+					
 					NMATH_DEBUG(20) {
 						std::cout << "ray.p   " << ray.p << std::endl;
 						std::cout << "ray.v   " << ray.v << std::endl;
 						std::cout << "plane.n " << f._M_plane.n << std::endl;
 						std::cout << "plane.d " << f._M_plane.d << std::endl;
+						std::cout << "f._M_A  " << std::endl;
+						std::cout << f._M_A << std::endl;
+						std::cout << "s       " << s << std::endl;
 						printf("ray plane intersect at dist=%f\n", d);
 					}
 
-					nmath::linalg::Vec<M-1> s = f.s(ray.x(d));
-
-					if (!f.eval(s)) continue;
-					
 					b = true;
 					if (d < dist)
 					{

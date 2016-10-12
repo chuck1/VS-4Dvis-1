@@ -142,7 +142,7 @@ namespace nmath {
 	}
 
 	template<int M, int N>
-	void subtractRow(Mat<M, N> & m, int i0, int i1, double f)
+	void subtractRow(Mat<M, N> & m, int i0, int i1, float f)
 	{
 		for (int j = 0; j < N; ++j)
 		{
@@ -151,7 +151,7 @@ namespace nmath {
 	}
 
 	template<int M, int N>
-	void multiplyRow(Mat<M, N> & m, int i, double f)
+	void multiplyRow(Mat<M, N> & m, int i, float f)
 	{
 		for (int j = 0; j < N; ++j)
 		{
@@ -160,7 +160,7 @@ namespace nmath {
 	}
 
 	template<int M, int N>
-	void divideRow(Mat<M, N> & m, int i, double f)
+	void divideRow(Mat<M, N> & m, int i, float f)
 	{
 		for (int j = 0; j < N; ++j)
 		{
@@ -224,7 +224,8 @@ namespace nmath {
 			{
 				if (m(i, k) < 0)
 				{
-					multiplyRow(m, i, -1);
+					multiplyRow(m, i, -1.f);
+					multiplyRow(m1, i, -1.f);
 				}
 			}
 
@@ -253,7 +254,6 @@ namespace nmath {
 			for (unsigned int i = 0; i < k; ++i)
 			{
 				subtractRow(m, i, k, m(i, k));
-
 				subtractRow(m1, i, k, m(i, k));
 			}
 			
