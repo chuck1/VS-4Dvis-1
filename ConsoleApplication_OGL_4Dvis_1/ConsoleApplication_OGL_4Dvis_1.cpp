@@ -466,7 +466,7 @@ Rectangle rect;
 
 std::shared_ptr<OCL::Manager> ocl;
 
-#define M (3)
+#define M (4)
 
 void construct_cube(std::shared_ptr<nmath::geometry::Polytope<M>> p, nmath::SMat<M> const & rot)
 {
@@ -550,13 +550,17 @@ void contruct_app(std::shared_ptr<nspace::app::App<M>> app)
 	l0->_M_atten[2] = 0;
 	l0->_M_p(0) = 0.f;
 	l0->_M_p(2) = 5.f;
+	//l0->_M_p(3) = -5.f;
 
 	app->_M_lights->push_back(l0);
 }
 
 void remake_cube(std::shared_ptr<nspace::app::App<M>> app, float angle)
 {
-	auto rot = simple_rotation_matrix<M>(0, 2, angle);
+	auto rot1 = simple_rotation_matrix<M>(0, 3, angle);
+	auto rot2 = simple_rotation_matrix<M>(0, 2, CL_M_PI / 4.f);
+	//auto rot = rot2*rot1;
+	auto rot = rot1;
 
 	app->_M_polytopes->clear();
 	
@@ -586,7 +590,7 @@ int _tmain(int argc, _TCHAR* argv[])
 	int w = 4;
 	int h = 3;
 
-	int textureScale = 8*2*2;
+	int textureScale = 16;
 	
 	//int w = 160;//  640;
 	//int h = 120;// 480;
@@ -671,6 +675,9 @@ int _tmain(int argc, _TCHAR* argv[])
 
 	rect.construct();
 	rect.setup();
+
+	remake_cube(app, 0);
+	app->render_init();
 
 	// Create and compile our GLSL program from the shaders
 	GLuint programID = LoadShaders("SimpleVertexShader.vertexshader", "SimpleFragmentShader.fragmentshader");

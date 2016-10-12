@@ -34,6 +34,12 @@
     <Filter Include="Source Files\gl">
       <UniqueIdentifier>{ee467ae1-02c4-449f-83d1-ee9933ca09de}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\nspace\graphics">
+      <UniqueIdentifier>{bfd353aa-e2c9-4b6a-b29d-fdbebea1d7e5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\nspace\graphics\raycast">
+      <UniqueIdentifier>{5aa01c39-5744-49a3-a9dd-252bfcfaf62a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -72,9 +78,6 @@
     <ClInclude Include="include\nspace\tests.h">
       <Filter>Header Files\nspace</Filter>
     </ClInclude>
-    <ClInclude Include="include\nspace\graphics\raycast\Viewport.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="include\nspace\graphics\Color.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -89,6 +92,12 @@
     </ClInclude>
     <ClInclude Include="include\nspace\util\Task.h">
       <Filter>Header Files\nspace\util</Filter>
+    </ClInclude>
+    <ClInclude Include="include\nspace\graphics\raycast\Viewport.h">
+      <Filter>Header Files\nspace\graphics\raycast</Filter>
+    </ClInclude>
+    <ClInclude Include="include\nspace\graphics\raycast\Task.h">
+      <Filter>Header Files\nspace\graphics\raycast</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

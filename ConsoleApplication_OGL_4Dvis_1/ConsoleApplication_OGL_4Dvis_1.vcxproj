@@ -89,6 +89,7 @@
     <ClInclude Include="include\nspace\app\ManagerBuffer.h" />
     <ClInclude Include="include\nspace\decl.h" />
     <ClInclude Include="include\nspace\graphics\Color.h" />
+    <ClInclude Include="include\nspace\graphics\raycast\Task.h" />
     <ClInclude Include="include\nspace\graphics\raycast\Viewport.h" />
     <ClInclude Include="include\nspace\light\Light.h" />
     <ClInclude Include="include\nspace\tests.h" />

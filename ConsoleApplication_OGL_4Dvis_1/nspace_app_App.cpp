@@ -6,7 +6,7 @@
 #include <nspace/app/App.h>
 #include <nspace/util/Task.h>
 
-void nspace::app::AppBase::init_render()
+void nspace::app::AppBase::render_init()
 {
 	unsigned int pixels_size = _M_viewport->_M_w * _M_viewport->_M_h;
 	unsigned int lights_size = _M_lights->size();
