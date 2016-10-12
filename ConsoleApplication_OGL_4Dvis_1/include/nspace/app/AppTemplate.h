@@ -21,7 +21,7 @@ namespace nspace {
 
 			virtual void render()
 			{
-				printf("App::render");
+				//printf("App::render\n");
 
 				unsigned int w = _M_viewport->_M_w;
 				unsigned int h = _M_viewport->_M_h;
@@ -41,11 +41,12 @@ namespace nspace {
 				eye(2) = 1.0f * (float)w / (float)h / tan(fov / 2.0f);
 				eye(2) += offsetz;
 
-				for (unsigned int i = 0; i < w; ++i)
+				for (unsigned int j = 0; j < h; ++j)
 				{
-					for (unsigned int j = 0; j < h; ++j)
+					for (unsigned int i = 0; i < w; ++i)
 					{
-						printf("pixel %u %u\n", i, j);
+					
+						NMATH_DEBUG(10)printf("pixel %u %u\n", i, j);
 
 						unsigned int pixel_i = j * w * 3 + i * 3;
 						pixelData[pixel_i + 0] = 0;
@@ -76,16 +77,19 @@ namespace nspace {
 							b = p->intersect(dist, face_i, N, r);
 
 							if (!b) {
-								//printf("no intersect with polytope %u\n", k);
+								NMATH_DEBUG(10) printf("no intersect with polytope %u\n", k);
 								continue; 
 							}
 
 							polytope_i = k;
 						}
 
-						if (!b) continue; // no intersections, leave pixel black
+						if (!b) {
+							NMATH_DEBUG(10) printf("no intersections\n");
+							continue; // no intersections, leave pixel black
+						}
 						
-						//printf("intersection with polytope %i, dist = %f\n", polytope_i, dist);
+						NMATH_DEBUG(10) printf("intersection with polytope %i, face %i, dist = %f\n", polytope_i, face_i, dist);
 
 						// calc color
 
@@ -113,7 +117,7 @@ namespace nspace {
 
 							float a = nmath::linalg::dot(L, N);
 
-							if (false){
+							NMATH_DEBUG(10){
 								std::cout << "p=" << p << std::endl;
 								std::cout << "L=" << L << std::endl;
 								std::cout << "N=" << N << std::endl;
@@ -126,19 +130,18 @@ namespace nspace {
 								float atten = l->_M_atten[0] + l->_M_atten[1] * L_len + l->_M_atten[1] * L_len * L_len;
 								nspace::graphics::Color colorDiffuse = colorMaterial * l->_M_color * (a / atten);
 
-								//std::cout << "colorDiffuse = " << colorDiffuse << std::endl;
+								NMATH_DEBUG(10)std::cout << "colorDiffuse = " << colorDiffuse << std::endl;
 
 								color += colorDiffuse;
 							}
 						}
 
-						//std::cout << "pixel color = " << color << std::endl;
-
 						pixelData[pixel_i + 0] = (unsigned int)(color(0)*255.f);
 						pixelData[pixel_i + 1] = (unsigned int)(color(1)*255.f);
 						pixelData[pixel_i + 2] = (unsigned int)(color(2)*255.f);
 
-						printf("pixel color = %i %i %i\n", pixelData[pixel_i + 0], pixelData[pixel_i + 1], pixelData[pixel_i + 2]);
+						NMATH_DEBUG(10)std::cout << "pixel color = " << color << std::endl;
+						NMATH_DEBUG(10)printf("pixel color = %i %i %i\n", pixelData[pixel_i + 0], pixelData[pixel_i + 1], pixelData[pixel_i + 2]);
 					}
 				}
 

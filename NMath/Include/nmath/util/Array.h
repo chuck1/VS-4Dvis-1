@@ -193,7 +193,13 @@ namespace nmath {
 					}
 				}
 			}
-
+			void clear()
+			{
+				_M_v.clear();
+				if (_M_buffer) delete[] _M_buffer;
+				_M_buffer = 0;
+				buffer_size = 0;
+			}
 			void push_back_buffer(T_S const & t, unsigned int index)
 			{
 				// write to buffer

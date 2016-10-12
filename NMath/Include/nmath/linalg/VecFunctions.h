@@ -89,7 +89,7 @@ inline std::ostream& operator<<(std::ostream& os, nmath::Mat<M, N> const & m)
 {
 	for (int i = 0; i < M; ++i) {
 		for (int j = 0; j < N; ++j) {
-			os << std::setw(5) << std::setprecision(2) << std::fixed << m(i, j) << " ";
+			os << std::setw(7) << std::setprecision(4) << std::fixed << m(i, j) << " ";
 		}
 		os << std::endl;
 	}

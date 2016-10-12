@@ -72,7 +72,7 @@ namespace nmath {
 				}
 				return ret;
 			}
-			Vec<M> operator*(int const & b)
+			Vec<M> operator*(float const & b)
 			{
 				Vec<M> c;
 				for (int i = 0; i < M; ++i)

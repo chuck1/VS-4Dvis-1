@@ -6,6 +6,10 @@
 #include <memory>
 #include <functional>
 
+#define NMATH_DEBUG_LEVEL (0)
+
+#define NMATH_DEBUG(a) if(a <= NMATH_DEBUG_LEVEL)
+
 namespace nmath{
 	namespace graph{
 		template<typename V>

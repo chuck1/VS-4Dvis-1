@@ -466,7 +466,7 @@ Rectangle rect;
 
 std::shared_ptr<OCL::Manager> ocl;
 
-#define M (4)
+#define M (3)
 
 void construct_cube(std::shared_ptr<nmath::geometry::Polytope<M>> p, nmath::SMat<M> const & rot)
 {
@@ -512,19 +512,34 @@ void construct_cube(std::shared_ptr<nmath::geometry::Polytope<M>> p, nmath::SMat
 			p->_M_faces[2 * i + 1].AddHyperplaneIntersection(p->_M_faces[2 * j + 1]._M_plane);
 		}
 	}
+
+	NMATH_DEBUG(10){
+		for (int i = 0; i < p->_M_faces.size(); ++i)
+		{
+			nmath::geometry::Face<M> & f = p->_M_faces[i];
+
+			std::cout << "face " << i << std::endl;
+			std::cout << "A" << std::endl;
+			std::cout << f._M_A << std::endl;
+			std::cout << "n " << f._M_plane.n.length() << std::endl;
+			std::cout << f._M_plane.n << std::endl;
+		}
+	}
+
+	//getchar();exit(0);
 }
 
 void contruct_app(std::shared_ptr<nspace::app::App<M>> app)
 {
-	auto rot = simple_rotation_matrix<M>(2, 3, CL_M_PI/32.f);
+	//auto rot = simple_rotation_matrix<M>(0, 2, CL_M_PI/8.f);
 	
 	app->_M_polytopes = std::make_shared<nspace::app::App<M>::ARRAY_POLYTOPE>();
 	app->_M_lights = std::make_shared<nspace::app::App<M>::ARRAY_LIGHT>();
 
-	auto p0 = std::make_shared<nmath::geometry::Polytope<M>>();
-	construct_cube(p0, rot);
+	//auto p0 = std::make_shared<nmath::geometry::Polytope<M>>();
+	//construct_cube(p0, rot);
 	
-	app->_M_polytopes->push_back(p0);
+	//app->_M_polytopes->push_back(p0);
 
 	auto l0 = std::make_shared<nspace::light::Point<M>>();
 	l0->_M_color(0) = 1;
@@ -533,10 +548,22 @@ void contruct_app(std::shared_ptr<nspace::app::App<M>> app)
 	l0->_M_atten[0] = 1;
 	l0->_M_atten[1] = 1;
 	l0->_M_atten[2] = 0;
-	l0->_M_p(0) = 2.f;
-	l0->_M_p(2) = 2.f;
+	l0->_M_p(0) = 0.f;
+	l0->_M_p(2) = 5.f;
 
 	app->_M_lights->push_back(l0);
+}
+
+void remake_cube(std::shared_ptr<nspace::app::App<M>> app, float angle)
+{
+	auto rot = simple_rotation_matrix<M>(0, 2, angle);
+
+	app->_M_polytopes->clear();
+	
+	auto p0 = std::make_shared<nmath::geometry::Polytope<M>>();
+	construct_cube(p0, rot);
+
+	app->_M_polytopes->push_back(p0);
 }
 
 void OCLtest2()
@@ -552,15 +579,19 @@ void OCLtest2()
 	}
 }
 
-
+float rotAngle = CL_M_PI/4.f;
 
 int _tmain(int argc, _TCHAR* argv[])
 {
+	int w = 4;
+	int h = 3;
 
-	//int w = 160;//320;//  640;
-	//int h = 120;// 240;// 480;
-	int w = 320;//  640;
-	int h = 240;// 480;
+	int textureScale = 8*2*2;
+	
+	//int w = 160;//  640;
+	//int h = 120;// 480;
+	//int w = 320;//  640;
+	//int h = 240;// 480;
 
 	//nmath::test();
 	//nspace::tests::test_array();
@@ -572,11 +603,12 @@ int _tmain(int argc, _TCHAR* argv[])
 		OCLtest2();
 	}
 
+	unsigned int windowScale = 160;
 
 	auto app = std::make_shared<nspace::app::App<M>>();
 	app->_M_viewport = std::make_shared<nspace::graphics::raycast::Viewport<M>>();
-	app->_M_viewport->_M_w = w;
-	app->_M_viewport->_M_h = h;
+	app->_M_viewport->_M_w = w*textureScale;
+	app->_M_viewport->_M_h = h*textureScale;
 	contruct_app(app);
 	//app->render();
 
@@ -599,7 +631,7 @@ int _tmain(int argc, _TCHAR* argv[])
 	GLFWwindow* window;
 
 	//Create a window and create its OpenGL context
-	window = glfwCreateWindow(w, h, "Test Window", NULL, NULL);
+	window = glfwCreateWindow(w*windowScale, h*windowScale, "Test Window", NULL, NULL);
 
 	//If the window couldn't be created
 	if (!window)
@@ -643,19 +675,29 @@ int _tmain(int argc, _TCHAR* argv[])
 	// Create and compile our GLSL program from the shaders
 	GLuint programID = LoadShaders("SimpleVertexShader.vertexshader", "SimpleFragmentShader.fragmentshader");
 	
-
+	double t = glfwGetTime();
+	double dt = 0;
 	//Main Loop
 	do
 	{
 		
+
+		double ttemp = glfwGetTime();
+		dt = ttemp - t;
+		t = ttemp;
+
+		printf("dt=%f\n", dt);
+
 		//OCLtest2();
-		
 		
 		//Clear color buffer
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 		glUseProgram(programID);
 
+		remake_cube(app, rotAngle);
+		rotAngle += dt * CL_M_PI / 32.f;
+		
 		app->render();
 
 		rect.drawTriangles();

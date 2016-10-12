@@ -19,6 +19,23 @@ namespace nmath {
 				return _M_A.transpose()*(x - _M_p);
 			}
 
+			void normalize()
+			{
+				for (unsigned int j = 0; j < K; ++j)
+				{
+					float l = 0;
+					for (unsigned int i = 0; i < M; ++i)
+					{
+						l += _M_A(i, j)*_M_A(i, j);
+					}
+					l = sqrt(l);
+					for (unsigned int i = 0; i < M; ++i)
+					{
+						_M_A(i, j) /= l;
+					}
+				}
+			}
+
 			virtual void serialize(nmath::util::Buffer & c) const
 			{
 				unsigned int c1 = c.pointer();

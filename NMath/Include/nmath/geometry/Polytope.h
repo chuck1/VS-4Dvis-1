@@ -35,6 +35,16 @@ namespace nmath {
 				nmath::gaussianElimination(m, m2);
 
 				_M_A = nmath::subMat1(m2.transpose(), 0);
+
+				// normalize column vectors of A
+
+				//std::cout << _M_A << std::endl;
+
+				normalize();
+
+				//std::cout << _M_A << std::endl;
+				//getchar(); exit(0);
+
 			}
 			bool intersection(nmath::geometry::Ray<M> ray, double & k)
 			{
@@ -48,7 +58,17 @@ namespace nmath {
 
 				for (unsigned int i = 0; i < _M_inequalities._M_size; ++i)
 				{
-					if (!_M_inequalities[i].eval(s1)) return false;;
+					if (!_M_inequalities[i].eval(s1)) {
+
+						NMATH_DEBUG(30) {
+							printf("inequality failed\n");
+							std::cout << _M_inequalities[i]._M_a << std::endl;
+							std::cout << _M_inequalities[i]._M_d << std::endl;
+							printf("s = \n");
+						}
+
+						return false;
+					}
 				}
 
 				// passed
@@ -62,7 +82,17 @@ namespace nmath {
 				{
 					nmath::geometry::Inequality<M - 1> & ineq = _M_inequalities[j];
 
-					if (!ineq.eval(s)) return false;
+					if (!ineq.eval(s)) {
+
+						NMATH_DEBUG(30) {
+							printf("inequality failed\n");
+							std::cout << "a = " << ineq._M_a << std::endl;
+							std::cout << "d = " << ineq._M_d << std::endl;
+							std::cout << "s = " << s << std::endl;
+						}
+
+						return false;
+					}
 				}
 
 				return true;
@@ -155,6 +185,8 @@ namespace nmath {
 
 			bool intersect(float & dist, unsigned int & face_i, nmath::linalg::Vec<M> & N, nmath::geometry::Ray<M> ray)
 			{
+				NMATH_DEBUG(20) printf("Polytope::intersect\n");
+				
 				bool b = false;
 
 				for (unsigned int i = 0; i < _M_faces.size(); ++i)
@@ -168,7 +200,7 @@ namespace nmath {
 					if (nv > 0) continue; // no intersection
 					if (d < 0) continue;
 
-					if (false){
+					NMATH_DEBUG(20) {
 						std::cout << "ray.p   " << ray.p << std::endl;
 						std::cout << "ray.v   " << ray.v << std::endl;
 						std::cout << "plane.n " << f._M_plane.n << std::endl;
