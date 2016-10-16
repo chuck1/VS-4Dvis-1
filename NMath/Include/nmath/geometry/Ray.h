@@ -7,15 +7,15 @@
 namespace nmath {
 	namespace geometry {
 
-		class RayBase
+		/*class RayBase
 		{
 		public:
 			virtual void serialize(nmath::util::Buffer & c) const = 0;
 			virtual void deserialize(nmath::util::Buffer & c) = 0;
-		};
+		};*/
 
 		template<unsigned int M>
-		class Ray: public RayBase
+		class Ray//: public RayBase
 		{
 		public:
 			nmath::linalg::Vec<M> x(double k)
@@ -23,16 +23,16 @@ namespace nmath {
 				return p + v*k;
 			}
 
-			virtual void serialize(nmath::util::Buffer & c) const
-			{
-				//nmath::util::write(c, p);
-				//c.write<nmath::linalg::Vec<M>>(p);
-				c.write((void*)&p, sizeof(nmath::linalg::Vec<M>));
-			}
-			virtual void deserialize(nmath::util::Buffer & c)
-			{
+			//virtual void serialize(nmath::util::Buffer & c) const
+			//{
+			//	//nmath::util::write(c, p);
+			//	//c.write<nmath::linalg::Vec<M>>(p);
+			//	//c.write((void*)&p, sizeof(nmath::linalg::Vec<M>));
+			//}
+			//virtual void deserialize(nmath::util::Buffer & c)
+			//{
 
-			}
+			//}
 
 
 		public:

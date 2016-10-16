@@ -19,13 +19,13 @@ namespace nspace {
 		{
 		public:
 			
-			typedef std::shared_ptr<nmath::geometry::RayBase> RAY_S;
+			//typedef std::shared_ptr<nmath::geometry::RayBase> RAY_S;
 
 			typedef nmath::util::ArrayIndirect<nmath::geometry::PolytopeBase> ARRAY_POLYTOPE;
 			typedef std::shared_ptr<ARRAY_POLYTOPE> ARRAY_POLYTOPE_S;
 
-			typedef nmath::util::ArrayIndirect<nmath::geometry::RayBase> ARRAY_RAY;
-			typedef std::shared_ptr<ARRAY_RAY> ARRAY_RAY_S;
+			//typedef nmath::util::ArrayIndirect<nmath::geometry::RayBase> ARRAY_RAY;
+			//typedef std::shared_ptr<ARRAY_RAY> ARRAY_RAY_S;
 
 			typedef nmath::util::ArrayIndirect<nspace::light::Base> ARRAY_LIGHT;
 			typedef std::shared_ptr<ARRAY_LIGHT> ARRAY_LIGHT_S;
@@ -36,13 +36,13 @@ namespace nspace {
 			virtual void												render_init();
 			virtual void												render();
 
-			virtual RAY_S												make_ray() = 0;
+			//virtual RAY_S												make_ray() = 0;
 			
 
 		public:
 			ARRAY_POLYTOPE_S											_M_polytopes;
 			ARRAY_LIGHT_S												_M_lights;
-			ARRAY_RAY_S													_M_rays;
+			//ARRAY_RAY_S													_M_rays;
 			
 			
 

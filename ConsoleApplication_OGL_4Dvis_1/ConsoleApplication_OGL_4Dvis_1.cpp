@@ -707,8 +707,8 @@ int _tmain(int argc, _TCHAR* argv[])
 	rect.construct();
 	rect.setup();
 
-	//remake_cube(app, 0, 0);
-	remake_cube(app, CL_M_PI / 4.f, 0);
+	remake_cube(app, 0, 0);
+	//remake_cube(app, CL_M_PI / 4.f, 0);
 	app->render_init();
 
 	// Create and compile our GLSL program from the shaders

@@ -20,8 +20,8 @@ void nspace::app::AppBase::render_init()
 		faces_size += p->faces_len();
 	}*/
 
-	_M_rays = std::make_shared<ARRAY_RAY>();
-	for (unsigned int i = 0; i < rays_size; ++i) _M_rays->push_back(make_ray());
+	//_M_rays = std::make_shared<ARRAY_RAY>();
+	//for (unsigned int i = 0; i < rays_size; ++i) _M_rays->push_back(make_ray());
 
 	std::vector<nspace::util::task::RayFaceIntersect> _M_tasks;
 

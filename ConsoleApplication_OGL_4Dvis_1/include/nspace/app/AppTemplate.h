@@ -15,11 +15,11 @@ namespace nspace {
 		{
 		public:
 
-			virtual AppBase::RAY_S make_ray()
-			{
+			//virtual AppBase::RAY_S make_ray()
+			/*{
 				return std::make_shared<nmath::geometry::Ray<M>>();
 			}
-
+			*/
 			
 			virtual void create_view_rays()
 			{
@@ -266,6 +266,8 @@ namespace nspace {
 				_M_memobj_test_polytope = _M_ocl->create_buffer(CL_MEM_READ_WRITE, _M_polytopes->buffer_size);
 				_M_memobj_test_polytope->EnqueueWrite(_M_polytopes->_M_buffer, _M_polytopes->buffer_size);
 
+				
+
 				unsigned int size = sizeof(float) * (M) * 100;
 				_M_memobj_test_out_float = _M_ocl->create_buffer(CL_MEM_READ_WRITE, size);
 
@@ -274,6 +276,7 @@ namespace nspace {
 
 				arg = 0;
 				_M_kernel_pointer_calc_test->set_arg(_M_memobj_test_polytope, arg++);
+				_M_kernel_pointer_calc_test->set_arg(memobj_rays_view, arg++);
 				_M_kernel_pointer_calc_test->set_arg(_M_memobj_test_out_uint, arg++);
 				_M_kernel_pointer_calc_test->set_arg(_M_memobj_test_out_float, arg++);
 			}
@@ -314,19 +317,35 @@ namespace nspace {
 				std::cout << "_M_tasks_ray_intercept      " << _M_tasks_ray_intercept.size() << std::endl;
 				std::cout << "_M_tasks_ray_face_intercept " << _M_tasks_ray_face_intercept.size() << std::endl;
 
+				unsigned int c1 = 0;
+				unsigned int c2 = 0;
+				unsigned int c12 = 0;
+
 				for (unsigned int i = 0; i < _M_tasks_ray_face_intercept.size(); ++i)
 				{
 					auto & t1 = _M_tasks_ray_face_intercept[i];
 					auto & t2 = _M_tasks_ray_face_intercept_result[i];
-					printf("%8i\n", i);
-					printf("    ray       %16i %16i\n", t1.ray_i, t2.ray_i);
-					printf("    polytope  %16i %16i\n", t1.polytope_i, t2.polytope_i);
-					printf("    face      %16i %16i\n", t1.face_i, t2.face_i);
-					printf("    intersect %16i %16i\n", t1.intersect, t2.intersect);
-					printf("    k         %16.4f %16.4f\n", t1.k, t2.k);
+
+					if (t1.intersect) ++c1;
+					if (t2.intersect) ++c2;
+					if (t1.intersect && t2.intersect) ++c12;
+
+					if (t1.intersect || t2.intersect)
+					{
+						
+						printf("%6i\n", i);
+						printf("      ray       %16i %16i\n", t1.ray_i, t2.ray_i);
+						printf("      polytope  %16i %16i\n", t1.polytope_i, t2.polytope_i);
+						printf("      face      %16i %16i\n", t1.face_i, t2.face_i);
+						printf("      intersect %16i %16i\n", t1.intersect, t2.intersect);
+						printf("      k         %16.4e %16.4e\n", t1.k, t2.k);
+					}
 				}
 
-				printf("counter=%i\n", counter);
+				printf("counter: %i\n", counter);
+				printf("c1:   %i\n", c1);
+				printf("c1:   %i\n", c2);
+				printf("c12:  %i\n", c12);
 
 				//==================================================
 
@@ -496,9 +515,14 @@ namespace nspace {
 				
 				// print
 
+				nmath::geometry::Ray<M> ray;
+
+				printf("position of ray p: %i\n", (int)((char*)(&ray.p) - (char*)&ray));
+
 				printf("sizeof(Vec<%i>)    = %4i\n", M, sizeof(nmath::linalg::Vec<M>));
 				printf("sizeof(Mat<%i,%i>)  = %4i\n", M, M-1, sizeof(nmath::Mat<M,M-1>));
 				printf("sizeof(Plane<%i>)  = %4i\n", M, sizeof(nmath::geometry::Plane<M>));
+				printf("sizeof(Ray<%i>)    = %4i\n", M, sizeof(nmath::geometry::Ray<M>));
 
 				for (unsigned int i = 0; i < 6; ++i)
 				{
@@ -508,15 +532,24 @@ namespace nspace {
 				std::shared_ptr<nmath::geometry::Polytope<M>> polytope = std::dynamic_pointer_cast<nmath::geometry::Polytope<M>>(_M_polytopes->operator[](0));
 				auto face = polytope->_M_faces[0];
 				
-				printf("face._M_plane.n\n");
-				std::cout << out_float[0] << std::endl;
-				std::cout << face._M_plane.n << std::endl;
-				
 				for (int j = 0; j < 4; ++j)
 				{
 					printf("\n");
-					std::cout << out_float[j+1] << std::endl;
-					std::cout << face._M_inequalities[j]._M_a << std::endl;
+					std::cout << out_float[j] << std::endl;
+					std::cout << _M_rays_view[j].p << std::endl;
+				}
+				if (0)
+				{
+					printf("face._M_plane.n\n");
+					std::cout << out_float[0] << std::endl;
+					std::cout << face._M_plane.n << std::endl;
+
+					for (int j = 0; j < 4; ++j)
+					{
+						printf("\n");
+						std::cout << out_float[j + 1] << std::endl;
+						std::cout << face._M_inequalities[j]._M_a << std::endl;
+					}
 				}
 				getchar(); exit(0);
 			}

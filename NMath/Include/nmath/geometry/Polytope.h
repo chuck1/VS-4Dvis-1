@@ -67,6 +67,8 @@ namespace nmath {
 				auto x = ray.x(k1);
 				auto s1 = s(x);
 
+				k = k1;
+
 				for (unsigned int i = 0; i < _M_inequalities._M_size; ++i)
 				{
 					if (!_M_inequalities[i].eval(s1)) {
@@ -83,7 +85,7 @@ namespace nmath {
 				}
 
 				// passed
-				k = k1;
+				
 				return true;
 			}
 
