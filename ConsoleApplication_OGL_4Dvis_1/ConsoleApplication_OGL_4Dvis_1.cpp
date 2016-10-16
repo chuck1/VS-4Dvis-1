@@ -734,11 +734,13 @@ int _tmain(int argc, _TCHAR* argv[])
 
 		glUseProgram(programID);
 
-		//remake_cube(app, rotAngle, CL_M_PI / 4.f);
-		//rotAngle += dt * CL_M_PI / 32.f;
+		remake_cube(app, rotAngle, CL_M_PI / 4.f);
+		rotAngle += dt * CL_M_PI / 32.f;
 		
+		app->reload_buffer();
+
 		app->render();
-		getchar();
+		//getchar();
 
 		rect.drawTriangles();
 

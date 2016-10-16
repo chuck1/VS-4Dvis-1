@@ -31,7 +31,7 @@ namespace nspace {
 			typedef std::shared_ptr<ARRAY_LIGHT> ARRAY_LIGHT_S;
 
 
-
+			virtual void reload_buffer() = 0;
 		
 			virtual void												render_init();
 			virtual void												render();

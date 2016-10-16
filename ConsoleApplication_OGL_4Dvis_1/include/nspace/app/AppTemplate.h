@@ -7,6 +7,8 @@
 #include <nspace/graphics/raycast/Task.h>
 #include <nspace/graphics/OCL.h>
 
+#define APP_RENDER_GPU (1)
+
 namespace nspace {
 	namespace app {
 		
@@ -21,6 +23,10 @@ namespace nspace {
 			}
 			*/
 			
+			virtual void reload_buffer()
+			{
+
+			}
 			virtual void create_view_rays()
 			{
 				_M_rays_view.clear();
@@ -304,32 +310,40 @@ namespace nspace {
 
 				// OCL
 
+#if APP_RENDER_GPU
 				_M_kernel_ray_face_intercept->enqueue_ND_range_kernel(10, 10);
 
 				//_M_ocl->flush();
 
 				// read
 				unsigned int size = _M_tasks_ray_face_intercept.size() * sizeof(nspace::graphics::raycast::task::RayFaceIntercept<M>);
-				_M_tasks_ray_face_intercept_result.resize(_M_tasks_ray_face_intercept.size());
-				_M_memobj_tasks_ray_face_intercept->EnqueueRead(&_M_tasks_ray_face_intercept_result[0], size);
+				
+				//_M_tasks_ray_face_intercept_result.resize(_M_tasks_ray_face_intercept.size());
+				//_M_memobj_tasks_ray_face_intercept->EnqueueRead(&_M_tasks_ray_face_intercept_result[0], size);
+
+				_M_memobj_tasks_ray_face_intercept->EnqueueRead(&_M_tasks_ray_face_intercept[0], size);
+
+
 
 				unsigned int counter;
 				_M_memobj_counter->EnqueueRead(&counter, sizeof(unsigned int));
 
 				//printf("App::render\n");
 
-				
+#endif
 
 				//=====================================
-
+#if APP_RENDER_CPU
 				for (unsigned int i = 0; i < _M_tasks_ray_face_intercept.size(); ++i)
 				{
 					nspace::graphics::raycast::task::RayFaceIntercept<M> & task = _M_tasks_ray_face_intercept[i];
 					//do_ray_face_intercept(_M_tasks_ray_intercept[task.task_ray_intercept_i], task);
 					do_ray_face_intercept(task);
 				}
-
+#endif
 				//==================================================
+
+#if APP_RENDER_DEBUG
 
 				std::cout << "_M_tasks_ray_intercept      " << _M_tasks_ray_intercept.size() << std::endl;
 				std::cout << "_M_tasks_ray_face_intercept " << _M_tasks_ray_face_intercept.size() << std::endl;
@@ -379,7 +393,7 @@ namespace nspace {
 				printf("c1:   %i\n", c1);
 				printf("c2:   %i\n", c2);
 				printf("c12:  %i\n", c12);
-
+#endif
 				//==================================================
 
 				for (unsigned int i = 0; i < _M_tasks_ray_intercept.size(); ++i)
@@ -443,6 +457,7 @@ namespace nspace {
 							continue; // no intersections, leave pixel black
 						}
 #else
+						
 						if (!task.intersect) {
 							NMATH_DEBUG(10) printf("no intersections\n");
 							pixelData[pixel_i + 0] = 128;
