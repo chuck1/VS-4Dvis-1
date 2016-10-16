@@ -89,12 +89,12 @@
     <ClInclude Include="include\nspace\app\ManagerBuffer.h" />
     <ClInclude Include="include\nspace\decl.h" />
     <ClInclude Include="include\nspace\graphics\Color.h" />
+    <ClInclude Include="include\nspace\graphics\ocl.h" />
     <ClInclude Include="include\nspace\graphics\raycast\Task.h" />
     <ClInclude Include="include\nspace\graphics\raycast\Viewport.h" />
     <ClInclude Include="include\nspace\light\Light.h" />
     <ClInclude Include="include\nspace\tests.h" />
     <ClInclude Include="include\nspace\util\Task.h" />
-    <ClInclude Include="OCL.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>
@@ -113,7 +113,8 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="SimpleFragmentShader.fragmentshader">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </ExcludedFromBuild>
       <FileType>Document</FileType>
       <DeploymentContent Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</DeploymentContent>
     </Text>

@@ -63,9 +63,6 @@
     <ClInclude Include="targetver.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="OCL.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="include\nspace\actor\RigidBody.h">
       <Filter>Header Files\nspace\actor</Filter>
     </ClInclude>
@@ -98,6 +95,9 @@
     </ClInclude>
     <ClInclude Include="include\nspace\graphics\raycast\Task.h">
       <Filter>Header Files\nspace\graphics\raycast</Filter>
+    </ClInclude>
+    <ClInclude Include="include\nspace\graphics\ocl.h">
+      <Filter>Header Files\nspace\graphics</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

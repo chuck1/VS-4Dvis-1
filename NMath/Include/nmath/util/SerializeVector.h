@@ -11,9 +11,7 @@ namespace nmath {
 		{
 			// placeholder to write byte-size of vector block
 
-			unsigned int d = c.pointer();
-
-			c += sizeof(unsigned int);
+			nmath::util::BlockSizeWriterScoped scoped_outer(c);
 
 			unsigned int s = v.size();
 
@@ -22,23 +20,10 @@ namespace nmath {
 			for (auto it = v.begin(); it != v.end(); ++it)
 			{
 				// placeholder
-				unsigned int c1 = c.pointer();
-				c += sizeof(unsigned int);
-
+				nmath::util::BlockSizeWriterScoped scoped(c);
+				
 				(*it).serialize(c);
-
-				unsigned int s1 = c - c1;
-
-				c -= s1;
-				c.write((void*)&s1, sizeof(unsigned int));
-				c += s1;
 			}
-
-			unsigned int sb = c - d;
-
-			c -= sb;
-			c.write(&sb, sizeof(unsigned int));
-			c += sb;
 		}
 
 	}

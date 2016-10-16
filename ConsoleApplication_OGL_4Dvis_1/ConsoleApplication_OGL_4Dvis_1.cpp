@@ -31,7 +31,7 @@
 #include <cstdlib>
 #include <string>
 
-#include "OCL.h"
+#include <nspace/graphics/ocl.h>
 
 
 GLuint LoadShaders(const char * vertex_file_path, const char * fragment_file_path){
@@ -464,7 +464,7 @@ Cube4 cube;
 Triangle tri;
 Rectangle rect;
 
-std::shared_ptr<OCL::Manager> ocl;
+//std::shared_ptr<OCL::Manager> ocl;
 
 #define M (4)
 
@@ -523,6 +523,15 @@ void construct_cube(std::shared_ptr<nmath::geometry::Polytope<M>> p, nmath::SMat
 			std::cout << f._M_A << std::endl;
 			std::cout << "n " << f._M_plane.n.length() << std::endl;
 			std::cout << f._M_plane.n << std::endl;
+
+			for (unsigned int j = 0; j < f._M_inequalities.size(); ++j)
+			{
+				nmath::geometry::Inequality<M - 1> & ineq = f._M_inequalities[j];
+
+				printf("  ineq %i\n", j);
+				std::cout << "    a " << ineq._M_a << std::endl;
+				std::cout << "    d " << ineq._M_d << std::endl;
+			}
 		}
 	}
 
@@ -555,12 +564,12 @@ void contruct_app(std::shared_ptr<nspace::app::App<M>> app)
 	app->_M_lights->push_back(l0);
 }
 
-void remake_cube(std::shared_ptr<nspace::app::App<M>> app, float angle)
+void remake_cube(std::shared_ptr<nspace::app::App<M>> app, float angle, float angle2)
 {
 	auto rot1 = simple_rotation_matrix<M>(0, 3, angle);
-	auto rot2 = simple_rotation_matrix<M>(0, 2, CL_M_PI / 4.f);
-	//auto rot = rot2*rot1;
-	auto rot = rot1;
+	auto rot2 = simple_rotation_matrix<M>(0, 2, angle2); //CL_M_PI / 4.f);
+	auto rot = rot2*rot1;
+	//auto rot = rot1;
 
 	app->_M_polytopes->clear();
 	
@@ -570,7 +579,7 @@ void remake_cube(std::shared_ptr<nspace::app::App<M>> app, float angle)
 	app->_M_polytopes->push_back(p0);
 }
 
-void OCLtest2()
+void OCLtest2(std::shared_ptr<OCL::Manager> ocl)
 {
 	try{
 		OCLtest(*ocl);
@@ -583,14 +592,14 @@ void OCLtest2()
 	}
 }
 
-float rotAngle = CL_M_PI/4.f;
+float rotAngle = 2.42;// CL_M_PI / 4.f;
 
 int _tmain(int argc, _TCHAR* argv[])
 {
 	int w = 4;
 	int h = 3;
 
-	int textureScale = 16;
+	int textureScale = 4;
 	
 	//int w = 160;//  640;
 	//int h = 120;// 480;
@@ -600,12 +609,34 @@ int _tmain(int argc, _TCHAR* argv[])
 	//nmath::test();
 	//nspace::tests::test_array();
 
-	if (false)
-	{
-		ocl = std::make_shared<OCL::Manager>();
-		ocl->init();
-		OCLtest2();
-	}
+	//if (false)
+	//{
+	//	ocl = std::make_shared<OCL::Manager>();
+	//	ocl->init();
+
+
+	//	/* Create Kernel Program from the source */
+	//	auto program = ocl->create_program("kernel/hello.cl");
+
+	//	/* Create OpenCL Kernel */
+	//	auto kernel = program->create_kernel("hello");
+	//	//auto kernel = clCreateKernel(program, "hello", &ret);
+
+	//	cl_int ret;
+
+	//	auto memobj1 = ocl->create_buffer(CL_MEM_READ_WRITE, MEM_SIZE * sizeof(char));
+	//	auto memobj2 = ocl->create_buffer(CL_MEM_READ_WRITE, sizeof(unsigned int));
+
+	//	/* Set OpenCL Kernel Parameters */
+	//	ret = clSetKernelArg(kernel->id, 0, sizeof(cl_mem), (void *)&(memobj1->id));
+	//	OCL::errorcheck("clSetKernelArg 0", ret);
+	//	ret = clSetKernelArg(kernel->id, 1, sizeof(cl_mem), (void *)&(memobj2->id));
+	//	OCL::errorcheck("clSetKernelArg 1", ret);
+
+
+	//	OCLtest2();
+	//	getchar(); exit(0);
+	//}
 
 	unsigned int windowScale = 160;
 
@@ -676,11 +707,12 @@ int _tmain(int argc, _TCHAR* argv[])
 	rect.construct();
 	rect.setup();
 
-	remake_cube(app, 0);
+	//remake_cube(app, 0, 0);
+	remake_cube(app, CL_M_PI / 4.f, 0);
 	app->render_init();
 
 	// Create and compile our GLSL program from the shaders
-	GLuint programID = LoadShaders("SimpleVertexShader.vertexshader", "SimpleFragmentShader.fragmentshader");
+	GLuint programID = LoadShaders("kernel/SimpleVertexShader.vertexshader", "kernel/SimpleFragmentShader.fragmentshader");
 	
 	double t = glfwGetTime();
 	double dt = 0;
@@ -702,10 +734,11 @@ int _tmain(int argc, _TCHAR* argv[])
 
 		glUseProgram(programID);
 
-		remake_cube(app, rotAngle);
-		rotAngle += dt * CL_M_PI / 32.f;
+		//remake_cube(app, rotAngle, CL_M_PI / 4.f);
+		//rotAngle += dt * CL_M_PI / 32.f;
 		
 		app->render();
+		getchar();
 
 		rect.drawTriangles();
 
@@ -729,8 +762,8 @@ int _tmain(int argc, _TCHAR* argv[])
 
 
 	// OpenCL cleanup
-	ocl->flush();
-	ocl->shutdown();
+	app->_M_ocl->flush();
+	app->_M_ocl->shutdown();
 
 	exit(EXIT_SUCCESS);
 }

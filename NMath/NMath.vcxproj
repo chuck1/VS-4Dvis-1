@@ -95,6 +95,7 @@
     <ClInclude Include="Include\nmath\linalg\Vec.h" />
     <ClInclude Include="Include\nmath\linalg\VecFunctions.h" />
     <ClInclude Include="Include\nmath\util\Array.h" />
+    <ClInclude Include="Include\nmath\util\BlockSizeWriterScoped.h" />
     <ClInclude Include="Include\nmath\util\Serializable.h" />
     <ClInclude Include="Include\nmath\util\SerializeVector.h" />
     <ClInclude Include="Include\nmath\vclip\Feature.h" />

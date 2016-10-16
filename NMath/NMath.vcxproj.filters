@@ -103,6 +103,9 @@
     <ClInclude Include="Include\nmath\util\SerializeVector.h">
       <Filter>Headers\util</Filter>
     </ClInclude>
+    <ClInclude Include="Include\nmath\util\BlockSizeWriterScoped.h">
+      <Filter>Headers\util</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="Include\nmath\vclip\vclip_pseudocode.txt" />

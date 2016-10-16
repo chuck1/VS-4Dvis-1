@@ -356,7 +356,7 @@ namespace nmath {
 
 				std::cout << std::dec;
 			}
-		private:
+		public:
 			
 			/* data storage
 			* the buffer is divided into block, one for each element

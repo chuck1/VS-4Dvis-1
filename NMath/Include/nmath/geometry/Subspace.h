@@ -38,18 +38,12 @@ namespace nmath {
 
 			virtual void serialize(nmath::util::Buffer & c) const
 			{
-				unsigned int c1 = c.pointer();
+				printf("serialize Subspace\n");
 
-				{
-					c.write((char*)&_M_A, sizeof(nmath::Mat<M, K>));
-					c.write((char*)&_M_p, sizeof(nmath::linalg::Vec<M>));
-				}
+				nmath::util::BlockSizeWriterScoped scoped(c);
 
-				unsigned int s1 = c - c1;
-
-				c -= s1;
-				c.write((char*)&s1, sizeof(unsigned int));
-				c += s1;
+				c.write((void*)&_M_A, sizeof(nmath::Mat<M, K>));
+				c.write((void*)&_M_p, sizeof(nmath::linalg::Vec<M>));
 			}
 			virtual void deserialize(nmath::util::Buffer & c)
 			{
@@ -70,18 +64,10 @@ namespace nmath {
 
 			virtual void serialize(nmath::util::Buffer & c) const
 			{
-				unsigned int c1 = c.pointer();
+				nmath::util::BlockSizeWriterScoped scoped(c);
 
-				{
-					Subspace<M, K>::serialize(c);
-					nmath::util::serialize(c, _M_inequalities);
-				}
-
-				unsigned int s1 = c - c1;
-
-				c -= s1;
-				c.write((char*)&s1, sizeof(unsigned int));
-				c += s1;
+				Subspace<M, K>::serialize(c);
+				nmath::util::serialize(c, _M_inequalities);
 			}
 			virtual void deserialize(nmath::util::Buffer & c)
 			{

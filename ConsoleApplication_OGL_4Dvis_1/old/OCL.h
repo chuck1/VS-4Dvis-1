@@ -27,7 +27,46 @@ namespace OCL {
 	class Kernel
 	{
 	public:
+		~Kernel()
+		{
+			cl_int ret;
+			ret = clReleaseKernel(id);
+		}
 		//std::vector<std::shared_ptr<MemObj>> _M_memobj;
+
+		cl_kernel id;
+	};
+
+	class Program
+	{
+	public:
+		~Program()
+		{
+			_M_kernels.clear();
+
+			cl_int ret;
+			ret = clReleaseProgram(id);
+		}
+		std::shared_ptr<Kernel>		create_kernel(char const * kernel_name)
+		{
+			cl_int ret;
+
+			cl_kernel kernel_id = clCreateKernel(id, kernel_name, &ret);
+
+			auto kernel = std::make_shared<Kernel>();
+
+			kernel->id = kernel_id;
+
+			_M_kernels.push_back(kernel);
+
+			return kernel;
+		}
+
+		std::vector<std::shared_ptr<Kernel>>		_M_kernels;
+
+		std::weak_ptr<Manager>						_M_manager;
+
+		cl_program id = NULL;
 	};
 
 	class Manager: public std::enable_shared_from_this<Manager>
@@ -55,34 +94,14 @@ namespace OCL {
 
 
 
-
-
 			/* Create OpenCL context */
 			context = clCreateContext(NULL, 1, &device_id, NULL, NULL, &ret);
 
 			/* Create Command Queue */
 			command_queue = clCreateCommandQueue(context, device_id, 0, &ret);
 
-			/* Create Memory Buffer */
-			//auto memobj1 = clCreateBuffer(context, CL_MEM_READ_WRITE, MEM_SIZE * sizeof(char), NULL, &ret);
-			//auto memobj2 = clCreateBuffer(context, CL_MEM_READ_WRITE, sizeof(unsigned int), NULL, &ret);
-			auto memobj1 = CreateBuffer(CL_MEM_READ_WRITE, MEM_SIZE * sizeof(char));
-			auto memobj2 = CreateBuffer(CL_MEM_READ_WRITE, sizeof(unsigned int));
-
-
-			/* Create Kernel Program from the source */
-			program = createProgram(context, "kernel/hello.cl");
-
-			/* Create OpenCL Kernel */
-			kernel = clCreateKernel(program, "hello", &ret);
-
-			/* Set OpenCL Kernel Parameters */
-			ret = clSetKernelArg(kernel, 0, sizeof(cl_mem), (void *)&(memobj1->id));
-			errorcheck("clSetKernelArg 0", ret);
-			ret = clSetKernelArg(kernel, 1, sizeof(cl_mem), (void *)&(memobj2->id));
-			errorcheck("clSetKernelArg 1", ret);
 		}
-		std::shared_ptr<MemObj> CreateBuffer(cl_mem_flags mem_flags, unsigned int size)
+		std::shared_ptr<MemObj>		create_buffer(cl_mem_flags mem_flags, unsigned int size)
 		{
 			int rc;
 			std::shared_ptr<MemObj> ret = std::make_shared<MemObj>();
@@ -91,7 +110,7 @@ namespace OCL {
 			_M_memobj.push_back(ret);
 			return ret;
 		}
-		cl_program createProgram(cl_context context, char * fileName)
+		std::shared_ptr<Program>	create_program(cl_context context, char * fileName)
 		{
 			FILE *fp;
 			char *source_str;
@@ -112,16 +131,16 @@ namespace OCL {
 
 			cl_int ret;
 
-			cl_program program;
+			cl_program program_id;
 
-			program = clCreateProgramWithSource(context, 1, (const char **)&source_str, (const size_t *)&source_size, &ret);
+			program_id = clCreateProgramWithSource(context, 1, (const char **)&source_str, (const size_t *)&source_size, &ret);
 
 			free(source_str);
 
 			printf("building program %s\n", fileName);
 
 			/* Build Kernel Program */
-			ret = clBuildProgram(program, 1, &device_id, "-D N=(4)", NULL, NULL);
+			ret = clBuildProgram(program_id, 1, &device_id, "-D N=(4)", NULL, NULL);
 
 			if (ret != CL_SUCCESS) {
 				char* programLog;
@@ -129,17 +148,23 @@ namespace OCL {
 				size_t logSize;
 
 				// check build error and build status first
-				clGetProgramBuildInfo(program, device_id, CL_PROGRAM_BUILD_STATUS, sizeof(cl_build_status), &status, NULL);
+				clGetProgramBuildInfo(program_id, device_id, CL_PROGRAM_BUILD_STATUS, sizeof(cl_build_status), &status, NULL);
 
 				// check build log
-				clGetProgramBuildInfo(program, device_id, CL_PROGRAM_BUILD_LOG, 0, NULL, &logSize);
+				clGetProgramBuildInfo(program_id, device_id, CL_PROGRAM_BUILD_LOG, 0, NULL, &logSize);
 				programLog = (char*)calloc(logSize + 1, sizeof(char));
-				clGetProgramBuildInfo(program, device_id, CL_PROGRAM_BUILD_LOG, logSize + 1, programLog, NULL);
+				clGetProgramBuildInfo(program_id, device_id, CL_PROGRAM_BUILD_LOG, logSize + 1, programLog, NULL);
 				printf("Build failed; error=%d, status=%d, programLog:nn%s", ret, status, programLog);
 				free(programLog);
 			}
 
 			printf("build successful\n");
+
+			auto program = std::make_shared<Program>();
+			program->id = program_id;
+			program->_M_manager = shared_from_this();
+
+			_M_programs.push_back(program);
 
 			return program;
 		}
@@ -152,9 +177,10 @@ namespace OCL {
 		void shutdown()
 		{
 			cl_int ret;
-			ret = clReleaseKernel(kernel);
-			ret = clReleaseProgram(program);
-
+			
+			
+			
+			_M_programs.clear();
 			_M_memobj.clear();
 
 			
@@ -252,13 +278,14 @@ namespace OCL {
 		cl_command_queue command_queue = NULL;
 
 		std::vector<std::shared_ptr<MemObj>> _M_memobj;
+		std::vector<std::shared_ptr<Program>> _M_programs;
 
 		//cl_mem memobj1 = NULL;
 		//cl_mem memobj2 = NULL;
 
 
-		cl_program program = NULL;
-		cl_kernel kernel = NULL;
+		
+		//cl_kernel kernel = NULL;
 	};
 
 	void OCLtest(OCL::Manager& ocl);

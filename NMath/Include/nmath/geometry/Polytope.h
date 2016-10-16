@@ -9,12 +9,11 @@
 #include <nmath/geometry/Ray.h>
 #include <nmath/geometry/Subspace.h>
 #include <nmath/util/Serializable.h>
+#include <nmath/util/BlockSizeWriterScoped.h>
 #include <nmath/linalg/VecFunctions.h>
 
 namespace nmath {
 	namespace geometry {
-
-
 
 		template<unsigned int M>
 		class Face : public SubspaceBounded<M, M - 1>
@@ -22,8 +21,6 @@ namespace nmath {
 		public:
 			using SubspaceBounded<M, M - 1>::_M_A;
 			using SubspaceBounded<M, M - 1>::_M_inequalities;
-
-			
 
 			void calc_basis()
 			{
@@ -100,9 +97,9 @@ namespace nmath {
 
 						NMATH_DEBUG(30) {
 							printf("inequality failed\n");
-							std::cout << "a = " << ineq._M_a << std::endl;
-							std::cout << "d = " << ineq._M_d << std::endl;
-							std::cout << "s = " << s << std::endl;
+							std::cout << "  a = " << ineq._M_a << std::endl;
+							std::cout << "  d = " << ineq._M_d << std::endl;
+							std::cout << "  s = " << s << std::endl;
 						}
 
 						return false;
@@ -119,8 +116,11 @@ namespace nmath {
 
 			void serialize(nmath::util::Buffer & c) const
 			{
-				SubspaceBounded<M, M - 1>::serialize(c);
+				printf("serialize Face\n");
 
+				nmath::util::BlockSizeWriterScoped scoped(c);
+
+				SubspaceBounded<M, M - 1>::serialize(c);
 				c.write((void*)&_M_plane, sizeof(nmath::geometry::Plane<M>));
 			}
 			void deserialize(nmath::util::Buffer & c)
@@ -148,6 +148,7 @@ namespace nmath {
 			virtual void serialize(nmath::util::Buffer & c) const
 			{
 				// faces
+				printf("serialize Polytope\n");
 
 				nmath::util::serialize(c, _M_faces);
 
