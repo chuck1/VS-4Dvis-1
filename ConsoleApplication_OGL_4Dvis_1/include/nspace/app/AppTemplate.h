@@ -91,7 +91,7 @@ namespace nspace {
 
 							for (unsigned int l = 0; l < p->_M_faces.size(); ++l)
 							{
-								nspace::graphics::raycast::task::RayFaceIntercept task;
+								nspace::graphics::raycast::task::RayFaceIntercept<M> task;
 								
 								task.polytope_i = k;
 								task.face_i = l;
@@ -135,10 +135,14 @@ namespace nspace {
 			}
 			void		do_ray_face_intercept(
 				//nspace::graphics::raycast::task::RayIntercept & task_ray_intercept)
-				nspace::graphics::raycast::task::RayFaceIntercept & task)
+				nspace::graphics::raycast::task::RayFaceIntercept<M> & task)
 			{
 				//std::cout << "do_ray_face_intercept " << task_ray_intercept.ray_i << std::endl;
 
+				
+
+
+				task.fail_code = 0;
 				task.intersect = false;
 				
 				float nv;
@@ -151,6 +155,12 @@ namespace nspace {
 
 				float d = nmath::linalg::intersect(nv, ray, f._M_plane);
 
+				// debugging
+				memcpy(&task.A, &f._M_A(0,0), sizeof(nmath::Mat<M,M-1>));
+
+				//debugging
+				task.nv = nv;
+
 				if ((nv > 0) || (d < 0)) 
 				{
 					// no intersection
@@ -158,7 +168,14 @@ namespace nspace {
 				}
 
 				auto x = ray.x(d);
+
+				//debugging
+				memcpy(&task.x, &x, sizeof(nmath::linalg::Vec<M>));
+
 				nmath::linalg::Vec<M - 1> s = f.s(x);
+
+				//debugging
+				memcpy(&task.s, &s, sizeof(nmath::linalg::Vec<M-1>));
 
 				if (!f.eval(s)) 
 				{
@@ -188,11 +205,11 @@ namespace nspace {
 				task.k = d;
 			}
 
-			std::vector<nspace::graphics::raycast::task::RayIntercept>		_M_tasks_ray_intercept;
-			std::vector<nspace::graphics::raycast::task::RayFaceIntercept>	_M_tasks_ray_face_intercept;
-			std::vector<nmath::geometry::Ray<M>>							_M_rays_view;
+			std::vector<nspace::graphics::raycast::task::RayIntercept>			_M_tasks_ray_intercept;
+			std::vector<nspace::graphics::raycast::task::RayFaceIntercept<M>>	_M_tasks_ray_face_intercept;
+			std::vector<nmath::geometry::Ray<M>>								_M_rays_view;
 
-			std::vector<nspace::graphics::raycast::task::RayFaceIntercept>	_M_tasks_ray_face_intercept_result;
+			std::vector<nspace::graphics::raycast::task::RayFaceIntercept<M>>	_M_tasks_ray_face_intercept_result;
 
 			virtual void	render_init()
 			{
@@ -221,7 +238,7 @@ namespace nspace {
 				memobj_rays_view->EnqueueWrite(&_M_rays_view[0], sz);
 
 				// tasks memobj
-				sz = _M_tasks_ray_face_intercept.size() * sizeof(nspace::graphics::raycast::task::RayFaceIntercept);
+				sz = _M_tasks_ray_face_intercept.size() * sizeof(nspace::graphics::raycast::task::RayFaceIntercept<M>);
 				_M_memobj_tasks_ray_face_intercept = _M_ocl->create_buffer(CL_MEM_READ_WRITE, sz);
 				_M_memobj_tasks_ray_face_intercept->EnqueueWrite(&_M_tasks_ray_face_intercept[0], sz);
 
@@ -277,13 +294,13 @@ namespace nspace {
 				arg = 0;
 				_M_kernel_pointer_calc_test->set_arg(_M_memobj_test_polytope, arg++);
 				_M_kernel_pointer_calc_test->set_arg(memobj_rays_view, arg++);
+				_M_kernel_pointer_calc_test->set_arg(_M_memobj_tasks_ray_face_intercept, arg++);
 				_M_kernel_pointer_calc_test->set_arg(_M_memobj_test_out_uint, arg++);
 				_M_kernel_pointer_calc_test->set_arg(_M_memobj_test_out_float, arg++);
 			}
 			virtual void	render()
 			{
-
-				test_pointer_calc();
+				//test_pointer_calc();
 
 				// OCL
 
@@ -292,7 +309,7 @@ namespace nspace {
 				//_M_ocl->flush();
 
 				// read
-				unsigned int size = _M_tasks_ray_face_intercept.size() * sizeof(nspace::graphics::raycast::task::RayFaceIntercept);
+				unsigned int size = _M_tasks_ray_face_intercept.size() * sizeof(nspace::graphics::raycast::task::RayFaceIntercept<M>);
 				_M_tasks_ray_face_intercept_result.resize(_M_tasks_ray_face_intercept.size());
 				_M_memobj_tasks_ray_face_intercept->EnqueueRead(&_M_tasks_ray_face_intercept_result[0], size);
 
@@ -307,7 +324,7 @@ namespace nspace {
 
 				for (unsigned int i = 0; i < _M_tasks_ray_face_intercept.size(); ++i)
 				{
-					nspace::graphics::raycast::task::RayFaceIntercept & task = _M_tasks_ray_face_intercept[i];
+					nspace::graphics::raycast::task::RayFaceIntercept<M> & task = _M_tasks_ray_face_intercept[i];
 					//do_ray_face_intercept(_M_tasks_ray_intercept[task.task_ray_intercept_i], task);
 					do_ray_face_intercept(task);
 				}
@@ -338,13 +355,29 @@ namespace nspace {
 						printf("      polytope  %16i %16i\n", t1.polytope_i, t2.polytope_i);
 						printf("      face      %16i %16i\n", t1.face_i, t2.face_i);
 						printf("      intersect %16i %16i\n", t1.intersect, t2.intersect);
+						printf("      fail code %16i %16i\n", t1.fail_code, t2.fail_code);
 						printf("      k         %16.4e %16.4e\n", t1.k, t2.k);
+						printf("      nv        %16.4e %16.4e\n", t1.nv, t2.nv);
+						for (int j = 0; j < M; ++j)
+						{
+						printf("      x         %16.4e %16.4e\n", t1.x[j], t2.x[j]);
+						}
+						for (int j = 0; j < (M-1); ++j)
+						{
+						printf("      s         %16.4e %16.4e\n", t1.s[j], t2.s[j]);
+						}
+						for (int j = 0; j < (M*(M - 1)); ++j)
+						{
+						printf("      A         %16.4e %16.4e\n", t1.A[j], t2.A[j]);
+						}
 					}
 				}
 
+				printf("sizeof(nmath::Mat<M,M-1>): %i\n", sizeof(nmath::Mat<M, M - 1>));
+
 				printf("counter: %i\n", counter);
 				printf("c1:   %i\n", c1);
-				printf("c1:   %i\n", c2);
+				printf("c2:   %i\n", c2);
 				printf("c12:  %i\n", c12);
 
 				//==================================================
@@ -508,7 +541,8 @@ namespace nspace {
 				_M_kernel_pointer_calc_test->enqueue_ND_range_kernel(1, 1);
 
 				unsigned int out_uint[100];
-				nmath::linalg::Vec<M> out_float[100];
+				//nmath::linalg::Vec<M> out_float[100];
+				float out_float[100*M];
 
 				_M_memobj_test_out_uint->EnqueueRead(out_uint, sizeof(unsigned int)* 100);
 				_M_memobj_test_out_float->EnqueueRead(out_float, sizeof(float)* M * 100);
@@ -516,15 +550,19 @@ namespace nspace {
 				// print
 
 				nmath::geometry::Ray<M> ray;
+				nmath::geometry::Plane<M> plane;
 
-				printf("position of ray p: %i\n", (int)((char*)(&ray.p) - (char*)&ray));
-
+				printf("position of ray p:   %2i\n", (int)((char*)(&ray.p) - (char*)&ray));
+				printf("position of ray v:   %2i\n", (int)((char*)(&ray.v) - (char*)&ray));
+				printf("position of plane n: %2i\n", (int)((char*)(&plane.n) - (char*)&plane));
+				printf("position of plane d: %2i\n", (int)((char*)(&plane.d) - (char*)&plane));
+				
 				printf("sizeof(Vec<%i>)    = %4i\n", M, sizeof(nmath::linalg::Vec<M>));
 				printf("sizeof(Mat<%i,%i>)  = %4i\n", M, M-1, sizeof(nmath::Mat<M,M-1>));
 				printf("sizeof(Plane<%i>)  = %4i\n", M, sizeof(nmath::geometry::Plane<M>));
 				printf("sizeof(Ray<%i>)    = %4i\n", M, sizeof(nmath::geometry::Ray<M>));
 
-				for (unsigned int i = 0; i < 6; ++i)
+				for (unsigned int i = 0; i < 7; ++i)
 				{
 					printf("out_uint[%2i] = %8i\n", i, out_uint[i]);
 				}
@@ -532,11 +570,29 @@ namespace nspace {
 				std::shared_ptr<nmath::geometry::Polytope<M>> polytope = std::dynamic_pointer_cast<nmath::geometry::Polytope<M>>(_M_polytopes->operator[](0));
 				auto face = polytope->_M_faces[0];
 				
-				for (int j = 0; j < 4; ++j)
-				{
-					printf("\n");
-					std::cout << out_float[j] << std::endl;
-					std::cout << _M_rays_view[j].p << std::endl;
+
+
+
+
+
+
+
+
+
+
+				if (0){
+					for (int i = 0; i < face._M_inequalities.size(); ++i)
+					{
+						printf("%2i %16f %16f\n", i, out_float[i], face._M_inequalities[i]._M_d);
+					}
+				}
+				if (0){
+					for (int j = 0; j < 4; ++j)
+					{
+						printf("\n");
+						std::cout << out_float[j] << std::endl;
+						std::cout << _M_rays_view[j].p << std::endl;
+					}
 				}
 				if (0)
 				{

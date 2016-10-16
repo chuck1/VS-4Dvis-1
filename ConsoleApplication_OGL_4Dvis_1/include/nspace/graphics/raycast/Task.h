@@ -6,6 +6,7 @@ namespace nspace {
 		namespace raycast {
 			namespace task {
 
+				template<unsigned int M>
 				struct RayFaceIntercept
 				{
 					unsigned int task_ray_intercept_i;
@@ -18,6 +19,14 @@ namespace nspace {
 
 					// redundent
 					unsigned int ray_i;
+
+					unsigned int fail_code;
+
+					// debugging
+					float nv;
+					float x[M];
+					float s[M - 1];
+					float A[M*(M - 1)];
 				};
 
 				struct RayIntercept

@@ -33,6 +33,20 @@ void	vec_sub_pg(float * ret, float * a, __global float * b)
 		ret[i] = a[i] - b[i];
 	}
 }
+void	vec_cpy_gp(__global float * dst, float * src, unsigned int m)
+{
+	for (unsigned int i = 0; i < m; ++i)
+	{
+		dst[i] = src[i];
+	}
+}
+void	vec_cpy_gg(__global float * dst, __global float * src, unsigned int m)
+{
+	for (unsigned int i = 0; i < m; ++i)
+	{
+		dst[i] = src[i];
+	}
+}
 
 void	mat_mul_transpose_gp(float * ret, __global float * A, float * b)
 {
@@ -75,6 +89,14 @@ struct RayFaceInterceptTask
 
 	// redundent
 	unsigned int ray_i;
+
+	unsigned int fail_code;
+
+	// debugging
+	float nv;
+	float x[M];
+	float s[M - 1];
+	float A[M*(M - 1)];
 };
 
 
@@ -210,7 +232,9 @@ bool				face_eval(__global char * face, float * s)
 {
 	__global char * inequalities = face_get_inequalities(face);
 
-	for (unsigned int j = 0; j < inequalities_size(inequalities); ++j)
+	unsigned int size = inequalities_size(inequalities);
+
+	for (unsigned int j = 0; j < size; ++j)
 	{
 		//nmath::geometry::Inequality<M - 1> & ineq = _M_inequalities[j];
 		__global char * ineq = inequalities_get(inequalities, j);
@@ -250,9 +274,10 @@ void ray_face_intercept(
 	__global struct Ray * rays,
 	__global struct RayFaceInterceptTask * task)
 {
-	__global char * polytope = buffer_seek(polytopes, task->polytope_i);
+	__global char * polytope = buffer_seek(polytopes, task->polytope_i) + sizeof(unsigned int);
 
 	__global char * face = polytope_get_face(polytope, task->face_i);
+	__global char * subspace = face_get_subspace(face);
 
 	struct Ray ray = rays[task->ray_i];
 
@@ -262,12 +287,20 @@ void ray_face_intercept(
 
 	float d = *plane_get_d(plane);
 	
+	// debugging
+	vec_cpy_gg(task->A, subspace_get_A(subspace), M*(M-1));
+
 	// calculate
 
+	task->fail_code = 0;
 	task->intersect = false;
 	
 	float nv = vec_dot_gp(n, ray.v, M);
 	
+	// debugging
+	task->nv = nv;
+	
+
 	if (nv > 0)
 	{
 		// no intersection
@@ -282,21 +315,25 @@ void ray_face_intercept(
 		return;
 	}
 
-	float x[N];
-	float s[N-1];
+	float x[M];
+	float s[M-1];
 
 	ray_x(&ray, x, k);
 	
+	// debugging
+	vec_cpy_gp(task->x, x, M);
+
 	//nmath::linalg::Vec<M - 1> s = f.s(x);
 	face_s(face, s, x);
 	
-	//return; // debugging=================
-	// problem occurs after this point. but the error could have started earlier. the face pointer here could be wrong.
+	// debugging
+	vec_cpy_gp(task->s, s, M-1);
 
 	task->k = k;
 	
 	if (!face_eval(face, s))
 	{
+		task->fail_code = 3;
 		return;
 	}
 
@@ -328,18 +365,101 @@ __kernel void ray_cast(
 __kernel void pointer_calc_test(
 	__global char * polytopes,
 	__global struct Ray * rays,
+	__global struct RayFaceInterceptTask * tasks_ray_face,
 	__global unsigned int * out_uint,
 	__global float * out_float
 	)
 {
-	__global char * polytope = polytopes + sizeof(unsigned int);
+	struct RayFaceInterceptTask task = tasks_ray_face[940];
 
-	__global char * face = polytope_get_face(polytope, 0);
+	__global char * polytope = buffer_seek(polytopes, task.polytope_i) + sizeof(unsigned int);
+
+	__global char * face = polytope_get_face(polytope, task.face_i);
+
+	struct Ray ray = rays[task.ray_i];
+
 
 	__global char * subspacebounded = face_get_subspacebounded(face);
 	__global char * subspace = face_get_subspace(face);
 	__global char * inequalities = face_get_inequalities(face);
 	__global char * inequality = inequalities_get(inequalities, 0);
+
+	
+
+	__global char * plane = face_get_plane(face);
+	__global float * n = plane_get_n(plane);
+	float d = *plane_get_d(plane);
+	
+	
+	out_uint[0] = task.ray_i;
+	out_uint[1] = task.polytope_i;
+	out_uint[2] = task.face_i;
+	
+
+	// calculate
+
+	float nv = vec_dot_gp(n, ray.v, M);
+
+	if (nv > 0)
+	{
+		// no intersection
+		return;
+	}
+
+	float k = (d - vec_dot_gp(n, ray.p, M)) / nv;
+
+	if (k < 0)
+	{
+		// no intersection
+		return;
+	}
+
+	float x[N];
+	float s[N - 1];
+
+	ray_x(&ray, x, k);
+
+	//nmath::linalg::Vec<M - 1> s = f.s(x);
+	face_s(face, s, x);
+
+	//task->k = k;
+
+	if (!face_eval(face, s))
+	{
+		//task->fail_code = 3;
+		return;
+	}
+
+	//task->intersect = true;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	return;
+
+#if 0
 
 	out_uint[0] = ((__global unsigned int *)polytopes)[0];
 	out_uint[1] = ((__global unsigned int *)polytope)[0];
@@ -347,12 +467,13 @@ __kernel void pointer_calc_test(
 	out_uint[3] = ((__global unsigned int *)face)[0];
 	out_uint[4] = ((__global unsigned int *)subspacebounded)[0];
 	out_uint[5] = ((__global unsigned int *)subspace)[0];
+	out_uint[6] = inequalities_size(inequalities);
 
-	//__global char * subspace = face_get_subspace(face);
-	//__global char * inequalities = face_get_inequalities(face);
-	__global char * plane = face_get_plane(face);
-	__global float * plane_n = plane_get_n(plane);
-
+	int size = inequalities_size(inequalities);
+	for (int i = 0; i < size; ++i)
+	{
+		out_float[i] = inequality_get_d(inequalities_get(inequalities, i));
+	}
 	for (int j = 0; j < 4; ++j)
 	{
 		for (int i = 0; i < N; ++i)
@@ -360,8 +481,6 @@ __kernel void pointer_calc_test(
 			out_float[j*N + i] = rays[j].p[i];
 		}
 	}
-
-	return;
 
 	for (int i = 0; i < N; ++i)
 	{
@@ -382,7 +501,7 @@ __kernel void pointer_calc_test(
 
 	//__global float * plane_d = plane_get_d(plane);
 
-
+#endif
 }
 
 __kernel void hello(

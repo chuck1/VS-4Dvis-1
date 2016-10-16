@@ -39,7 +39,7 @@ namespace nmath {
 			}
 		}
 
-		double const & operator()(int i, int j) const
+		float const & operator()(int i, int j) const
 		{
 			assert(i<M);
 			assert(j<N);
@@ -47,7 +47,7 @@ namespace nmath {
 
 			return _M_v[i*N + j];
 		}
-		double & operator()(int i, int j)
+		float & operator()(int i, int j)
 		{
 			assert(i<M);
 			assert(j<N);
@@ -111,7 +111,7 @@ namespace nmath {
 		}
 
 	private:
-		double _M_v[M*N];
+		float _M_v[M*N];
 	};
 
 	template<int M>

@@ -214,6 +214,8 @@ namespace nmath {
 
 					float d = nmath::linalg::intersect(nv, ray, f._M_plane);
 
+
+
 					if (nv > 0) continue; // no intersection
 					if (d < 0) continue;
 
