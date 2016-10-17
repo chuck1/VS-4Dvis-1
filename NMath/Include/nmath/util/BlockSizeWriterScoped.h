@@ -19,7 +19,7 @@ namespace nmath
 			{
 				unsigned int s = buffer - c;
 
-				printf("block size: %4i\n", s);
+				//printf("block size: %4i\n", s);
 
 				buffer -= s;
 				buffer.write((char*)&s, sizeof(unsigned int));

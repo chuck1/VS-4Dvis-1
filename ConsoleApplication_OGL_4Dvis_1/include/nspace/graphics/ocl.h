@@ -163,35 +163,7 @@ namespace OCL {
 	class Manager: public std::enable_shared_from_this<Manager>
 	{
 	public:
-		void init()
-		{
-			cl_int ret;
-			cl_uint ret_num_devices;
-			cl_uint ret_num_platforms;
-
-			/* Get Platform and Device Info */
-			ret = clGetPlatformIDs(1, &platform_id, &ret_num_platforms);
-			ret = clGetDeviceIDs(platform_id, CL_DEVICE_TYPE_DEFAULT, 1, &device_id, &ret_num_devices);
-
-
-			char* value;
-			size_t valueSize;
-
-			clGetDeviceInfo(device_id, CL_DEVICE_VERSION, 0, NULL, &valueSize);
-			value = (char*)malloc(valueSize);
-			clGetDeviceInfo(device_id, CL_DEVICE_VERSION, valueSize, value, NULL);
-			printf("Hardware version: %s\n", value);
-			free(value);
-
-
-
-			/* Create OpenCL context */
-			context = clCreateContext(NULL, 1, &device_id, NULL, NULL, &ret);
-
-			/* Create Command Queue */
-			_M_command_queue = clCreateCommandQueue(context, device_id, 0, &ret);
-
-		}
+		void init();
 		std::shared_ptr<MemObj>		create_buffer(cl_mem_flags mem_flags, unsigned int size)
 		{
 			int rc;

@@ -118,7 +118,7 @@ namespace nmath {
 
 			void serialize(nmath::util::Buffer & c) const
 			{
-				printf("serialize Face\n");
+				//printf("serialize Face\n");
 
 				nmath::util::BlockSizeWriterScoped scoped(c);
 
@@ -150,7 +150,7 @@ namespace nmath {
 			virtual void serialize(nmath::util::Buffer & c) const
 			{
 				// faces
-				printf("serialize Polytope\n");
+				//printf("serialize Polytope\n");
 
 				nmath::util::serialize(c, _M_faces);
 

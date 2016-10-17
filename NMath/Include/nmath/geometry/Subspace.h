@@ -38,7 +38,7 @@ namespace nmath {
 
 			virtual void serialize(nmath::util::Buffer & c) const
 			{
-				printf("serialize Subspace\n");
+				//printf("serialize Subspace\n");
 
 				nmath::util::BlockSizeWriterScoped scoped(c);
 

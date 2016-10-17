@@ -2,15 +2,21 @@
 #define NSPACE_APP_APPTEMPLATE
 
 #include <cstdio>
-
+#include <nmath/util/Util.h>
 #include <nspace/app/App.h>
 #include <nspace/graphics/raycast/Task.h>
 #include <nspace/graphics/OCL.h>
 
 #define APP_RENDER_GPU (1)
+#define APP_RENDER_CPU (0)
+
+#define NSPACE_APP_APPTEMPLATE_DEBUG (0)
+
+#define NSPACE_APP_APPTEMPLATE_PROF (0)
 
 namespace nspace {
 	namespace app {
+
 		
 		template<unsigned int M>
 		class App: public AppBase
@@ -25,7 +31,7 @@ namespace nspace {
 			
 			virtual void reload_buffer()
 			{
-
+				_M_memobj_polytope->EnqueueWrite(_M_polytopes->_M_buffer, _M_polytopes->buffer_size);
 			}
 			virtual void create_view_rays()
 			{
@@ -147,7 +153,6 @@ namespace nspace {
 
 				
 
-
 				task.fail_code = 0;
 				task.intersect = false;
 				
@@ -204,9 +209,6 @@ namespace nspace {
 					return;
 				}
 
-				
-				
-
 				task.intersect = true;
 				task.k = d;
 			}
@@ -217,7 +219,7 @@ namespace nspace {
 
 			std::vector<nspace::graphics::raycast::task::RayFaceIntercept<M>>	_M_tasks_ray_face_intercept_result;
 
-			virtual void	render_init()
+			virtual void						render_init()
 			{
 				create_view_rays();
 				create_tasks_ray_face_intercept();
@@ -235,8 +237,8 @@ namespace nspace {
 				
 				unsigned int sz;
 				// polytopes memobj
-				auto memobj_polytope = _M_ocl->create_buffer(CL_MEM_READ_WRITE, _M_polytopes->buffer_size);
-				memobj_polytope->EnqueueWrite(_M_polytopes->_M_buffer, _M_polytopes->buffer_size);
+				_M_memobj_polytope = _M_ocl->create_buffer(CL_MEM_READ_WRITE, _M_polytopes->buffer_size);
+				_M_memobj_polytope->EnqueueWrite(_M_polytopes->_M_buffer, _M_polytopes->buffer_size);
 
 				// rays memobj
 				sz = _M_rays_view.size() * sizeof(nmath::geometry::Ray<M>);
@@ -261,7 +263,7 @@ namespace nspace {
 				// kernel args
 				int arg = 0;
 				//__global void * polytopes,
-				_M_kernel_ray_face_intercept->set_arg(memobj_polytope, arg++);
+				_M_kernel_ray_face_intercept->set_arg(_M_memobj_polytope, arg++);
 
 				//__global void * lights,
 
@@ -304,32 +306,31 @@ namespace nspace {
 				_M_kernel_pointer_calc_test->set_arg(_M_memobj_test_out_uint, arg++);
 				_M_kernel_pointer_calc_test->set_arg(_M_memobj_test_out_float, arg++);
 			}
-			virtual void	render()
+			virtual void						render_ray_face_intercept()
 			{
 				//test_pointer_calc();
 
 				// OCL
 
-#if APP_RENDER_GPU
-				_M_kernel_ray_face_intercept->enqueue_ND_range_kernel(10, 10);
+				unsigned int size_tasks_ray_face = _M_tasks_ray_face_intercept.size() * sizeof(nspace::graphics::raycast::task::RayFaceIntercept<M>);
 
-				//_M_ocl->flush();
+				unsigned int work_group_size = 512;
 
-				// read
-				unsigned int size = _M_tasks_ray_face_intercept.size() * sizeof(nspace::graphics::raycast::task::RayFaceIntercept<M>);
-				
-				//_M_tasks_ray_face_intercept_result.resize(_M_tasks_ray_face_intercept.size());
-				//_M_memobj_tasks_ray_face_intercept->EnqueueRead(&_M_tasks_ray_face_intercept_result[0], size);
-
-				_M_memobj_tasks_ray_face_intercept->EnqueueRead(&_M_tasks_ray_face_intercept[0], size);
-
-
+				_M_kernel_ray_face_intercept->enqueue_ND_range_kernel(work_group_size, work_group_size);
 
 				unsigned int counter;
 				_M_memobj_counter->EnqueueRead(&counter, sizeof(unsigned int));
 
-				//printf("App::render\n");
+#if APP_RENDER_GPU
 
+				// read
+
+				_M_memobj_tasks_ray_face_intercept->EnqueueRead(&_M_tasks_ray_face_intercept[0], size_tasks_ray_face);
+
+				//printf("App::render\n");
+#else
+				_M_tasks_ray_face_intercept_result.resize(_M_tasks_ray_face_intercept.size());
+				_M_memobj_tasks_ray_face_intercept->EnqueueRead(&_M_tasks_ray_face_intercept_result[0], size_tasks_ray_face);
 #endif
 
 				//=====================================
@@ -363,7 +364,7 @@ namespace nspace {
 
 					if (t1.intersect || t2.intersect)
 					{
-						
+
 						printf("%6i\n", i);
 						printf("      ray       %16i %16i\n", t1.ray_i, t2.ray_i);
 						printf("      polytope  %16i %16i\n", t1.polytope_i, t2.polytope_i);
@@ -374,28 +375,55 @@ namespace nspace {
 						printf("      nv        %16.4e %16.4e\n", t1.nv, t2.nv);
 						for (int j = 0; j < M; ++j)
 						{
-						printf("      x         %16.4e %16.4e\n", t1.x[j], t2.x[j]);
+							printf("      x         %16.4e %16.4e\n", t1.x[j], t2.x[j]);
 						}
-						for (int j = 0; j < (M-1); ++j)
+						for (int j = 0; j < (M - 1); ++j)
 						{
-						printf("      s         %16.4e %16.4e\n", t1.s[j], t2.s[j]);
+							printf("      s         %16.4e %16.4e\n", t1.s[j], t2.s[j]);
 						}
 						for (int j = 0; j < (M*(M - 1)); ++j)
 						{
-						printf("      A         %16.4e %16.4e\n", t1.A[j], t2.A[j]);
+							printf("      A         %16.4e %16.4e\n", t1.A[j], t2.A[j]);
 						}
 					}
 				}
 
 				printf("sizeof(nmath::Mat<M,M-1>): %i\n", sizeof(nmath::Mat<M, M - 1>));
 
-				printf("counter: %i\n", counter);
+
 				printf("c1:   %i\n", c1);
 				printf("c2:   %i\n", c2);
 				printf("c12:  %i\n", c12);
 #endif
-				//==================================================
 
+#if NSPACE_APP_APPTEMPLATE_DEBUG
+				unsigned int c1 = 0;
+				unsigned int c2 = 0;
+				unsigned int c12 = 0;
+				for (unsigned int i = 0; i < _M_tasks_ray_face_intercept.size(); ++i)
+				{
+					auto & t1 = _M_tasks_ray_face_intercept[i];
+					//auto & t2 = _M_tasks_ray_face_intercept_result[i];
+
+					if (t1.intersect) ++c1;
+					//if (t2.intersect) ++c2;
+					//if (t1.intersect && t2.intersect) ++c12;
+				}
+				printf("c1:   %i\n", c1);
+				printf("c2:   %i\n", c2);
+				printf("c12:  %i\n", c12);
+				printf("counter: %i\n", counter);
+
+				unsigned int test[4];
+				for (int i = 0; i < 4; ++i) test[i] = i + 1;
+
+				//printf("tasks check sum: %8u\n", nmath::util::checksum2<unsigned int>((char*)&test, 4*4));
+				//printf("%i\n", size_tasks_ray_face);
+				printf("tasks check sum: %8u\n", nmath::util::checksum2<unsigned long>((char*)&_M_tasks_ray_face_intercept[0], size_tasks_ray_face));
+#endif
+			}
+			virtual void						render2(unsigned char * pixelData)
+			{
 				for (unsigned int i = 0; i < _M_tasks_ray_intercept.size(); ++i)
 				{
 					nspace::graphics::raycast::task::RayIntercept & task = _M_tasks_ray_intercept[i];
@@ -406,14 +434,14 @@ namespace nspace {
 
 				unsigned int w = _M_viewport->_M_w;
 				unsigned int h = _M_viewport->_M_h;
+
 				
-				unsigned char * pixelData = new unsigned char[h * w * 3];
-				
+
 				for (unsigned int j = 0; j < h; ++j)
 				{
 					for (unsigned int i = 0; i < w; ++i)
 					{
-					
+
 						NMATH_DEBUG(10)printf("pixel %u %u ====================================\n", i, j);
 
 						unsigned int ray_i = i * h + j;
@@ -425,7 +453,7 @@ namespace nspace {
 						nmath::geometry::Ray<M> & r = _M_rays_view[ray_i];
 
 						nspace::graphics::raycast::task::RayIntercept & task = _M_tasks_ray_intercept[ray_i];
-						
+
 						bool b = false;
 						nmath::linalg::Vec<M> N;
 						float dist = std::numeric_limits<float>::max();
@@ -457,7 +485,7 @@ namespace nspace {
 							continue; // no intersections, leave pixel black
 						}
 #else
-						
+
 						if (!task.intersect) {
 							NMATH_DEBUG(10) printf("no intersections\n");
 							pixelData[pixel_i + 0] = 128;
@@ -474,7 +502,7 @@ namespace nspace {
 						N = f._M_plane.n;
 						b = task.intersect;
 						dist = task.k;
-						
+
 #endif
 
 						NMATH_DEBUG(10) printf("intersection with polytope %i, face %i, dist = %f\n", polytope_i, face_i, dist);
@@ -491,7 +519,7 @@ namespace nspace {
 
 						for (unsigned int k = 0; k < _M_lights->size(); ++k)
 						{
-							
+
 
 							std::shared_ptr<nspace::light::Point<M>> l = std::dynamic_pointer_cast<nspace::light::Point<M>>(_M_lights->operator[](k));
 
@@ -534,22 +562,41 @@ namespace nspace {
 						}
 					}
 				}
+			}
+			virtual void						render()
+			{
+				//==================================================
+				{
+					std::clock_t start;
+					if(NSPACE_APP_APPTEMPLATE_PROF) start = std::clock();
+					render_ray_face_intercept();
+					if (NSPACE_APP_APPTEMPLATE_PROF) printf("render1 time: %i\n", std::clock() - start);
+				}
+				//==================================================
 
-				
-				
+				unsigned int w = _M_viewport->_M_w;
+				unsigned int h = _M_viewport->_M_h;
+
+				unsigned char * pixelData = new unsigned char[h * w * 3];
+
+				{
+					std::clock_t start;
+					if (NSPACE_APP_APPTEMPLATE_PROF) start = std::clock();
+					render2(pixelData);
+					if (NSPACE_APP_APPTEMPLATE_PROF) printf("render2 time: %i\n", std::clock() - start);
+				}
+
 				GLuint textureID;
 				glGenTextures(1, &textureID);
 				glBindTexture(GL_TEXTURE_2D, textureID);
 				glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, w, h, 0, GL_RGB, GL_UNSIGNED_BYTE, pixelData);
-				
+
 				glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 				glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 
 				// render rectangle to display texture on
-
-
 			}
-			void			test_pointer_calc()
+			void								test_pointer_calc()
 			{
 				printf("test pointer calc\n");
 				
@@ -624,18 +671,19 @@ namespace nspace {
 				}
 				getchar(); exit(0);
 			}
-
-
+			
 			std::shared_ptr<OCL::Manager>		_M_ocl;
+			
 			std::shared_ptr<OCL::Kernel>		_M_kernel_ray_face_intercept;
 			std::shared_ptr<OCL::Kernel>		_M_kernel_pointer_calc_test;
+
+			std::shared_ptr<OCL::MemObj>		_M_memobj_polytope;
 			std::shared_ptr<OCL::MemObj>		_M_memobj_tasks_ray_face_intercept;
 			std::shared_ptr<OCL::MemObj>		_M_memobj_counter;
 			std::shared_ptr<OCL::MemObj>		_M_memobj_test_polytope;
 			std::shared_ptr<OCL::MemObj>		_M_memobj_test_out_uint;
 			std::shared_ptr<OCL::MemObj>		_M_memobj_test_out_float;
 		};
-
 	}
 }
 

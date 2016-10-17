@@ -566,10 +566,12 @@ void contruct_app(std::shared_ptr<nspace::app::App<M>> app)
 
 void remake_cube(std::shared_ptr<nspace::app::App<M>> app, float angle, float angle2)
 {
-	auto rot1 = simple_rotation_matrix<M>(0, 3, angle);
+	auto rot1 = simple_rotation_matrix<M>(0, 2, angle);
+	//auto rot1 = simple_rotation_matrix<M>(0, 3, angle);
+
 	auto rot2 = simple_rotation_matrix<M>(0, 2, angle2); //CL_M_PI / 4.f);
-	auto rot = rot2*rot1;
-	//auto rot = rot1;
+	//auto rot = rot2*rot1;
+	auto rot = rot1;
 
 	app->_M_polytopes->clear();
 	
@@ -592,14 +594,15 @@ void OCLtest2(std::shared_ptr<OCL::Manager> ocl)
 	}
 }
 
-float rotAngle = 2.42;// CL_M_PI / 4.f;
+//float rotAngle = 2.42;// CL_M_PI / 4.f;
+float rotAngle = 0;// CL_M_PI / 4.f;
 
 int _tmain(int argc, _TCHAR* argv[])
 {
 	int w = 4;
 	int h = 3;
 
-	int textureScale = 4;
+	int textureScale = 32*2;
 	
 	//int w = 160;//  640;
 	//int h = 120;// 480;
@@ -695,8 +698,6 @@ int _tmain(int argc, _TCHAR* argv[])
 	//Set a background color
 	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 
-
-
 	// initialize rendering data
 	cube.construct4Cube4();
 	cube.setup();
@@ -707,8 +708,8 @@ int _tmain(int argc, _TCHAR* argv[])
 	rect.construct();
 	rect.setup();
 
-	remake_cube(app, 0, 0);
-	//remake_cube(app, CL_M_PI / 4.f, 0);
+	//remake_cube(app, 0, 0);
+	remake_cube(app, CL_M_PI / 4.f, 0);
 	app->render_init();
 
 	// Create and compile our GLSL program from the shaders
@@ -719,13 +720,11 @@ int _tmain(int argc, _TCHAR* argv[])
 	//Main Loop
 	do
 	{
-		
-
 		double ttemp = glfwGetTime();
 		dt = ttemp - t;
 		t = ttemp;
 
-		printf("dt=%f\n", dt);
+		printf("dt=%1.4f angle=%1.3f\n", dt, rotAngle);
 
 		//OCLtest2();
 		
@@ -735,7 +734,7 @@ int _tmain(int argc, _TCHAR* argv[])
 		glUseProgram(programID);
 
 		remake_cube(app, rotAngle, CL_M_PI / 4.f);
-		rotAngle += dt * CL_M_PI / 32.f;
+		rotAngle += dt * CL_M_PI / 16.f;
 		
 		app->reload_buffer();
 

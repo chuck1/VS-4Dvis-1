@@ -47,6 +47,43 @@ void OCL::OCLtest(OCL::Manager& ocl)
 }
 
 
+void OCL::Manager::init()
+{
+	cl_int ret;
+	cl_uint ret_num_devices;
+	cl_uint ret_num_platforms;
+
+	/* Get Platform and Device Info */
+	ret = clGetPlatformIDs(1, &platform_id, &ret_num_platforms);
+	ret = clGetDeviceIDs(platform_id, CL_DEVICE_TYPE_DEFAULT, 1, &device_id, &ret_num_devices);
+
+	
+
+
+
+
+
+	/* Create OpenCL context */
+	context = clCreateContext(NULL, 1, &device_id, NULL, NULL, &ret);
+
+	/* Create Command Queue */
+	_M_command_queue = clCreateCommandQueue(context, device_id, 0, &ret);
+
+
+
+	char value[512];
+	unsigned int value_uint;
+
+	clGetDeviceInfo(device_id, CL_DEVICE_VERSION, 512, value, NULL);
+	printf("CL_DEVICE_VERSION:             %s\n", value);
+	
+	clGetDeviceInfo(device_id, CL_DEVICE_MAX_WORK_GROUP_SIZE, sizeof(unsigned int), &value_uint, NULL);
+	printf("CL_DEVICE_MAX_WORK_GROUP_SIZE: %u\n", value_uint);
+
+	getchar();
+
+}
+
 
 OCL::MemObj::~MemObj()
 {
@@ -55,7 +92,7 @@ OCL::MemObj::~MemObj()
 }
 void OCL::MemObj::EnqueueWrite(void * src, unsigned int size)
 {
-	printf("EnqueueWrite %16x %8i\n", src, size);
+	//printf("EnqueueWrite %16x %8i\n", src, size);
 
 	auto mgr = _M_mgr.lock();
 	int ret = clEnqueueWriteBuffer(mgr->_M_command_queue, id, CL_FALSE, 0, size, src, 0, 0, 0);
@@ -63,7 +100,7 @@ void OCL::MemObj::EnqueueWrite(void * src, unsigned int size)
 }
 void OCL::MemObj::EnqueueRead(void * dst, unsigned int size)
 {
-	printf("EnqueueRead  %16x %8i\n", dst, size);
+	//printf("EnqueueRead  %16x %8i\n", dst, size);
 
 	auto mgr = _M_mgr.lock();
 	cl_int ret = clEnqueueReadBuffer(mgr->_M_command_queue, id, CL_TRUE, 0, size, dst, 0, NULL, NULL);

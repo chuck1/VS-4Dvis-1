@@ -98,6 +98,7 @@
     <ClInclude Include="Include\nmath\util\BlockSizeWriterScoped.h" />
     <ClInclude Include="Include\nmath\util\Serializable.h" />
     <ClInclude Include="Include\nmath\util\SerializeVector.h" />
+    <ClInclude Include="Include\nmath\util\Util.h" />
     <ClInclude Include="Include\nmath\vclip\Feature.h" />
     <ClInclude Include="Include\nmath\vclip\Vclip.h" />
   </ItemGroup>

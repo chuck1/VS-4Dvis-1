@@ -275,7 +275,6 @@ void ray_face_intercept(
 	__global struct RayFaceInterceptTask * task)
 {
 	__global char * polytope = buffer_seek(polytopes, task->polytope_i) + sizeof(unsigned int);
-
 	__global char * face = polytope_get_face(polytope, task->face_i);
 	__global char * subspace = face_get_subspace(face);
 
@@ -300,7 +299,6 @@ void ray_face_intercept(
 	// debugging
 	task->nv = nv;
 	
-
 	if (nv > 0)
 	{
 		// no intersection
@@ -338,7 +336,6 @@ void ray_face_intercept(
 	}
 
 	task->intersect = true;
-	
 }
 
 __kernel void ray_cast(
@@ -350,6 +347,10 @@ __kernel void ray_cast(
 	//__global float3 * pixel_color,
 	volatile __global uint * counter)
 {
+	if (get_global_id(0) == 0) *counter = 0;
+
+	barrier(CLK_GLOBAL_MEM_FENCE);
+
 	while (true){
 		int task_id = atomic_inc(counter);
 		if (task_id > ((*tasks_len) - 1)) return;
