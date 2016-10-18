@@ -166,6 +166,8 @@ namespace OCL {
 		void init();
 		std::shared_ptr<MemObj>		create_buffer(cl_mem_flags mem_flags, unsigned int size)
 		{
+			printf("create buffer %u\n", size);
+
 			int rc;
 			std::shared_ptr<MemObj> ret = std::make_shared<MemObj>();
 			ret->id = clCreateBuffer(context, mem_flags, size, NULL, &rc);

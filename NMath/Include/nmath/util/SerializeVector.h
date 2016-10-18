@@ -5,12 +5,9 @@
 
 namespace nmath {
 	namespace util {
-
 		template<typename T>
 		void serialize(nmath::util::Buffer & c, std::vector<T> const & v)
 		{
-			// placeholder to write byte-size of vector block
-
 			nmath::util::BlockSizeWriterScoped scoped_outer(c);
 
 			unsigned int s = v.size();
@@ -26,6 +23,17 @@ namespace nmath {
 			}
 		}
 
+		template<typename T>
+		void serialize_primitive(nmath::util::Buffer & b, std::vector<T> const & v)
+		{
+			nmath::util::BlockSizeWriterScoped scoped_outer(b);
+
+			unsigned int s = v.size();
+
+			b.write(&s, sizeof(unsigned int));
+
+			b.write((void*)&v[0], s * sizeof(T));
+		}
 	}
 }
 

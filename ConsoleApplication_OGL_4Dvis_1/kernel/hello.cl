@@ -98,6 +98,17 @@ struct RayFaceInterceptTask
 	float s[M - 1];
 	float A[M*(M - 1)];
 };
+struct RayInterceptInOut
+{
+	unsigned int pixel_i;
+	unsigned int pixel_j;
+	unsigned int ray_i;
+
+	float k;
+	bool intersect;
+
+	unsigned int _M_task_i;
+};
 
 
 
@@ -268,6 +279,20 @@ void				ray_x(struct Ray * ray, float * x, float k)
 }
 
 
+unsigned int		task_ray_in_tasks_ray_face_intercept_i_size(__global char * task_ray_in)
+{
+	task_ray_in += sizeof(unsigned int);
+
+	return *((__global unsigned int*)task_ray_in);
+}
+unsigned int		task_ray_in_tasks_ray_face_intercept_i_get(__global char * task_ray_in, unsigned int i)
+{
+	task_ray_in += sizeof(unsigned int);
+	task_ray_in += sizeof(unsigned int);
+
+	return ((__global unsigned int*)task_ray_in)[i];
+}
+
 
 void ray_face_intercept(
 	__global char * polytopes,
@@ -338,29 +363,83 @@ void ray_face_intercept(
 	task->intersect = true;
 }
 
+
+void ray_view(
+	__global char * task_ray_in,
+	__global struct RayInterceptInOut * task_ray_inout,
+	__global struct RayFaceInterceptTask * tasks_ray_face)
+{
+	task_ray_inout->k = FLT_MAX;
+	task_ray_inout->intersect = false;
+
+	//for (unsigned int i = 0; i < task_in->_M_tasks_ray_face_intercept_i.size(); ++i)
+
+	//unsigned int size = task_ray_in_tasks_ray_face_intercept_i_size(task_ray_in);
+	unsigned int size = 8;
+
+	for (unsigned int i = 0; i < size; ++i)
+	{
+		unsigned int tasks_ray_face_intercept_i = task_ray_in_tasks_ray_face_intercept_i_get(task_ray_in, i);
+		
+		struct RayFaceInterceptTask task_ray_face = tasks_ray_face[tasks_ray_face_intercept_i];
+
+		if (!task_ray_face.intersect) continue;
+
+		if (task_ray_face.k > task_ray_inout->k) continue;
+
+		task_ray_inout->k = task_ray_face.k;
+		task_ray_inout->intersect = true;
+		task_ray_inout->_M_task_i = i;
+	}
+}
+
+
+
 __kernel void ray_cast(
 	__global void * polytopes,
 	//__global void * lights,
 	__global struct Ray * rays,
 	__global struct RayFaceInterceptTask * tasks_ray_face,
-	__global uint * tasks_len,
+	__global uint * tasks_ray_face_len,
+	__global char * tasks_ray_in,
+	__global struct RayInterceptInOut * tasks_ray_inout,
+	__global uint * tasks_ray_inout_len,
 	//__global float3 * pixel_color,
 	volatile __global uint * counter)
 {
+	// ray view calculate all possible face intersections
+	
 	if (get_global_id(0) == 0) *counter = 0;
-
 	barrier(CLK_GLOBAL_MEM_FENCE);
 
 	while (true){
 		int task_id = atomic_inc(counter);
-		if (task_id > ((*tasks_len) - 1)) return;
+		if (task_id > ((*tasks_ray_face_len) - 1)) return;
 
 		__global struct RayFaceInterceptTask * task_ray_face = tasks_ray_face + task_id;
 
-		// ERROR SOMEWHERE IN HERE
 		ray_face_intercept(polytopes, rays, task_ray_face);
 	}
 
+	// ray view determine first face intersection
+	
+	try spliting these
+
+
+	barrier(CLK_GLOBAL_MEM_FENCE);
+	if (get_global_id(0) == 0) *counter = 0;
+	barrier(CLK_GLOBAL_MEM_FENCE);
+
+	while (true){
+		int task_id = atomic_inc(counter);
+		if (task_id > ((*tasks_ray_inout_len) - 1)) return;
+
+		// args
+		__global char * task_ray_in = buffer_seek(tasks_ray_in, task_id) + sizeof(unsigned int);
+		__global struct RayInterceptInOut * task_ray_inout = tasks_ray_inout + task_id;
+
+		ray_view(task_ray_in, task_ray_inout, tasks_ray_face);
+	}
 }
 
 __kernel void pointer_calc_test(

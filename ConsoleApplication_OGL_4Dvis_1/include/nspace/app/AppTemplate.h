@@ -12,7 +12,7 @@
 
 #define NSPACE_APP_APPTEMPLATE_DEBUG (0)
 
-#define NSPACE_APP_APPTEMPLATE_PROF (0)
+#define NSPACE_APP_APPTEMPLATE_PROF (1)
 
 namespace nspace {
 	namespace app {
@@ -22,6 +22,9 @@ namespace nspace {
 		class App: public AppBase
 		{
 		public:
+
+			typedef nmath::util::ArrayIndirect<nspace::graphics::raycast::task::RayInterceptIn> ARRAY_RAYINTERCEPTIN;
+			typedef std::shared_ptr<ARRAY_RAYINTERCEPTIN> ARRAY_RAYINTERCEPTIN_S;
 
 			//virtual AppBase::RAY_S make_ray()
 			/*{
@@ -35,6 +38,8 @@ namespace nspace {
 			}
 			virtual void create_view_rays()
 			{
+				printf("create_view_rays\n");
+
 				_M_rays_view.clear();
 				
 				unsigned int w = _M_viewport->_M_w;
@@ -80,7 +85,10 @@ namespace nspace {
 			}
 			virtual void create_tasks_ray_face_intercept()
 			{
-				_M_tasks_ray_intercept.clear();
+				printf("create_tasks_ray_face_intercept\n");
+
+				_M_tasks_ray_intercept_in = std::make_shared<ARRAY_RAYINTERCEPTIN>();
+				_M_tasks_ray_intercept_inout.clear();
 
 				unsigned int w = _M_viewport->_M_w;
 				unsigned int h = _M_viewport->_M_h;
@@ -91,11 +99,12 @@ namespace nspace {
 					{
 						unsigned int ray_i = i * h + j;
 
-						nspace::graphics::raycast::task::RayIntercept task_ray_intercept;
+						std::shared_ptr<nspace::graphics::raycast::task::RayInterceptIn> task_ray_intercept_in = std::make_shared<nspace::graphics::raycast::task::RayInterceptIn>();
+						nspace::graphics::raycast::task::RayInterceptInOut task_ray_intercept_inout;
 
-						task_ray_intercept.pixel_i = i;
-						task_ray_intercept.pixel_j = j;
-						task_ray_intercept.ray_i = ray_i;
+						task_ray_intercept_inout.pixel_i = i;
+						task_ray_intercept_inout.pixel_j = j;
+						task_ray_intercept_inout.ray_i = ray_i;
 
 						for (unsigned int k = 0; k < _M_polytopes->size(); ++k)
 						{
@@ -108,41 +117,43 @@ namespace nspace {
 								task.polytope_i = k;
 								task.face_i = l;
 								task.task_ray_intercept_i = ray_i;
-								task.ray_i = task_ray_intercept.ray_i;
+								task.ray_i = task_ray_intercept_inout.ray_i;
 
-								task_ray_intercept._M_tasks_ray_face_intercept_i.push_back(_M_tasks_ray_face_intercept.size());
+								task_ray_intercept_in->_M_tasks_ray_face_intercept_i.push_back(_M_tasks_ray_face_intercept.size());
 								_M_tasks_ray_face_intercept.push_back(task);
 							}
 						}
 
-						_M_tasks_ray_intercept.push_back(task_ray_intercept);
+						_M_tasks_ray_intercept_in->push_back(task_ray_intercept_in);
+						_M_tasks_ray_intercept_inout.push_back(task_ray_intercept_inout);
 					}
 				}
 			}
 			void		do_ray_intercept(
-				nspace::graphics::raycast::task::RayIntercept & task)
+				std::shared_ptr<nspace::graphics::raycast::task::RayInterceptIn> & task_in,
+				nspace::graphics::raycast::task::RayInterceptInOut & task_inout)
 			{
 				/*for (unsigned int i = 0; i < task._M_tasks_ray_face_intercept.size(); ++i)
 				{
 					do_ray_face_intercept(task, task._M_tasks_ray_face_intercept[i]);
 				}*/
 
-				task.k = std::numeric_limits<float>::max();
-				task.intersect = false;
+				task_inout.k = std::numeric_limits<float>::max();
+				task_inout.intersect = false;
 
-				NMATH_DEBUG(10) printf("pixel %i %i ###############################\n", task.pixel_i, task.pixel_j);
+				NMATH_DEBUG(10) printf("pixel %i %i ###############################\n", task_inout.pixel_i, task_inout.pixel_j);
 
-				for (unsigned int i = 0; i < task._M_tasks_ray_face_intercept_i.size(); ++i)
+				for (unsigned int i = 0; i < task_in->_M_tasks_ray_face_intercept_i.size(); ++i)
 				{
-					auto & task_ray_face_intercept = _M_tasks_ray_face_intercept[task._M_tasks_ray_face_intercept_i[i]];
+					auto & task_ray_face_intercept = _M_tasks_ray_face_intercept[task_in->_M_tasks_ray_face_intercept_i[i]];
 
 					if (!task_ray_face_intercept.intersect) continue;
 
-					if (task_ray_face_intercept.k > task.k) continue;
+					if (task_ray_face_intercept.k > task_inout.k) continue;
 					
-					task.k = task_ray_face_intercept.k;
-					task.intersect = true;
-					task._M_task_i = i;
+					task_inout.k = task_ray_face_intercept.k;
+					task_inout.intersect = true;
+					task_inout._M_task_i = i;
 				}
 			}
 			void		do_ray_face_intercept(
@@ -213,18 +224,20 @@ namespace nspace {
 				task.k = d;
 			}
 
-			std::vector<nspace::graphics::raycast::task::RayIntercept>			_M_tasks_ray_intercept;
-			std::vector<nspace::graphics::raycast::task::RayFaceIntercept<M>>	_M_tasks_ray_face_intercept;
-			std::vector<nmath::geometry::Ray<M>>								_M_rays_view;
-
-			std::vector<nspace::graphics::raycast::task::RayFaceIntercept<M>>	_M_tasks_ray_face_intercept_result;
+			
+			
+			
 
 			virtual void						render_init()
 			{
+				printf("app render init\n");
+
 				create_view_rays();
 				create_tasks_ray_face_intercept();
 
 				// ocl
+
+				printf("openCL init\n");
 
 				_M_ocl = std::make_shared<OCL::Manager>();
 
@@ -276,6 +289,30 @@ namespace nspace {
 				//unsigned int tasks_len,
 				_M_kernel_ray_face_intercept->set_arg(memobj_tasks_len, arg++);
 
+				//__global char * tasks_ray_in,
+				auto memobj_tasks_ray_in = _M_ocl->create_buffer(CL_MEM_READ_WRITE, _M_tasks_ray_intercept_in->buffer_size);
+				memobj_tasks_ray_in->EnqueueWrite(_M_tasks_ray_intercept_in->_M_buffer, _M_tasks_ray_intercept_in->buffer_size);
+				_M_kernel_ray_face_intercept->set_arg(memobj_tasks_ray_in, arg++);
+				printf("tasks_ray_in size %u\n", _M_tasks_ray_intercept_in->size());
+				printf("tasks_ray_in bsize %u\n", _M_tasks_ray_intercept_in->buffer_size);
+
+				for (unsigned int i = 0; i < (_M_tasks_ray_intercept_in->buffer_size / sizeof(unsigned int)); ++i)
+				{
+					printf("  %i\n", ((unsigned int *)_M_tasks_ray_intercept_in->_M_buffer)[i]);
+				}
+
+				//__global struct RayInterceptInOut * tasks_ray_inout,
+				sz = _M_tasks_ray_intercept_inout.size() * sizeof(nspace::graphics::raycast::task::RayInterceptInOut);
+				_M_memobj_tasks_ray_inout = _M_ocl->create_buffer(CL_MEM_READ_WRITE, sz);
+				_M_memobj_tasks_ray_inout->EnqueueWrite(&_M_tasks_ray_intercept_inout[0], sz);
+				_M_kernel_ray_face_intercept->set_arg(_M_memobj_tasks_ray_inout, arg++);
+
+				//__global uint * tasks_ray_inout_len,
+				unsigned int tasks_ray_inout_len = _M_tasks_ray_intercept_inout.size();
+				auto memobj_tasks_ray_inout_len = _M_ocl->create_buffer(CL_MEM_READ_WRITE, sizeof(unsigned int));
+				memobj_tasks_ray_inout_len->EnqueueWrite(&tasks_ray_inout_len, sizeof(unsigned int));
+				_M_kernel_ray_face_intercept->set_arg(memobj_tasks_ray_inout_len, arg++);
+
 				//__global float3 * pixel_color,
 				//volatile __global uint * counter
 				_M_kernel_ray_face_intercept->set_arg(_M_memobj_counter, arg++);
@@ -305,6 +342,10 @@ namespace nspace {
 				_M_kernel_pointer_calc_test->set_arg(_M_memobj_tasks_ray_face_intercept, arg++);
 				_M_kernel_pointer_calc_test->set_arg(_M_memobj_test_out_uint, arg++);
 				_M_kernel_pointer_calc_test->set_arg(_M_memobj_test_out_float, arg++);
+
+
+				printf("render init finished\n");
+				getchar();
 			}
 			virtual void						render_ray_face_intercept()
 			{
@@ -422,14 +463,57 @@ namespace nspace {
 				printf("tasks check sum: %8u\n", nmath::util::checksum2<unsigned long>((char*)&_M_tasks_ray_face_intercept[0], size_tasks_ray_face));
 #endif
 			}
-			virtual void						render2(unsigned char * pixelData)
+			virtual void						render_ray_view()
 			{
-				for (unsigned int i = 0; i < _M_tasks_ray_intercept.size(); ++i)
+//#if APP_RENDER_CPU
+				for (unsigned int i = 0; i < _M_tasks_ray_intercept_in->size(); ++i)
 				{
-					nspace::graphics::raycast::task::RayIntercept & task = _M_tasks_ray_intercept[i];
-					do_ray_intercept(task);
+					auto & task_in = _M_tasks_ray_intercept_in->operator[](i);
+					nspace::graphics::raycast::task::RayInterceptInOut & task_inout = _M_tasks_ray_intercept_inout[i];
+					do_ray_intercept(task_in, task_inout);
+				}
+//#endif
+//#if APP_RENDER_GPU
+				// read tasks ray view inout
+
+				unsigned int size = _M_tasks_ray_intercept_inout.size() * sizeof(nspace::graphics::raycast::task::RayInterceptInOut);
+
+				std::vector<nspace::graphics::raycast::task::RayInterceptInOut>		tasks_ray_intercept_inout_2;
+				tasks_ray_intercept_inout_2.resize(_M_tasks_ray_intercept_inout.size());
+				
+				//_M_memobj_tasks_ray_inout->EnqueueRead(&_M_tasks_ray_intercept_inout[0], size);
+				_M_memobj_tasks_ray_inout->EnqueueRead(&tasks_ray_intercept_inout_2[0], size);
+
+
+
+				//debug
+				for (unsigned int i = 0; i < _M_tasks_ray_intercept_inout.size(); ++i)
+				{
+					auto & t1 = _M_tasks_ray_intercept_inout[i];
+					auto & t2 = tasks_ray_intercept_inout_2[i];
+
+					printf("pixel_i   %8u %8u\n", t1.pixel_i, t2.pixel_i);
+					printf("pixel_j   %8u %8u\n", t1.pixel_j, t2.pixel_j);
+					printf("ray_i     %8u %8u\n", t1.ray_i, t2.ray_i);
+					printf("k         %8.2e %8.2e\n", t1.k, t2.k);
+					printf("intersect %8u %8u\n", t1.intersect, t2.intersect);
+					printf("task_i    %8u %8u\n", t1._M_task_i, t2._M_task_i);
+					/*
+					unsigned int pixel_i;
+					unsigned int pixel_j;
+					unsigned int ray_i;
+
+					float k;
+					bool intersect;
+
+					unsigned int _M_task_i;
+					*/
 				}
 
+//#endif
+			}
+			virtual void						render2(unsigned char * pixelData)
+			{
 				//==================================================
 
 				unsigned int w = _M_viewport->_M_w;
@@ -452,7 +536,8 @@ namespace nspace {
 
 						nmath::geometry::Ray<M> & r = _M_rays_view[ray_i];
 
-						nspace::graphics::raycast::task::RayIntercept & task = _M_tasks_ray_intercept[ray_i];
+						std::shared_ptr<nspace::graphics::raycast::task::RayInterceptIn> & task_in = _M_tasks_ray_intercept_in->operator[](ray_i);
+						nspace::graphics::raycast::task::RayInterceptInOut & task_inout = _M_tasks_ray_intercept_inout[ray_i];
 
 						bool b = false;
 						nmath::linalg::Vec<M> N;
@@ -486,13 +571,13 @@ namespace nspace {
 						}
 #else
 
-						if (!task.intersect) {
+						if (!task_inout.intersect) {
 							NMATH_DEBUG(10) printf("no intersections\n");
 							pixelData[pixel_i + 0] = 128;
 							continue; // no intersections, leave pixel black
 						}
 
-						auto & task_ray_face_intercept_i = task._M_tasks_ray_face_intercept_i[task._M_task_i];
+						auto & task_ray_face_intercept_i = task_in->_M_tasks_ray_face_intercept_i[task_inout._M_task_i];
 						auto & task_ray_face_intercept = _M_tasks_ray_face_intercept[task_ray_face_intercept_i];
 
 						polytope_i = task_ray_face_intercept.polytope_i;
@@ -500,8 +585,8 @@ namespace nspace {
 						auto polytope = std::dynamic_pointer_cast<nmath::geometry::Polytope<M>>(_M_polytopes->operator[](polytope_i));
 						nmath::geometry::Face<M> & f = polytope->_M_faces[face_i];
 						N = f._M_plane.n;
-						b = task.intersect;
-						dist = task.k;
+						b = task_inout.intersect;
+						dist = task_inout.k;
 
 #endif
 
@@ -570,8 +655,17 @@ namespace nspace {
 					std::clock_t start;
 					if(NSPACE_APP_APPTEMPLATE_PROF) start = std::clock();
 					render_ray_face_intercept();
-					if (NSPACE_APP_APPTEMPLATE_PROF) printf("render1 time: %i\n", std::clock() - start);
+					if (NSPACE_APP_APPTEMPLATE_PROF) printf("render_ray_face_intercept time: %i\n", std::clock() - start);
 				}
+
+				{
+					std::clock_t start;
+					if (NSPACE_APP_APPTEMPLATE_PROF) start = std::clock();
+					render_ray_view();
+					if (NSPACE_APP_APPTEMPLATE_PROF) printf("render_ray_view time: %i\n", std::clock() - start);
+				}
+				
+
 				//==================================================
 
 				unsigned int w = _M_viewport->_M_w;
@@ -672,6 +766,18 @@ namespace nspace {
 				getchar(); exit(0);
 			}
 			
+
+
+
+
+			ARRAY_RAYINTERCEPTIN_S												_M_tasks_ray_intercept_in;
+			std::vector<nspace::graphics::raycast::task::RayInterceptInOut>		_M_tasks_ray_intercept_inout;
+			std::vector<nspace::graphics::raycast::task::RayFaceIntercept<M>>	_M_tasks_ray_face_intercept;
+			std::vector<nmath::geometry::Ray<M>>								_M_rays_view;
+
+			std::vector<nspace::graphics::raycast::task::RayFaceIntercept<M>>	_M_tasks_ray_face_intercept_result;
+
+
 			std::shared_ptr<OCL::Manager>		_M_ocl;
 			
 			std::shared_ptr<OCL::Kernel>		_M_kernel_ray_face_intercept;
@@ -679,6 +785,7 @@ namespace nspace {
 
 			std::shared_ptr<OCL::MemObj>		_M_memobj_polytope;
 			std::shared_ptr<OCL::MemObj>		_M_memobj_tasks_ray_face_intercept;
+			std::shared_ptr<OCL::MemObj>		_M_memobj_tasks_ray_inout;
 			std::shared_ptr<OCL::MemObj>		_M_memobj_counter;
 			std::shared_ptr<OCL::MemObj>		_M_memobj_test_polytope;
 			std::shared_ptr<OCL::MemObj>		_M_memobj_test_out_uint;

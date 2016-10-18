@@ -602,7 +602,7 @@ int _tmain(int argc, _TCHAR* argv[])
 	int w = 4;
 	int h = 3;
 
-	int textureScale = 32*2;
+	int textureScale = 8;
 	
 	//int w = 160;//  640;
 	//int h = 120;// 480;
@@ -699,11 +699,11 @@ int _tmain(int argc, _TCHAR* argv[])
 	glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 
 	// initialize rendering data
-	cube.construct4Cube4();
+	/*cube.construct4Cube4();
 	cube.setup();
 
 	tri.construct();
-	tri.setup();
+	tri.setup();*/
 
 	rect.construct();
 	rect.setup();

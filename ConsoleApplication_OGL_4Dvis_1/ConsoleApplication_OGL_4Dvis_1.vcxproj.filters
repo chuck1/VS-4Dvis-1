@@ -87,9 +87,6 @@
     <ClInclude Include="include\nspace\app\AppTemplate.h">
       <Filter>Header Files\nspace\app</Filter>
     </ClInclude>
-    <ClInclude Include="include\nspace\util\Task.h">
-      <Filter>Header Files\nspace\util</Filter>
-    </ClInclude>
     <ClInclude Include="include\nspace\graphics\raycast\Viewport.h">
       <Filter>Header Files\nspace\graphics\raycast</Filter>
     </ClInclude>

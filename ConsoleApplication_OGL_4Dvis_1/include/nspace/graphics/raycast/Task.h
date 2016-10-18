@@ -1,6 +1,9 @@
 #ifndef NSPACE_GRAPHICS_RAYCAST_TASK
 #define NSPACE_GRAPHICS_RAYCAST_TASK
 
+#include <nmath/util/Serializable.h>
+#include <nmath/util/SerializeVector.h>
+
 namespace nspace {
 	namespace graphics {
 		namespace raycast {
@@ -29,7 +32,17 @@ namespace nspace {
 					float A[M*(M - 1)];
 				};
 
-				struct RayIntercept
+				class RayInterceptIn
+				{
+				public:
+					virtual void serialize(nmath::util::Buffer & b)
+					{
+						nmath::util::serialize_primitive(b, _M_tasks_ray_face_intercept_i);
+					}
+
+					std::vector<unsigned int> _M_tasks_ray_face_intercept_i;
+				};
+				struct RayInterceptInOut
 				{
 					unsigned int pixel_i;
 					unsigned int pixel_j;
@@ -39,13 +52,7 @@ namespace nspace {
 					bool intersect;
 
 					unsigned int _M_task_i;
-
-					//std::vector<RayFaceIntercept> _M_tasks_ray_face_intercept;
-					std::vector<unsigned int> _M_tasks_ray_face_intercept_i;
-					
 				};
-				
-				
 			}
 		}
 	}
