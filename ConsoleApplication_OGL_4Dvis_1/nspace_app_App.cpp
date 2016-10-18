@@ -8,10 +8,12 @@
 
 void nspace::app::AppBase::render_init()
 {
-	unsigned int pixels_size = _M_viewport->_M_w * _M_viewport->_M_h;
+	_M_render_manager->render_init();
+
+	/*unsigned int pixels_size = _M_viewport->_M_w * _M_viewport->_M_h;
 	unsigned int lights_size = _M_lights->size();
 
-	unsigned int rays_size = pixels_size + pixels_size * lights_size;
+	unsigned int rays_size = pixels_size + pixels_size * lights_size;*/
 
 	/*unsigned int faces_size = 0;
 	for (int k = 0; k < _M_polytopes->size(); ++k)
@@ -79,11 +81,17 @@ void nspace::app::AppBase::render_init()
 	//	}
 	//}
 }
+void nspace::app::AppBase::reload_buffer()
+{
+	_M_render_manager->reload_buffer();
+}
 void nspace::app::AppBase::render()
 {
+	_M_render_manager->render();
+
 	// cast rays
 	
-	for (int i = 0; i < _M_viewport->_M_w; ++i)
+	/*for (int i = 0; i < _M_viewport->_M_w; ++i)
 	{
 		for (int j = 0; j < _M_viewport->_M_h; ++j)
 		{
@@ -96,7 +104,7 @@ void nspace::app::AppBase::render()
 				}
 			}
 		}
-	}
+	}*/
 
 	// copy color data from rays to GL buffer
 

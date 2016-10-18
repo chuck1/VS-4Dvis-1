@@ -10,6 +10,7 @@
 #include <nspace/decl.h>
 
 #include <nspace/graphics/raycast/Viewport.h>
+#include <nspace/graphics/Manager.h>
 #include <nspace/light/Light.h>
 
 
@@ -31,8 +32,7 @@ namespace nspace {
 			typedef std::shared_ptr<ARRAY_LIGHT> ARRAY_LIGHT_S;
 
 
-			virtual void reload_buffer() = 0;
-		
+			virtual void												reload_buffer();
 			virtual void												render_init();
 			virtual void												render();
 
@@ -49,6 +49,8 @@ namespace nspace {
 			std::vector< std::shared_ptr<nspace::actor::Base> >			_M_actors;
 			
 			std::shared_ptr<nspace::graphics::raycast::ViewportBase>	_M_viewport;
+
+			std::shared_ptr<nspace::graphics::ManagerBase>				_M_render_manager;
 
 		};
 	}

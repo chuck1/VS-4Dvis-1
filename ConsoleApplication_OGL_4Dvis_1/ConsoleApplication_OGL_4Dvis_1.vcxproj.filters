@@ -40,6 +40,9 @@
     <Filter Include="Header Files\nspace\graphics\raycast">
       <UniqueIdentifier>{5aa01c39-5744-49a3-a9dd-252bfcfaf62a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\nspace\graphics\pathtrace">
+      <UniqueIdentifier>{4be2bba1-a113-430c-9fd1-fe9b59f0ef58}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -95,6 +98,15 @@
     </ClInclude>
     <ClInclude Include="include\nspace\graphics\ocl.h">
       <Filter>Header Files\nspace\graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="include\nspace\graphics\raycast\Manager.h">
+      <Filter>Header Files\nspace\graphics\raycast</Filter>
+    </ClInclude>
+    <ClInclude Include="include\nspace\graphics\Manager.h">
+      <Filter>Header Files\nspace\graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="include\nspace\graphics\pathtrace\Manager.h">
+      <Filter>Header Files\nspace\graphics\pathtrace</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

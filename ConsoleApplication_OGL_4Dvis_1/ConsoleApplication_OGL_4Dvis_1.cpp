@@ -19,8 +19,9 @@
 #include <nspace\actor\RigidBody.h>
 #include <nspace/app/AppTemplate.h>
 #include <nspace/tests.h>
-
-
+#include <nspace/graphics/ocl.h>
+#include <nspace/graphics/raycast/Manager.h>
+#include <nspace/graphics/pathtrace/Manager.h>
 
 //Include the standard C++ headers
 #include <stdio.h>
@@ -31,7 +32,7 @@
 #include <cstdlib>
 #include <string>
 
-#include <nspace/graphics/ocl.h>
+
 
 
 GLuint LoadShaders(const char * vertex_file_path, const char * fragment_file_path){
@@ -466,7 +467,7 @@ Rectangle rect;
 
 //std::shared_ptr<OCL::Manager> ocl;
 
-#define M (4)
+#define M (3)
 
 void construct_cube(std::shared_ptr<nmath::geometry::Polytope<M>> p, nmath::SMat<M> const & rot)
 {
@@ -602,7 +603,7 @@ int _tmain(int argc, _TCHAR* argv[])
 	int w = 4;
 	int h = 3;
 
-	int textureScale = 8;
+	int textureScale = 2;
 	
 	//int w = 160;//  640;
 	//int h = 120;// 480;
@@ -644,6 +645,11 @@ int _tmain(int argc, _TCHAR* argv[])
 	unsigned int windowScale = 160;
 
 	auto app = std::make_shared<nspace::app::App<M>>();
+	
+	//app->_M_render_manager = std::make_shared<nspace::graphics::raycast::Manager<M>>();
+	app->_M_render_manager = std::make_shared<nspace::graphics::pathtrace::Manager<M>>();
+	
+	app->_M_render_manager->_M_app = app;
 	app->_M_viewport = std::make_shared<nspace::graphics::raycast::Viewport<M>>();
 	app->_M_viewport->_M_w = w*textureScale;
 	app->_M_viewport->_M_h = h*textureScale;
@@ -763,8 +769,8 @@ int _tmain(int argc, _TCHAR* argv[])
 
 
 	// OpenCL cleanup
-	app->_M_ocl->flush();
-	app->_M_ocl->shutdown();
+	app->_M_render_manager->_M_ocl->flush();
+	app->_M_render_manager->_M_ocl->shutdown();
 
 	exit(EXIT_SUCCESS);
 }

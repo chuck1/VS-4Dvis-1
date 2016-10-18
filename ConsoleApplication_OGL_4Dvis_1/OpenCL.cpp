@@ -119,7 +119,9 @@ void	OCL::Kernel::set_arg(std::shared_ptr<MemObj> memobj, int arg)
 	cl_int ret;
 	ret = clSetKernelArg(id, arg, sizeof(cl_mem), (void *)&(memobj->id));
 
-	errorcheck("clSetKernelArg 0", ret);
+	char s[128];
+	sprintf_s(s, "clSetKernelArg %i", arg);
+	errorcheck(s, ret);
 }
 void	OCL::Kernel::enqueue_ND_range_kernel(unsigned int global_size, unsigned int local_size)
 {

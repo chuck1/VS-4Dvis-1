@@ -204,6 +204,8 @@ namespace OCL {
 
 			printf("building program %s\n", fileName);
 
+			printf("define string: %s\n", args.c_str());
+
 			/* Build Kernel Program */
 			ret = clBuildProgram(program_id, 1, &device_id, args.c_str(), NULL, NULL);
 

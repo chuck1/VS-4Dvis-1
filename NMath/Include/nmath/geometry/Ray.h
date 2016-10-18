@@ -38,6 +38,8 @@ namespace nmath {
 		public:
 			nmath::linalg::Vec<M> p;
 			nmath::linalg::Vec<M> v;
+
+			nmath::linalg::Vec<3> color;
 		};
 	}
 }

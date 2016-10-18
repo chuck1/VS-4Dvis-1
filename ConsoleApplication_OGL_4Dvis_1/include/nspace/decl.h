@@ -2,6 +2,10 @@
 #define NSPACE_DECL
 
 namespace nspace {
+	namespace app
+	{
+		class AppBase;
+	}
 	namespace actor {
 		class Base;
 		class RigidBodyBase;
