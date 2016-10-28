@@ -26,6 +26,7 @@ namespace nspace {
 				unsigned int counter;
 			};
 
+
 			template<unsigned int M>
 			class Manager : public nspace::graphics::ManagerBase
 			{
@@ -128,7 +129,10 @@ namespace nspace {
 
 					char s[64];
 					sprintf_s(s, "-D N=(%u)", M);
-					auto program = _M_ocl->create_program("kernel/hello.cl", s);
+
+					char * files[2] = { "kernel/hello.cl", "kernel/kernel.h" };
+
+					auto program = _M_ocl->create_program(files, 2, s);
 
 					_M_kernel_path_trace_1 = program->create_kernel("path_trace1");
 					_M_kernel_path_trace_2 = program->create_kernel("path_trace2");
@@ -262,18 +266,19 @@ namespace nspace {
 
 					_M_memobj_rays->EnqueueRead(&rays[0], sizeof(nmath::geometry::Ray<M>)*len);
 
-					
-
-					
-
 					for (int i = 0; i < len; ++i)
 					{
 						nmath::geometry::Ray<M> & ray = rays[i];
 
 						printf("%i\n", i);
-						std::cout << "    " << ray.p << std::endl;
-						std::cout << "    " << ray.v << std::endl;
-						std::cout << "    " << ray.color << std::endl;
+						std::cout << "    p " << ray.p << std::endl;
+						std::cout << "    v " << ray.v << std::endl;
+						std::cout << "    c " << ray.color << std::endl;
+						if (ray.res.hit){
+							std::cout << "    x " << ray.res.x << std::endl;
+							std::cout << "    n " << ray.res.n << std::endl;
+							std::cout << "    k " << ray.res.k << std::endl;
+						}
 					}
 				}
 

@@ -1,21 +1,9 @@
 
 #define M (N)
 
-struct Vec
-{
-	float v[M];
-};
-struct Colorf
-{
-	float c[3];
-};
-struct Ray
-{
-	struct Vec p;
-	struct Vec v;
+#include "kernel/kernel.h"
 
-	struct Colorf color;
-};
+
 
 float	vec_dot_gg(__global float * a, __global float * b, unsigned int m)
 {
@@ -207,23 +195,7 @@ struct KernelHeader
 	unsigned int s;
 	unsigned int counter;
 };
-struct Material
-{
-	struct Colorf emittance;
-	struct Colorf reflectance;
-};
 
-struct RayCastResult
-{
-	bool hit;
-	float k;
-	struct Material mat;
-	struct Vec x;
-	struct Vec n;
-
-	unsigned int polytope_i;
-	unsigned int face_i;
-};
 
 
 //void * buffer_seek(void * c, unsigned int i)
@@ -790,6 +762,17 @@ struct Colorf color_ctor(float r, float g, float b)
 	return ret;
 }
 
+void strcpy(__private char * dst, constant char * src)
+{
+	while (*src != 0)
+	{
+		*dst = *src;
+		++dst;
+		++src;
+	}
+	*dst = *src;
+}
+
 struct RayCastResult cast_sub(
 	__global char * polytope,
 	__global char * face,
@@ -817,6 +800,14 @@ struct RayCastResult cast_sub(
 	}
 
 	float k = (d - vec_dot(n, ray->p)) / nv;
+
+	if (isnan(k))
+	{
+		constant char * msg = "isnan(k)";
+		strcpy(ret.message, msg);
+		//ret.message = 
+		return ret;
+	}
 
 	if (k < 0)
 	{
@@ -856,7 +847,6 @@ struct RayCastResult cast_sub(
 	return ret;
 }
 
-
 struct RayCastResult cast(
 	__global char * polytopes,
 	__global struct Ray * ray,
@@ -891,6 +881,8 @@ struct RayCastResult cast(
 			ret = res;
 		}
 	}
+
+	ray->res = ret;
 
 	return ret;
 }

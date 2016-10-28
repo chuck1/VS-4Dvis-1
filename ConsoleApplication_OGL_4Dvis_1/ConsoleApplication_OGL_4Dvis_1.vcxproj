@@ -97,6 +97,7 @@
     <ClInclude Include="include\nspace\graphics\raycast\Viewport.h" />
     <ClInclude Include="include\nspace\light\Light.h" />
     <ClInclude Include="include\nspace\tests.h" />
+    <ClInclude Include="kernel\kernel.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
   </ItemGroup>

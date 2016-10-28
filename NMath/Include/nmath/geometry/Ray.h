@@ -13,6 +13,29 @@ namespace nmath {
 			virtual void serialize(nmath::util::Buffer & c) const = 0;
 			virtual void deserialize(nmath::util::Buffer & c) = 0;
 		};*/
+		struct Colorf
+		{
+			nmath::linalg::Vec<3> c;
+		};
+		struct Material
+		{
+			struct Colorf emittance;
+			struct Colorf reflectance;
+		};
+		template<unsigned int M>
+		struct RayCastResult
+		{
+			bool hit;
+			float k;
+			struct Material mat;
+			nmath::linalg::Vec<M> x;
+			nmath::linalg::Vec<M> n;
+
+			unsigned int polytope_i;
+			unsigned int face_i;
+
+			char message[128];
+		};
 
 		template<unsigned int M>
 		class Ray//: public RayBase
@@ -40,6 +63,8 @@ namespace nmath {
 			nmath::linalg::Vec<M> v;
 
 			nmath::linalg::Vec<3> color;
+
+			RayCastResult<M>	res;
 		};
 	}
 }

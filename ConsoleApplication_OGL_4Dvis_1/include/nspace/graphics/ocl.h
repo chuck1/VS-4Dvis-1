@@ -175,34 +175,41 @@ namespace OCL {
 			_M_memobj.push_back(ret);
 			return ret;
 		}
-		std::shared_ptr<Program>	create_program(char * fileName, std::string args)
+		std::shared_ptr<Program>	create_program(char ** fileNames, int len, std::string args)
 		{
-			FILE *fp;
-			char *source_str;
+			
+			char ** source_str = new char*[len];
 			//char source_str[MAX_SOURCE_SIZE];
-			size_t source_size;
+			size_t * source_size = new size_t[len];
 
 			/* Load the source code containing the kernel*/
 
-			fopen_s(&fp, fileName, "r");
-			if (!fp) {
-				throw std::exception("Failed to load kernel");
-				abort();
-			}
+			for (int i = 0; i < len; ++i)
+			{
+				FILE *fp;
+				printf("opening file %s\n", fileNames[i]);
+				fopen_s(&fp, fileNames[i], "r");
 
-			source_str = (char*)malloc(MAX_SOURCE_SIZE);
-			source_size = fread(source_str, 1, MAX_SOURCE_SIZE, fp);
-			fclose(fp);
+				if (!fp) {
+					printf("file load error\n");
+					throw std::exception("Failed to load kernel");
+					abort();
+				}
+				
+				source_str[i] = (char*)malloc(MAX_SOURCE_SIZE);
+				source_size[i] = fread(source_str[i], 1, MAX_SOURCE_SIZE, fp);
+				fclose(fp);
+			}
 
 			cl_int ret;
 
 			cl_program program_id;
 
-			program_id = clCreateProgramWithSource(context, 1, (const char **)&source_str, (const size_t *)&source_size, &ret);
+			program_id = clCreateProgramWithSource(context, 1, (const char **)source_str, (const size_t *)source_size, &ret);
 
 			free(source_str);
 
-			printf("building program %s\n", fileName);
+			//printf("building program %s\n", fileNames);
 
 			printf("define string: %s\n", args.c_str());
 

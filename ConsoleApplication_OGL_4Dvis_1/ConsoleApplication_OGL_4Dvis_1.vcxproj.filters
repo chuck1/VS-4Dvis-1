@@ -25,9 +25,6 @@
     <Filter Include="Header Files\nspace\app">
       <UniqueIdentifier>{7ee3cb4d-4cd2-49fb-8036-25865556f61f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\cl">
-      <UniqueIdentifier>{189721b5-3297-4b79-b252-031750aa80d3}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\nspace\light">
       <UniqueIdentifier>{f10d8996-a8ae-4421-9116-cd89d0ebf6c2}</UniqueIdentifier>
     </Filter>
@@ -42,6 +39,9 @@
     </Filter>
     <Filter Include="Header Files\nspace\graphics\pathtrace">
       <UniqueIdentifier>{4be2bba1-a113-430c-9fd1-fe9b59f0ef58}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\kernel">
+      <UniqueIdentifier>{189721b5-3297-4b79-b252-031750aa80d3}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -108,6 +108,9 @@
     <ClInclude Include="include\nspace\graphics\pathtrace\Manager.h">
       <Filter>Header Files\nspace\graphics\pathtrace</Filter>
     </ClInclude>
+    <ClInclude Include="kernel\kernel.h">
+      <Filter>Source Files\kernel</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -128,7 +131,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="kernel\hello.cl">
-      <Filter>Source Files\cl</Filter>
+      <Filter>Source Files\kernel</Filter>
     </None>
   </ItemGroup>
 </Project>
