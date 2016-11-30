@@ -6,8 +6,11 @@
 #include <nmath/linalg/VecFunctions.h>
 #include <nmath/linalg/Mat.h>
 #include <nmath/linalg/NMath.h>
+#include <nmath/geometry/Polytope.h>
+#include <nmath/geometry/GraphTopology.h>
 
 #include <nmath/graph/graph.hpp>
+#include <nmath/graph/container/edge.hpp>
 
 template<int M>
 std::ostream& operator<<(std::ostream& os, nmath::linalg::Vec<M> const & v)
@@ -16,30 +19,7 @@ std::ostream& operator<<(std::ostream& os, nmath::linalg::Vec<M> const & v)
 	return os;
 }
 
-class Vertex : public nmath::graph::vert
-{
-public:
-	Vertex(nmath::graph::GRAPH_S g):
-		nmath::graph::vert(g)
-	{}
-	virtual bool		operator==(vert const & v)
-	{
-		Vertex const * v1 = dynamic_cast<Vertex const *>(&v);
-		return (v1->d == d) && (v1->i == i);
-	}
-	virtual bool		operator<(vert const & v)
-	{
-		Vertex const * v1 = dynamic_cast<Vertex const *>(&v);
-		if (v1->d == d)
-		{
-			return v1->i < i;
-		}
-		return v1->d < d;
-	}
 
-	int d;
-	int i;
-};
 
 void NMath::test()
 {
@@ -63,16 +43,21 @@ void NMath::test()
 
 	// graph
 
-	auto g = std::make_shared<nmath::graph::Graph>();
+	auto g = std::make_shared<nmath::geometry::topo::Graph>();
 
-	auto v0 = std::make_shared<Vertex>(g);
-	auto v1 = std::make_shared<Vertex>(g);
+	auto v0 = std::make_shared<nmath::geometry::topo::Vertex>(g);
+	auto v1 = std::make_shared<nmath::geometry::topo::Vertex>(g);
 
 	g->add_edge(v0, v1);
 
 	std::cout << "graph" << std::endl;
 	std::cout << g->vert_size() << std::endl;
 
+	// data use
+	std::cout << "PolytopePrimitive<4>   " << sizeof(nmath::geometry::PolytopePrimitive<4>) << std::endl;
+
 	getchar();
+
+	
 }
 

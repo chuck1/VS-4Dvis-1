@@ -40,6 +40,12 @@
     <Filter Include="Header Files\nmath\graph\container">
       <UniqueIdentifier>{f09921fd-e258-4042-8d57-d169b279aa43}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\nmath\geometry">
+      <UniqueIdentifier>{6cf4f87c-74b9-4217-9b43-cbcb730742cb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\nmath\util">
+      <UniqueIdentifier>{f4123c58-b7f6-4803-9d3a-12faff4e2a61}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Include\nmath\graph\decl.hpp">
@@ -110,6 +116,24 @@
     </ClInclude>
     <ClInclude Include="Include\nmath\graph\container\vert.hpp">
       <Filter>Header Files\nmath\graph\container</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\nmath\graph\EdgeFunction.h">
+      <Filter>Header Files\nmath\graph</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\nmath\geometry\Plane.h">
+      <Filter>Header Files\nmath\geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\nmath\geometry\Polytope.h">
+      <Filter>Header Files\nmath\geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\nmath\geometry\Ray.h">
+      <Filter>Header Files\nmath\geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\nmath\geometry\GraphTopology.h">
+      <Filter>Header Files\nmath\geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="Include\nmath\graph\VertFunction.h">
+      <Filter>Header Files\nmath\graph</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

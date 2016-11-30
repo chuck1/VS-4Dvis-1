@@ -1,4 +1,5 @@
-
+#ifndef NMATH_GRAPH_EDGEDATA
+#define NMATH_GRAPH_EDGEDATA
 
 #include <memory>
 #include <set>
@@ -17,3 +18,5 @@ namespace nmath {
 
 	}
 }
+
+#endif

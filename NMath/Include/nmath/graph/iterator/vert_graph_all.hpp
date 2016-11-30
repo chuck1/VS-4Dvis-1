@@ -1,4 +1,5 @@
-
+#ifndef NMATH_GRAPH_ITERATOR_VERTGRAPHALL
+#define NMATH_GRAPH_ITERATOR_VERTGRAPHALL
 
 #include <iterator>
 
@@ -23,22 +24,22 @@ namespace nmath {
 				typedef std::shared_ptr<V> V_S;
 				typedef V_S const &		reference;
 				typedef V_S				value_type;
+				typedef std::function<bool(std::shared_ptr<V> const &)> VFUNC;
 
-
-				vert_graph_all(nmath::graph::container::vert & container, THIS::iterator j) :
+				vert_graph_all(nmath::graph::container::Vert<V> & container, iterator j) :
 					_M_container(container),
 					_M_j(j)
 				{
 					next();
 				}
-				vert_graph_all(nmath::graph::container::vert & container, THIS::iterator j, nmath::graph::VERT_FUNC func) :
+				vert_graph_all(nmath::graph::container::Vert<V> & container, iterator j, VFUNC func) :
 					_M_container(container),
 					_M_j(j),
 					_M_func(func)
 				{
 					next();
 				}
-				vert_graph_all			operator=(THIS const & i)
+				vert_graph_all			operator=(vert_graph_all const & i)
 				{
 					_M_container = i._M_container;
 					_M_j = i._M_j;
@@ -100,7 +101,7 @@ namespace nmath {
 
 
 				//private:
-				graph::container::vert &		_M_container;
+				graph::container::Vert<V> &		_M_container;
 				iterator			_M_j;
 				std::function<bool(std::shared_ptr<V> const &)>			_M_func;
 			};
@@ -108,3 +109,5 @@ namespace nmath {
 		}
 	}
 }
+
+#endif

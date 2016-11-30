@@ -1,0 +1,6 @@
+#ifndef NMATH_GRAPH_VERTFUNCTION
+#define NMATH_GRAPH_VERTFUNCTION
+
+
+
+#endif
