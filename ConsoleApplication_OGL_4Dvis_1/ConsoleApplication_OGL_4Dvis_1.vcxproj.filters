@@ -25,6 +25,24 @@
     <Filter Include="Header Files\nspace\app">
       <UniqueIdentifier>{7ee3cb4d-4cd2-49fb-8036-25865556f61f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\nspace\light">
+      <UniqueIdentifier>{f10d8996-a8ae-4421-9116-cd89d0ebf6c2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\gl">
+      <UniqueIdentifier>{ee467ae1-02c4-449f-83d1-ee9933ca09de}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\nspace\graphics">
+      <UniqueIdentifier>{bfd353aa-e2c9-4b6a-b29d-fdbebea1d7e5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\nspace\graphics\raycast">
+      <UniqueIdentifier>{5aa01c39-5744-49a3-a9dd-252bfcfaf62a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\nspace\graphics\pathtrace">
+      <UniqueIdentifier>{4be2bba1-a113-430c-9fd1-fe9b59f0ef58}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\kernel">
+      <UniqueIdentifier>{189721b5-3297-4b79-b252-031750aa80d3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
@@ -34,6 +52,12 @@
     <Text Include="SimpleVertexShader.vertexshader">
       <Filter>Source Files</Filter>
     </Text>
+    <Text Include="gl\raycast_vertex_shader.txt">
+      <Filter>Source Files\gl</Filter>
+    </Text>
+    <Text Include="gl\raycast_fragment_shader.txt">
+      <Filter>Source Files\gl</Filter>
+    </Text>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h">
@@ -42,14 +66,8 @@
     <ClInclude Include="targetver.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="OCL.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="include\nspace\actor\RigidBody.h">
       <Filter>Header Files\nspace\actor</Filter>
-    </ClInclude>
-    <ClInclude Include="include\nspace\util\Array.h">
-      <Filter>Header Files\nspace\util</Filter>
     </ClInclude>
     <ClInclude Include="include\nspace\app\App.h">
       <Filter>Header Files\nspace\app</Filter>
@@ -59,6 +77,39 @@
     </ClInclude>
     <ClInclude Include="include\nspace\tests.h">
       <Filter>Header Files\nspace</Filter>
+    </ClInclude>
+    <ClInclude Include="include\nspace\graphics\Color.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\nspace\app\ManagerBuffer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\nspace\light\Light.h">
+      <Filter>Header Files\nspace\light</Filter>
+    </ClInclude>
+    <ClInclude Include="include\nspace\app\AppTemplate.h">
+      <Filter>Header Files\nspace\app</Filter>
+    </ClInclude>
+    <ClInclude Include="include\nspace\graphics\raycast\Viewport.h">
+      <Filter>Header Files\nspace\graphics\raycast</Filter>
+    </ClInclude>
+    <ClInclude Include="include\nspace\graphics\raycast\Task.h">
+      <Filter>Header Files\nspace\graphics\raycast</Filter>
+    </ClInclude>
+    <ClInclude Include="include\nspace\graphics\ocl.h">
+      <Filter>Header Files\nspace\graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="include\nspace\graphics\raycast\Manager.h">
+      <Filter>Header Files\nspace\graphics\raycast</Filter>
+    </ClInclude>
+    <ClInclude Include="include\nspace\graphics\Manager.h">
+      <Filter>Header Files\nspace\graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="include\nspace\graphics\pathtrace\Manager.h">
+      <Filter>Header Files\nspace\graphics\pathtrace</Filter>
+    </ClInclude>
+    <ClInclude Include="kernel\kernel.h">
+      <Filter>Source Files\kernel</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -74,10 +125,13 @@
     <ClCompile Include="nspace_tests.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="nspace_app_App.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="hello.cl">
-      <Filter>Source Files</Filter>
+    <None Include="kernel\hello.cl">
+      <Filter>Source Files\kernel</Filter>
     </None>
   </ItemGroup>
 </Project>

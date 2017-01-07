@@ -83,8 +83,13 @@ namespace nmath {
 
 						if (_M_i == _M_container.end()) break;
 
+<<<<<<< HEAD
 						nmath::graph::VERT_S const & pu = *_M_i;
 						nmath::graph::vert & u = *pu;
+=======
+						V_S const & pu = *_M_i;
+						V & u = *pu;
+>>>>>>> 268bf01e8f6c31479771525ac3872ff9050934a7
 
 						//std::cout << "iterator edge_graph j " << std::distance(_M_j, u._M_edges->end()) << std::endl;
 
@@ -98,14 +103,22 @@ namespace nmath {
 							continue;
 						}
 
+<<<<<<< HEAD
 						nmath::graph::edge const & edge = *_M_j;
+=======
+						nmath::graph::Edge<V> const & edge = *_M_j;
+>>>>>>> 268bf01e8f6c31479771525ac3872ff9050934a7
 
 						if (!edge.enabled()) {
 							++_M_j;
 							continue;
 						}
 
+<<<<<<< HEAD
 						nmath::graph::VERT_S const & v = _M_j->_M_v1.lock();
+=======
+						V_S const & v = _M_j->_M_v1.lock();
+>>>>>>> 268bf01e8f6c31479771525ac3872ff9050934a7
 
 						assert(v);
 
@@ -125,7 +138,11 @@ namespace nmath {
 				}
 				edge_graph			operator++(int)
 				{
+<<<<<<< HEAD
 					THIS ret(_M_container, _M_i, _M_j);
+=======
+					edge_graph ret(_M_container, _M_i, _M_j);
+>>>>>>> 268bf01e8f6c31479771525ac3872ff9050934a7
 					operator++();
 					return ret;
 				}
@@ -141,7 +158,11 @@ namespace nmath {
 					//return &_M_value;
 				}
 
+<<<<<<< HEAD
 				bool				operator==(nmath::graph::iterator::edge_graph const & i)
+=======
+				bool				operator==(nmath::graph::iterator::edge_graph<V> const & i)
+>>>>>>> 268bf01e8f6c31479771525ac3872ff9050934a7
 				{
 					if (_M_i == i._M_i) {
 						if (_M_i == _M_container.end()) return true;
@@ -152,7 +173,11 @@ namespace nmath {
 						return false;
 					}
 				}
+<<<<<<< HEAD
 				bool				operator!=(nmath::graph::iterator::edge_graph const & i)
+=======
+				bool				operator!=(nmath::graph::iterator::edge_graph<V> const & i)
+>>>>>>> 268bf01e8f6c31479771525ac3872ff9050934a7
 				{
 					return !(operator==(i));
 				}
@@ -178,4 +203,8 @@ namespace nmath {
 	}
 }
 
+<<<<<<< HEAD
 #endif
+=======
+#endif
+>>>>>>> 268bf01e8f6c31479771525ac3872ff9050934a7

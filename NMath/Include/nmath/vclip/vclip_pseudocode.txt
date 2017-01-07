@@ -1,0 +1,17 @@
+
+Algorithm 6: VFstate(Vertex V, Face F)
+--------------------------------------
+search for Voronoi plane VP(F, E) that V maximally violates
+if violated plane exists then
+	F <- E
+	return CONTINUE
+P <- plane(F)
+search for edge E, incident to V and V', such that |D_P(V)|>|D_P(V')|
+if E exists then
+	V <- E
+	return CONTINUE
+if DP(V) > 0 then
+	return DONE
+return result of handleLocalMin [Algo. 3]
+
+

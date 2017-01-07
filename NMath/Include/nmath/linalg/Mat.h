@@ -5,6 +5,8 @@
 #include <cassert>
 #include <exception>
 
+#include <nmath/linalg/Vec.h>
+
 namespace nmath {
 
 	/**
@@ -16,8 +18,6 @@ namespace nmath {
 	class Mat
 	{
 	public:
-
-
 		Mat<M, N>()
 		{
 			for (int i = 0; i < M; ++i)
@@ -39,22 +39,79 @@ namespace nmath {
 			}
 		}
 
-		double const & operator()(int i, int j) const
+		float const & operator()(int i, int j) const
 		{
-			if ((i >= M) || (j >= N)) throw std::exception("index out of range");
+			assert(i<M);
+			assert(j<N);
+			if ((i >= M) || (j >= N)) throw std::exception();
 
-			return _M_v[i*M + j];
+			return _M_v[i*N + j];
 		}
-		double & operator()(int i, int j)
+		float & operator()(int i, int j)
 		{
-			if ((i >= M) || (j >= N)) throw std::exception("index out of range");
+			assert(i<M);
+			assert(j<N);
+			if ((i >= M) || (j >= N)) throw std::exception();
 
-			return _M_v[i*M + j];
+			return _M_v[i*N + j];
 		}
 
+		Mat<N, M> transpose()
+		{
+			Mat<N, M> ret;
+			for (int i = 0; i < M; ++i)
+			{
+				for (int j = 0; j < N; ++j)
+				{
+					ret(j, i) = operator()(i, j);
+				}
+			}
+			return ret;
+		}
+
+		template<int O>
+		Mat<M, O> operator*(Mat<N, O> const & m) const
+		{
+			Mat<M, O> ret;
+			for (int i = 0; i < M; ++i)
+			{
+				for (int j = 0; j < O; ++j)
+				{
+					for (int k = 0; k < N; ++k)
+					{
+						ret(i, j) += operator()(i, k) * m(k, j);
+					}
+				}
+			}
+			return ret;
+		}
+
+		nmath::linalg::Vec<M> operator*(nmath::linalg::Vec<N> const & v) const
+		{
+			nmath::linalg::Vec<M> ret;
+			for (int i = 0; i < M; ++i)
+			{
+				for (int j = 0; j < N; ++j)
+				{
+					ret(i) += operator()(i, j) * v(j);
+				}
+			}
+			return ret;
+		}
+
+		void swapRows(unsigned int i0, unsigned int i1)
+		{
+			for (int j = 0; j < N; ++j)
+			{
+				/*double x = operator()(i1, j);
+				operator()(i1, j) = operator()(i0, j);
+				operator()(i0, j) = x;*/
+				std::swap(operator()(i0, j), operator()(i1, j));
+			}
+		}
 
 	private:
-		double _M_v[M*N];
+		float _M_v[M*N];
 	};
 
 	template<int M>

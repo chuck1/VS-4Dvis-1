@@ -10,6 +10,12 @@
 #include <nmath/graph/iterator/edge_vert.hpp>
 //#include <nmath/graph/container/edge.hpp>
 #include <nmath/graph/layer.hpp>
+<<<<<<< HEAD
+=======
+
+// experimental
+#include <nmath/graph/EdgeFunction.h>
+>>>>>>> 268bf01e8f6c31479771525ac3872ff9050934a7
 
 namespace nmath {
 	namespace graph {
@@ -18,7 +24,7 @@ namespace nmath {
 		class Vert : public std::enable_shared_from_this<Vert<V>>
 		{
 		public:
-			friend class graph::iterator::edge_graph<V>;
+			friend class nmath::graph::iterator::edge_graph<V>;
 
 			typedef std::shared_ptr<V> V_S;
 			typedef std::weak_ptr<V> V_W;
@@ -26,7 +32,11 @@ namespace nmath {
 			typedef std::shared_ptr<Graph<V>> G_S;
 			typedef std::weak_ptr<Graph<V>> G_W;
 
+<<<<<<< HEAD
 			typedef graph::container::Edge<V> ECONT;
+=======
+			typedef nmath::graph::container::Edge<V> ECONT;
+>>>>>>> 268bf01e8f6c31479771525ac3872ff9050934a7
 			typedef std::shared_ptr<ECONT> ECONT_S;
 
 			Vert(G_S g, ECONT_S c) :
@@ -57,17 +67,29 @@ namespace nmath {
 			}
 			nmath::graph::iterator::edge_vert<V>		edge_begin()
 			{
+<<<<<<< HEAD
 				return nmath::graph::iterator::edge_vert(*_M_edges, _M_edges->begin());
 			}
 			nmath::graph::iterator::edge_vert<V>		edge_end()
 			{
 				return nmath::graph::iterator::edge_vert(*_M_edges, _M_edges->end());
+=======
+				return nmath::graph::iterator::edge_vert<V>(*_M_edges, _M_edges->begin());
+			}
+			nmath::graph::iterator::edge_vert<V>		edge_end()
+			{
+				return nmath::graph::iterator::edge_vert<V>(*_M_edges, _M_edges->end());
+>>>>>>> 268bf01e8f6c31479771525ac3872ff9050934a7
 			}
 			nmath::graph::iterator::edge_vert<V>		edge_erase(nmath::graph::iterator::edge_vert<V> & i)
 			{
 				auto j = _M_edges->erase(i._M_i);
 
+<<<<<<< HEAD
 				return nmath::graph::iterator::edge_vert(*_M_edges, j);
+=======
+				return nmath::graph::iterator::edge_vert<V>(*_M_edges, j);
+>>>>>>> 268bf01e8f6c31479771525ac3872ff9050934a7
 			}
 
 			void				edge_erase_disconnected()
@@ -85,10 +107,18 @@ namespace nmath {
 					}
 				}
 			}
+<<<<<<< HEAD
 			unsigned int			edge_size()
 			{
 				return std::distance(edge_begin(), edge_end());
 			}
+=======
+			unsigned int		edge_size()
+			{
+				return std::distance(edge_begin(), edge_end());
+			}
+			/*
+>>>>>>> 268bf01e8f6c31479771525ac3872ff9050934a7
 			void				add_edge_util(
 				V_S v0,
 				V_S v1,
@@ -98,8 +128,15 @@ namespace nmath {
 
 				nmath::graph::Edge<V> edge(v0, v1, edge_data);
 
+<<<<<<< HEAD
 				_M_edges->insert(std::move(edge));
 			}
+=======
+				//_M_edges->insert(std::move(edge));
+				nmath::graph::edge::insert(*_M_edges, std::move(edge));
+			}
+			*/
+>>>>>>> 268bf01e8f6c31479771525ac3872ff9050934a7
 			void				edge_erase_util(V_S & v0, V_S & v1)
 			{
 				//graph::container::EDGE_S const & edges = (*i)->_M_edges;
@@ -126,7 +163,7 @@ namespace nmath {
 
 			// for ditance algorithm
 			struct {
-				double		_M_distance;
+				double			_M_distance;
 			} dist;
 
 			// for bridge-finding algorithm
@@ -145,7 +182,7 @@ namespace nmath {
 			
 			G_W							_M_graph;
 			
-			std::shared_ptr<graph::container::Edge<V>>	_M_edges;
+			std::shared_ptr<nmath::graph::container::Edge<V>>	_M_edges;
 		public:
 			LAYER_W						_M_layer;
 		};

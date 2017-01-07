@@ -21,7 +21,11 @@ namespace nmath {
 			{
 			public:
 				typedef std::shared_ptr<V> V_S;
+<<<<<<< HEAD
 				typedef typename std::set<std::shared_ptr<V>, graph::vert_comp<V>>::iterator iterator;
+=======
+				typedef typename std::set<std::shared_ptr<V>, nmath::graph::vert_comp<V>>::iterator iterator;
+>>>>>>> 268bf01e8f6c31479771525ac3872ff9050934a7
 
 				typedef std::shared_ptr<V> const &	reference;
 				typedef std::shared_ptr<V>		value_type;
@@ -79,7 +83,11 @@ namespace nmath {
 				}
 				vert_graph			operator++(int)
 				{
+<<<<<<< HEAD
 					nmath::graph::iterator::vert_graph ret(_M_container, _M_j);
+=======
+					nmath::graph::iterator::vert_graph<V> ret(_M_container, _M_j);
+>>>>>>> 268bf01e8f6c31479771525ac3872ff9050934a7
 					operator++();
 					return ret;
 				}
@@ -104,7 +112,11 @@ namespace nmath {
 
 
 				//private:
+<<<<<<< HEAD
 				graph::container::Vert<V> &		_M_container;
+=======
+				nmath::graph::container::Vert<V> &		_M_container;
+>>>>>>> 268bf01e8f6c31479771525ac3872ff9050934a7
 				iterator			_M_j;
 			};
 

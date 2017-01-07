@@ -5,7 +5,7 @@
 
 #include "../decl.hpp"
 #include "../vert.hpp"
-#include "../vert_comp.hpp"
+#include <nmath/graph/iterator/vert_comp.hpp>
 
 
 namespace nmath {
@@ -51,7 +51,7 @@ namespace nmath {
 					while (true) {
 						if (_M_j == _M_container.end()) break;
 
-						graph::VERT_S const & v = *_M_j;
+						V_S const & v = *_M_j;
 
 						assert(v);
 
@@ -70,11 +70,11 @@ namespace nmath {
 				{
 					++_M_j;
 					next();
-					return graph::iterator::vert_graph_all(_M_container, _M_j);
+					return graph::iterator::vert_graph_all<V>(_M_container, _M_j);
 				}
 				vert_graph_all			operator++(int)
 				{
-					graph::iterator::vert_graph_all ret(_M_container, _M_j);
+					graph::iterator::vert_graph_all<V> ret(_M_container, _M_j);
 					operator++();
 					return ret;
 				}
@@ -88,11 +88,11 @@ namespace nmath {
 					return _M_j.operator->();
 				}
 
-				bool					operator==(nmath::graph::iterator::vert_graph_all const & i)
+				bool					operator==(nmath::graph::iterator::vert_graph_all<V> const & i)
 				{
 					return (_M_j == i._M_j);
 				}
-				bool					operator!=(nmath::graph::iterator::vert_graph_all const & i)
+				bool					operator!=(nmath::graph::iterator::vert_graph_all<V> const & i)
 				{
 					return !(_M_j == i._M_j);
 				}
@@ -110,4 +110,9 @@ namespace nmath {
 	}
 }
 
+<<<<<<< HEAD
 #endif
+=======
+#endif
+
+>>>>>>> 268bf01e8f6c31479771525ac3872ff9050934a7

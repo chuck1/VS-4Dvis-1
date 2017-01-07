@@ -4,6 +4,10 @@
 
 #include <nmath/util/Array.h>
 
+#include <iostream>
+
+#include <nmath/util/Array.h>
+
 #include <nspace/tests.h>
 
 
@@ -24,6 +28,7 @@ private:
 
 void nspace::tests::test_array()
 {
+<<<<<<< HEAD
 	auto arr = std::make_shared<nspace::util::Array<double>>();
 
 	auto d0 = arr->push_back(0);
@@ -31,6 +36,17 @@ void nspace::tests::test_array()
 	auto tir = std::make_shared<test_index_ref>();
 
 	auto d1 = arr->push_back_index_ref(0, std::bind(&test_index_ref::set_i, tir, std::placeholders::_1), std::bind(&test_index_ref::get_i, tir));
+=======
+	auto arr = std::make_shared<nmath::util::Array<double>>();
+
+	auto d0 = arr->push_back(0);
+
+	auto tir = std::make_shared<test_index_ref>();
+
+	auto d1 = arr->push_back_index_ref(0, std::bind(&test_index_ref::set_i, tir, std::placeholders::_1), std::bind(&test_index_ref::get_i, tir));
+
+	std::cout << "array size " << arr->size() << std::endl;
+>>>>>>> 268bf01e8f6c31479771525ac3872ff9050934a7
 
 	std::cout << "array size " << arr->size() << std::endl;
 }

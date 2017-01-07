@@ -4,7 +4,10 @@
 #include <iterator>
 
 #include <nmath/graph/decl.hpp>
+<<<<<<< HEAD
 //#include <nmath/graph/edge.hpp>
+=======
+>>>>>>> 268bf01e8f6c31479771525ac3872ff9050934a7
 
 namespace nmath {
 	namespace graph {
@@ -13,14 +16,14 @@ namespace nmath {
 			 * iterates on each edge in a vert's edge container
 			 */
 			template<typename V>
-			class edge_vert :
-				public std::iterator<std::input_iterator_tag, graph::Edge<V>>
+			class edge_vert:
+				public std::iterator<std::input_iterator_tag, ::nmath::graph::Edge<V>>
 			{
 			public:
 				//typedef typename graph::CONT_EDGE::iterator iterator;
-				typedef std::iterator<std::input_iterator_tag, graph::Edge<V>> CONT;
+				typedef std::iterator<std::input_iterator_tag, nmath::graph::Edge<V>> CONT;
 				
-				typedef CONT::iterator iterator;
+				typedef typename CONT::iterator iterator;
 
 				typedef graph::Edge<V> const &	reference;
 				typedef graph::Edge<V>		value_type;
@@ -63,7 +66,11 @@ namespace nmath {
 					while (true) {
 						if (_M_i == _M_container.end()) break;
 
+<<<<<<< HEAD
 						nmath::graph::edge const & edge = *_M_i;
+=======
+						nmath::graph::Edge<V> const & edge = *_M_i;
+>>>>>>> 268bf01e8f6c31479771525ac3872ff9050934a7
 
 						if (!edge.enabled()) {
 							++_M_i;
@@ -81,7 +88,11 @@ namespace nmath {
 				}
 				edge_vert			operator++(int)
 				{
+<<<<<<< HEAD
 					THIS ret(_M_container, _M_i);
+=======
+					edge_vert ret(_M_container, _M_i);
+>>>>>>> 268bf01e8f6c31479771525ac3872ff9050934a7
 					operator++();
 					return ret;
 				}

@@ -1,6 +1,11 @@
 
+#ifndef NMATH_LINALG_VECFUNCTION
+#define NMATH_LINALG_VECFUNCTION
+
 #include "Vec.h"
 #include "MatFunctions.h"
+#include <nmath/geometry/Ray.h>
+#include <nmath/geometry/Plane.h>
 
 namespace nmath {
 	namespace linalg {
@@ -33,7 +38,7 @@ namespace nmath {
 			{
 				for (int j = 0; j < N; ++j)
 				{
-					Vecs[i].resize(N);
+					//Vecs[i].resize(N);
 					m0(i, j) = Vecs[i](j);
 				}
 			}
@@ -51,6 +56,46 @@ namespace nmath {
 			return ret;
 		}
 
+		template<int M>
+		float dot(Vec<M> const & a, Vec<M> const & b)
+		{
+			float d = 0;
+			for (int i = 0; i < M; ++i) d += a(i)*b(i);
+			return d;
+		}
 
+		template<int M>
+		float	intersect(float & nv, nmath::geometry::Ray<M> const & ray, nmath::geometry::Plane<M> const & plane)
+		{
+			nv = dot(plane.n, ray.v);
+			return (plane.d - dot(plane.n, ray.p)) / nv;
+		}
 	}
 }
+
+
+
+
+
+template<int M>
+inline std::ostream& operator<<(std::ostream& os, nmath::linalg::Vec<M> const & v)
+{
+	for (int i = 0; i < M; ++i) os << v(i) << " ";
+	return os;
+}
+
+template<int M, int N>
+inline std::ostream& operator<<(std::ostream& os, nmath::Mat<M, N> const & m)
+{
+	for (int i = 0; i < M; ++i) {
+		for (int j = 0; j < N; ++j) {
+			os << std::setw(7) << std::setprecision(4) << std::fixed << m(i, j) << " ";
+		}
+		os << std::endl;
+	}
+	return os;
+}
+
+
+
+#endif

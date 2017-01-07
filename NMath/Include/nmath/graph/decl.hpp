@@ -6,6 +6,10 @@
 #include <memory>
 #include <functional>
 
+#define NMATH_DEBUG_LEVEL (0)
+
+#define NMATH_DEBUG(a) if(a <= NMATH_DEBUG_LEVEL)
+
 namespace nmath{
 	namespace graph{
 		template<typename V>
@@ -48,6 +52,12 @@ namespace nmath{
 
 		typedef std::shared_ptr<EDGE_DATA>		EDGE_DATA_S;
 
+		namespace edge {
+			template<typename V> class less;
+		}
+
+		template<typename V>
+		using E_C = std::set<nmath::graph::Edge<V>, nmath::graph::edge::less<V>>;
 
 		//typedef std::set<edge<V>>				std::set<edge<V>>;
 		

@@ -18,6 +18,7 @@ namespace nmath {
 			class vert_comp : public std::iterator<std::input_iterator_tag, std::shared_ptr<V>>
 			{
 			public:
+				typedef std::shared_ptr<V> V_S;
 				typedef typename std::set<std::shared_ptr<V>, graph::vert_comp<V>>::iterator iterator;
 
 				typedef std::shared_ptr<V> const &	reference;
@@ -37,10 +38,13 @@ namespace nmath {
 				//bool				operator==(graph::iterator::vert_comp const &);
 				//bool				operator!=(graph::iterator::vert_comp const &);
 
+<<<<<<< HEAD
 
 
 
 
+=======
+>>>>>>> 268bf01e8f6c31479771525ac3872ff9050934a7
 				vert_comp(nmath::graph::container::Vert<V> & container, iterator j, int c) :
 					_M_container(container),
 					_M_j(j),
@@ -53,7 +57,11 @@ namespace nmath {
 					while (true) {
 						if (_M_j == _M_container.end()) break;
 
+<<<<<<< HEAD
 						nmath::graph::VERT_S const & v = *_M_j;
+=======
+						V_S const & v = *_M_j;
+>>>>>>> 268bf01e8f6c31479771525ac3872ff9050934a7
 
 						assert(v);
 
@@ -73,11 +81,19 @@ namespace nmath {
 				{
 					++_M_j;
 					next();
+<<<<<<< HEAD
 					return nmath::graph::iterator::vert_comp(_M_container, _M_j, _M_c);
 				}
 				vert_comp			operator++(int)
 				{
 					nmath::graph::iterator::vert_comp ret(_M_container, _M_j, _M_c);
+=======
+					return nmath::graph::iterator::vert_comp<V>(_M_container, _M_j, _M_c);
+				}
+				vert_comp			operator++(int)
+				{
+					nmath::graph::iterator::vert_comp<V> ret(_M_container, _M_j, _M_c);
+>>>>>>> 268bf01e8f6c31479771525ac3872ff9050934a7
 					operator++();
 					return ret;
 				}
@@ -107,7 +123,11 @@ namespace nmath {
 
 
 			private:
+<<<<<<< HEAD
 				graph::container::Vert<V> &		_M_container;
+=======
+				nmath::graph::container::Vert<V> &		_M_container;
+>>>>>>> 268bf01e8f6c31479771525ac3872ff9050934a7
 				iterator			_M_j;
 				int					_M_c;
 			};

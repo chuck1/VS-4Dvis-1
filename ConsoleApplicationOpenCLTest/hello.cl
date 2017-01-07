@@ -14,4 +14,4 @@ __kernel void hello(__global char* string)
 	string[11] = 'd';
 	string[12] = '!';
 	string[13] = '\0';
-}
+}MAX_SOURCE_SIZE
